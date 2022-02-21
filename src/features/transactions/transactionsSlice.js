@@ -12,14 +12,18 @@ export const fetchTransactions = createAsyncThunk(
   () => {
     return getTransactions();
   }
-);
+); 
 
 const transactionsSlice = createSlice({
   name,
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(fetchTransactions.pending, (state, action) => {});
-    builder.addCase(fetchTransactions.fulfilled, (state, action) => {});
+    builder.addCase(fetchTransactions.pending, (state, action) => { 
+      state.transactions = []
+    });
+    builder.addCase(fetchTransactions.fulfilled, (state, action) => {
+      state.transactions = action.payload
+    });
     builder.addCase(fetchTransactions.rejected, (state, action) => {});
   },
 });

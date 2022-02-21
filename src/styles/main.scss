@@ -1,12 +1,19 @@
-.app {
-  text-align: center;
+/* login page */
+.logo_container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0e2e3f;
 
-  &__title {
-    color: crimson;
-  }
-
-  &__message {
-    color: darkslateblue;
-    font-size: 18px;
+  img {
+    width: 600px;
   }
 }
+
+.login_input_container {
+  margin: auto;
+  width: calc(100% - 50px);
+}
+/* end of login page */
