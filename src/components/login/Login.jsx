@@ -55,7 +55,7 @@ export default function Login() {
                 align="center"
                 style={{ color: '#1c658c' }}
               >
-                Money Manager
+                Finance Manager
               </Typography.Title>
             </Col>
             <Col span={24}>
