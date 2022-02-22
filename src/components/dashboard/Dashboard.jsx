@@ -66,7 +66,7 @@ function Dashboard() {
         >
           <div className="logo">
             <Space>
-              <DollarOutlined style={{ fontSize: '26px' }} />
+              <DollarOutlined style={{ fontSize: '26px', display: collapsed ? 'flex' : undefined }} />
               {collapsed ? '' : <span>Finance Manager</span>}
             </Space>
           </div>
@@ -98,6 +98,7 @@ function Dashboard() {
           className="site-layout"
           style={{
             transition: "all 0.2s",
+            backgroundColor: '#E5E5E5',
             marginLeft: collapsed ? 80 : 240,
           }}
         >
