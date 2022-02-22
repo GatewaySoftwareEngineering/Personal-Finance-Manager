@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 
 import {
   Layout, Menu, Popover, Avatar, List, Space
@@ -25,6 +25,7 @@ function Dashboard() {
   const dispatch = useDispatch();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
+  const [routeName, setRouteName] = useState('Overview');
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed)
@@ -37,6 +38,21 @@ function Dashboard() {
   const onLoggingOut = () => {
     dispatch(logout())
   };
+
+  const onMenuChange = (val) => {
+    const { key } = val;
+    onTitleChange(key)
+  }
+
+  useEffect(() => {  
+    onTitleChange(location.pathname)
+  })
+
+  const onTitleChange = (key) => { 
+    if (key === '/') setRouteName('Overview')
+    else if (key === '/transaction-history') setRouteName('Transaction History')
+  }
+  
 
   return (
     <>
@@ -51,14 +67,20 @@ function Dashboard() {
           <div className="logo">
             <Space>
               <DollarOutlined style={{ fontSize: '26px' }} />
-              {collapsed ? '': <span>Finance Manager</span>}
+              {collapsed ? '' : <span>Finance Manager</span>}
             </Space>
           </div>
           <Menu
             theme="dark"
             mode="inline"
+            onClick={onMenuChange}
             selectedKeys={[location.pathname]}
-            style={{ backgroundColor: 'transparent', marginTop: 35, fontSize: 16 }}
+            style={{
+              fontSize: 16,
+              marginTop: 35,
+              backgroundColor: 'transparent',
+            }}
+
           >
             <Menu.Item key="/">
               <PieChartOutlined />
@@ -85,7 +107,7 @@ function Dashboard() {
           >
             <div className="header_container">
               <div className="hambargar_menu">
-                <span>Overview</span>
+                <span>{routeName}</span>
                 <button onClick={toggleSidebar}>
                   {collapsed ?
                     <DoubleLeftOutlined style={{ fontSize: 14 }} />
