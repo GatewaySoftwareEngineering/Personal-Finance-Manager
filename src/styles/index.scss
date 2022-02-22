@@ -33,6 +33,12 @@ p {
     height: 48px !important;
     border-radius: 7px !important;
     background: #ffffff;
+
+    .ant-select-selection-placeholder {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
   }
 
   .ant-select-selection-item {
