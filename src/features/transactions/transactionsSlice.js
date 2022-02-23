@@ -10,7 +10,9 @@ const initialState = {
 export const fetchTransactions = createAsyncThunk(
   `${name}/fetchTransactions`,
   () => {
-    return getTransactions();
+    return setTimeout(() => {
+      getTransactions();
+    }, 1500);
   }
 ); 
 
