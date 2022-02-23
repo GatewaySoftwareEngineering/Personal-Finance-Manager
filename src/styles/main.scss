@@ -45,12 +45,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #F7F4F3;
+  background: #f7f4f3;
   box-shadow: 0px 1px 8px rgba(34, 40, 49, 0.15);
 }
 
 .hambargar_menu {
-  > span { 
+  > span {
     display: block;
     font-size: 20px;
   }
@@ -138,37 +138,14 @@
 }
 
 .overview_transactions {
+  margin-bottom: 40px;
+
   > span {
-    font-family: Inter;
     font-style: normal;
     font-weight: 500;
     font-size: 22px;
     line-height: 27px;
   }
-}
-
-.transaction_container {
-  width: 100%;
-  display: grid;
-  grid-gap: 1rem;
-  margin-top: 18px;
-
-  > div {
-    width: 100%;
-    height: 56px;
-    background: #f8fafc;
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 14px; 
-
-    p {
-      font-style: normal;
-      font-weight: normal;
-      font-size: 16px;
-    }
-  } 
 }
 
 .transaction_row_end_child {
@@ -213,24 +190,68 @@
     background: #f8fafc;
   }
 }
+
+.custom_list {
+  .ant-list-pagination {
+    text-align: left;
+
+    .ant-pagination-item {
+      border-radius: 100px;
+      background: transparent;
+      border-color: #377a99;
+    }
+
+    .ant-pagination {
+      li button {
+        border: none;
+        font-size: 16px;
+        color: #111827;
+        background-color: transparent;
+      }
+
+      li.ant-pagination-disabled button{
+        color: #959FB4;
+      }
+
+      li.ant-pagination-item-active {
+        background: #1c658cbf !important;
+        a {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}
+
+.transaction_row {
+  width: 100%;
+  height: 56px;
+  background: #f8fafc;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  margin-bottom: 18px;
+}
 // end of overview page style
 
-// teansaction history page style  
-.custom_serach_input { 
+// teansaction history page style
+.custom_serach_input {
   .ant-input-affix-wrapper {
     width: 100%;
     height: 48px;
     background: #ffffff;
     border-top-left-radius: 7px;
     border-bottom-left-radius: 7px;
-  } 
+  }
 
   .ant-input-group-addon {
     padding: 0;
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
 
-    button { 
+    button {
       padding: unset;
       height: 46px;
       width: 80px;
@@ -248,7 +269,7 @@
   align-items: center;
   justify-content: space-between;
   height: 68px;
-  background: #F8FAFC;
+  background: #f8fafc;
   border-radius: 7px;
   gap: 10px;
   overflow: hidden;
@@ -274,11 +295,11 @@
     width: 80px;
     height: 100%;
 
-     button {
+    button {
       padding: 0;
       height: 100%;
       width: 100%;
-     }
+    }
   }
 }
 // end of transaction history page style
