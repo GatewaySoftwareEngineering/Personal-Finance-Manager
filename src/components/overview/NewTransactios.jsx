@@ -12,8 +12,11 @@ export default function NewTransactios({ closeModal }) {
   const [type, setType] = useState('Income')
   const [category, setCategory] = useState('Salary')
 
-  const onFinish = (val) => {
-    console.log(val)
+  const onFinish = (val) => { 
+    const data = {
+      ...val,
+    }
+    console.log(data)
   }
 
   const onValuesChange = (val) => {

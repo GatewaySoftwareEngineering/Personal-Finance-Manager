@@ -1,30 +1,28 @@
-const today = new Date()
-export const getTransactions = async () => [
+const transactionsInStroe = JSON.parse(localStorage.getItem('fm-transactions'))
+const mockData = [
   {
-    id: "123456789",
+    id: "1",
     note: "HyperCloud II Headset",
-    category: "ACCESSORIES",
-    createdAt: today.toString(),
-    type: "EXPENSE",
+    category: "Tech",
+    date: 'Wed Feb 23 2022 23:59:00 GMT+0300 (Arabian Standard Time)',
+    type: "Expense",
     amount: 75,
-    currency: "USD",
   },
   {
-    id: "987546321",
+    id: "2",
     note: "Salary after promotion",
-    category: "SALARY",
-    createdAt: today.toString(),
-    type: "INCOME",
+    category: "Salary",
+    date: 'Wed Feb 20 2022 23:59:00 GMT+0300 (Arabian Standard Time)',
+    type: "Income",
     amount: 5_000_000,
-    currency: "IQD",
   },
   {
-    id: "987546344",
+    id: "3",
     note: "Borrowed from Muhammad",
-    category: "LOAN",
-    createdAt: today.toString(),
-    type: "INCOME",
+    category: "Loan",
+    date: 'Wed Feb 15 2022 23:59:00 GMT+0300 (Arabian Standard Time)',
+    type: "Income",
     amount: 100_000,
-    currency: "IQD",
   },
-];
+]; 
+export const getTransactions = async () => [...mockData, ...transactionsInStroe];
