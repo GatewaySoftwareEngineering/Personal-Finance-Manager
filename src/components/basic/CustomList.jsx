@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import {
-  Space, Avatar,
+  Space, Avatar, Tooltip
 } from "antd";
+import moment from 'moment'
 
-// gategory images
+// category images
 import Loan from '../../assets/icons/svg/loan.svg';
 import Food from '../../assets/icons/svg/food.svg';
 import Gift from '../../assets/icons/svg/gift.svg';
@@ -13,70 +14,78 @@ import Health from '../../assets/icons/svg/health.svg';
 import Salary from '../../assets/icons/svg/salary.svg';
 
 export default function CustomList({ item }) {
-  const [avatarSrc, setAvatarSrc] = useState()
-  const [avatarBg, setAvatarBg] = useState('#ffffff')
+  const [avatarSrc, setAvatarSrc] = useState();
+  const [avatarBg, setAvatarBg] = useState('#ffffff');
+  const [customizedNote, setCustomizedNote] = useState();
+  const [customizedDate, setCustomizedDate] = useState();
+  const [customizedAmount, setCustomizedAmount] = useState();
 
-  const handleAvatar = (item) => {
-    switch (item.category) {
+  const handleAvatar = ({ category }) => {
+    switch (category) {
       case 'Salary':
         setAvatarSrc(Salary);
-        break;
-      case 'Loan':
-        setAvatarSrc(Loan);;
-        break;
-      case 'Gift':
-        setAvatarSrc(Gift);;
-        break;
-      case 'Tech':
-        setAvatarSrc(Tech);;
-        break;
-      case 'Food':
-        setAvatarSrc(Food);;
-        break;
-      case 'Sports':
-        setAvatarSrc(Sports);;
-        break;
-      case 'Health':
-        setAvatarSrc(Health);;
-        break;
-
-      default:
-      // do nothing
-    }
-  }
-
-  const handleAvatarBg = (item) => {
-    switch (item.category) {
-      case 'Salary':
         setAvatarBg('#faad14');
         break;
       case 'Loan':
+        setAvatarSrc(Loan);
         setAvatarBg('#bae637');
         break;
       case 'Gift':
+        setAvatarSrc(Gift);
         setAvatarBg('#d4b106');
         break;
       case 'Tech':
+        setAvatarSrc(Tech);
         setAvatarBg('#ff7875');
         break;
       case 'Food':
+        setAvatarSrc(Food);
         setAvatarBg('#73d13d');
         break;
       case 'Sports':
+        setAvatarSrc(Sports);
         setAvatarBg('#13c2c2');
         break;
       case 'Health':
+        setAvatarSrc(Health);
         setAvatarBg('#9254de');
         break;
 
       default:
       // do nothing
     }
+  };
+
+  const handleNote = ({ note }) => {
+    if (note) {
+      const subtractedNote = note.replace(/^(.{40}[^\s]*).*/, "$1");
+      if (note.length > 40) setCustomizedNote(subtractedNote + '...');
+      else setCustomizedNote(note);
+    }
+  }
+
+  const handleDate = ({ date }) => {
+    const dateDifference = moment().diff(date, 'hours');
+
+    if (dateDifference <= 24) setCustomizedDate('Today');
+    else if (dateDifference <= 48) setCustomizedDate('Yesterday');
+    else setCustomizedDate(moment(date).format('lll').toString());
+  }
+
+  const handleAmount = ({ amount, type }) => {
+    if (amount && type) {
+      const formatter = Intl.NumberFormat('en', { notation: 'compact' });
+      const formated = formatter.format(amount);
+      const text = `${type === 'Expense' ? '-$' : '+$'}${formated}`
+      setCustomizedAmount(text);
+    }
   }
 
   useEffect(() => {
+    handleDate(item);
+    handleNote(item);
     handleAvatar(item);
-    handleAvatarBg(item)
+    handleAmount(item);
   }, [item])
 
   return (
@@ -89,11 +98,20 @@ export default function CustomList({ item }) {
           )}
           style={{ backgroundColor: avatarBg }}
         />
-        <p>12 Rules for life by Jordan Peterson signed by himself...</p>
+        <Tooltip title={item.note}>
+          <span>{customizedNote || '---'}</span>
+        </Tooltip>
       </Space>
       <div className="transaction_row_end_child">
-        <span>Today</span>
-        <div>-$45</div>
+        <span>
+          <Tooltip title={moment(item.date).format('lll')}>
+            {customizedDate}
+          </Tooltip>
+        </span>
+        <div style={{ 
+          color: item.type !== 'Expense' ? '#0EA5E9' : undefined,
+          backgroundColor: item.type !== 'Expense' ? '#0EA5E926' : undefined,
+        }}>{customizedAmount}</div>
       </div>
     </div>
   )

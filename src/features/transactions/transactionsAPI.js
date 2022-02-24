@@ -1,10 +1,10 @@
-const transactionsInStroe = JSON.parse(localStorage.getItem('fm-transactions'))
+const transactionsInStroe = JSON.parse(localStorage.getItem('fm-transactions'));
 const mockData = [
   {
     id: "1",
-    note: "HyperCloud II Headset",
+    note: "bought HyperCloud II Headset for Muhammad right after his promotion for 75 dollars",
     category: "Tech",
-    date: 'Wed Feb 23 2022 23:59:00 GMT+0300 (Arabian Standard Time)',
+    date: '2022-02-10T00:05:00+01:00',
     type: "Expense",
     amount: 75,
   },
@@ -12,7 +12,7 @@ const mockData = [
     id: "2",
     note: "Salary after promotion",
     category: "Salary",
-    date: 'Wed Feb 20 2022 23:59:00 GMT+0300 (Arabian Standard Time)',
+    date: '2022-02-24T05:48:00+01:00',
     type: "Income",
     amount: 5_000_000,
   },
@@ -20,9 +20,13 @@ const mockData = [
     id: "3",
     note: "Borrowed from Muhammad",
     category: "Loan",
-    date: 'Wed Feb 15 2022 23:59:00 GMT+0300 (Arabian Standard Time)',
+    date: '2022-02-23T05:48:00+01:00',
     type: "Income",
     amount: 100_000,
   },
-]; 
-export const getTransactions = async () => [...mockData, ...transactionsInStroe];
+];
+
+let data;
+if (transactionsInStroe) data = [...mockData, ...transactionsInStroe];
+else data = [...mockData]
+export const getTransactions = async () => data;
