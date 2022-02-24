@@ -1,5 +1,4 @@
-const transactionsInStroe = JSON.parse(localStorage.getItem('fm-transactions'));
-const mockData = [
+export const mockData = [
   {
     id: "1",
     note: "bought HyperCloud II Headset for Muhammad right after his promotion for 75 dollars",
@@ -24,9 +23,4 @@ const mockData = [
     type: "Income",
     amount: 100_000,
   },
-];
-
-let data;
-if (transactionsInStroe) data = [...mockData, ...transactionsInStroe];
-else data = [...mockData]
-export const getTransactions = async () => data;
+]; 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import {
   Space, Avatar, Tooltip
@@ -19,6 +20,7 @@ export default function CustomList({ item }) {
   const [customizedNote, setCustomizedNote] = useState();
   const [customizedDate, setCustomizedDate] = useState();
   const [customizedAmount, setCustomizedAmount] = useState();
+  const [isInFuture, setIsInFuture] = useState(false)
 
   const handleAvatar = ({ category }) => {
     switch (category) {
@@ -67,7 +69,10 @@ export default function CustomList({ item }) {
   const handleDate = ({ date }) => {
     const dateDifference = moment().diff(date, 'hours');
 
-    if (dateDifference <= 24) setCustomizedDate('Today');
+    if (dateDifference < 0) {
+      setIsInFuture(true)
+      setCustomizedDate(moment(item.date).calendar());
+    } else if (dateDifference <= 24) setCustomizedDate('Today');
     else if (dateDifference <= 48) setCustomizedDate('Yesterday');
     else setCustomizedDate(moment(date).format('lll').toString());
   }
@@ -101,6 +106,11 @@ export default function CustomList({ item }) {
         <Tooltip title={item.note}>
           <span>{customizedNote || '---'}</span>
         </Tooltip>
+        {isInFuture && (
+          <Tooltip title={'This Transaction is in the Future!'}>
+            <span className="future_badge">Precent</span>
+          </Tooltip>
+        )}
       </Space>
       <div className="transaction_row_end_child">
         <span>
@@ -108,10 +118,10 @@ export default function CustomList({ item }) {
             {customizedDate}
           </Tooltip>
         </span>
-        <div style={{ 
+        <div style={{
           color: item.type !== 'Expense' ? '#0EA5E9' : undefined,
           backgroundColor: item.type !== 'Expense' ? '#0EA5E926' : undefined,
-        }}>{customizedAmount}</div>
+        }}>{customizedAmount || 0}</div>
       </div>
     </div>
   )

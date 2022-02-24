@@ -16,27 +16,36 @@ export default function List() {
   const [loading, setLoading] = useState(true);
   const [viewTransactionModal, setViewTransactionModal] = useState(false);
 
+
+  const [updateState, setUpdateState] = useState(false);
+
   const showTransactionModal = () => {
-    setViewTransactionModal(true)
+    setViewTransactionModal(true);
   }
   const closeTransactionModal = () => {
-    setViewTransactionModal(false)
+    setViewTransactionModal(false);
+    updateComponent();
+  }
+
+  const updateComponent = () => {
+    setUpdateState(!updateState);
   }
 
   useEffect(() => {
-    // to delay the load by 1.5s to simulate the loading state of the components
+    // to delay the load by 1.5s to simulate the loading state of the components 
+    setLoading(true);
     setTimeout(() => {
       dispatch(fetchTransactions())
         .then((res) => {
-          const { payload } = res
-          setDataList(payload)
-          setLoading(false)
-        }).catch((err) => {
+          const { payload } = res;
+          setDataList([...payload].reverse());
+          setLoading(false);
+        }).catch(() => {
           //handle err
-          setLoading(false)
+          setLoading(false);
         })
-    }, 1500);
-  }, [dispatch])
+    }, 750);
+  }, [dispatch, updateState]); 
 
   return (
     <>
@@ -64,20 +73,22 @@ export default function List() {
           span={24}
           className="overview_transactions"
         >
-          <span>This Week</span>
-
           <Loading visible={loading} />
           <div style={{ display: loading ? 'none' : undefined }}>
+            <span>This Week</span>
+
             <AntList
               itemLayout="vertical"
               dataSource={dateList}
               className="custom_list"
               style={{ marginTop: 15 }}
-              pagination={{ pageSize: 6 }}
+              pagination={{ pageSize: 20 }}
               renderItem={(item) => (
-                <CustomList
-                  item={item}
-                />
+                <React.Fragment key={parseInt(item.id, 10)}>
+                  <CustomList
+                    item={item}
+                  />
+                </React.Fragment>
               )}
             />
             <Button

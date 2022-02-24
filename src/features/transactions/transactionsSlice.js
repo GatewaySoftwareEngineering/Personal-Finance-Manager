@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getTransactions } from "./transactionsAPI";
+import { mockData } from "./transactionsAPI";
 
 const name = "transactions";
 
@@ -11,20 +11,24 @@ const initialState = {
 export const fetchTransactions = createAsyncThunk(
   `${name}/fetchTransactions`,
   () => {
-    return getTransactions(); 
+    const transactionsInStroe = JSON.parse(localStorage.getItem('fm-transactions'));
+    let data;
+    if (transactionsInStroe) data = transactionsInStroe;
+    else data = mockData;
+    return data;
   }
-); 
+);
 
 const transactionsSlice = createSlice({
   name,
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(fetchTransactions.pending, (state) => { 
+    builder.addCase(fetchTransactions.pending, (state) => {
       state.loadState = 'pending'
     });
     builder.addCase(fetchTransactions.fulfilled, (state, action) => {
       state.loadState = 'loaded'
-      state.transactions = action.payload
+      state.transactions = action.payload; 
     });
     builder.addCase(fetchTransactions.rejected, (state) => {
       state.loadState = 'failed'

@@ -140,7 +140,7 @@
 .overview_transactions {
   margin-bottom: 40px;
 
-  > span {
+  > div > span {
     font-style: normal;
     font-weight: 500;
     font-size: 22px;
@@ -172,7 +172,7 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 22px;
-    padding: 0 5px;
+    padding: 0 5px; 
   }
 }
 
@@ -243,6 +243,15 @@
      width: 20px;
      height: 20px;
    }
+}
+
+.future_badge { 
+    padding: 4px 8px;
+    border-radius: 24px;
+    font-size: 10px;
+    height: 20px;
+    color: #ffffff;
+    background: #232a34; 
 }
 // end of overview page style
 

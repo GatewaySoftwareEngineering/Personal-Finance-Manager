@@ -3,20 +3,41 @@ import {
   Row, Col, Space, Form, InputNumber,
   DatePicker, Select, Radio, Input, Button
 } from "antd";
+import { useSelector } from "react-redux";
 import moment from 'moment';
 
 const { Option } = Select
 
 export default function NewTransactios({ closeModal }) {
-  const [form] = Form.useForm();
-  const [type, setType] = useState('Income')
-  const [category, setCategory] = useState('Salary')
 
-  const onFinish = (val) => { 
-    const data = {
+  const [form] = Form.useForm();
+  const { transactions }  = useSelector((state) => state.transactions); 
+
+  // states
+  const [type, setType] = useState('Income');
+  const [saving, setSaving] = useState(false);
+  const [category, setCategory] = useState('Salary');
+  const [allTransactions, setAllTransactions] = useState([]);
+
+  const onFinish = async (val) => {
+    setSaving(true);
+    const lastTransactionObj =  allTransactions.slice(-1).pop();
+    const generatedId = parseInt(lastTransactionObj.id, 10) + 1;
+    const transactionArray = [...allTransactions];
+
+     const data = await {
       ...val,
-    }
-    console.log(data)
+      id: generatedId.toString(),
+      date: moment(val.date).format(),
+    } 
+
+    transactionArray.push(data);
+    localStorage.setItem('fm-transactions', JSON.stringify(transactionArray));
+    
+    setTimeout(() => {
+      setSaving(false)
+      closeModal();
+    }, 1000);
   }
 
   const onValuesChange = (val) => {
@@ -49,6 +70,12 @@ export default function NewTransactios({ closeModal }) {
       note: `${type} ⇢ ${category}`
     });
   }, [category, type, form])
+
+  useEffect(() => {
+    const ls = JSON.parse(localStorage.getItem('fm-transactions'));
+    if (ls !== null) setAllTransactions(ls);
+    else setAllTransactions(transactions); 
+  }, [transactions])
   
 
   return (
@@ -177,6 +204,8 @@ export default function NewTransactios({ closeModal }) {
                 shape='round'
                 type='primary'
                 htmlType='submit'
+                loading={saving}
+                disabled={saving}
               >
                 Add Transaction
               </Button>
