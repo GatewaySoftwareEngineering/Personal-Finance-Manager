@@ -35,17 +35,17 @@ export default function List() {
     // to delay the load by 1.5s to simulate the loading state of the components 
     setLoading(true);
     setTimeout(() => {
-      dispatch(fetchTransactions())
+      dispatch(fetchTransactions({ limit: 10 }))
         .then((res) => {
           const { payload } = res;
-          setDataList([...payload].reverse());
+          setDataList(payload);
           setLoading(false);
         }).catch(() => {
           //handle err
           setLoading(false);
         })
-    }, 750);
-  }, [dispatch, updateState]); 
+    }, 500);
+  }, [dispatch, updateState]);
 
   return (
     <>
@@ -82,7 +82,6 @@ export default function List() {
               dataSource={dateList}
               className="custom_list"
               style={{ marginTop: 15 }}
-              pagination={{ pageSize: 20 }}
               renderItem={(item) => (
                 <React.Fragment key={parseInt(item.id, 10)}>
                   <CustomList
@@ -91,18 +90,15 @@ export default function List() {
                 </React.Fragment>
               )}
             />
-            <Button
-              shape='round'
-              type='primary'
-              onClick={showTransactionModal}
-              style={{
-                right: 0,
-                bottom: 0,
-                position: 'absolute'
-              }}
-            >
-              Add Transaction
-            </Button>
+            <Col span={24} style={{ textAlign: 'end' }}>
+              <Button
+                shape='round'
+                type='primary'
+                onClick={showTransactionModal}
+              >
+                Add Transaction
+              </Button>
+            </Col>
           </div>
         </Col>
       </Row>

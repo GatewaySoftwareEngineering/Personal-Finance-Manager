@@ -10,12 +10,16 @@ const initialState = {
 
 export const fetchTransactions = createAsyncThunk(
   `${name}/fetchTransactions`,
-  () => {
+  async (query) => {
+    console.log(query)
     const transactionsInStroe = JSON.parse(localStorage.getItem('fm-transactions'));
     let data;
     if (transactionsInStroe) data = transactionsInStroe;
     else data = mockData;
-    return data;
+
+    if (query.limit) data = data.slice(0, query.limit);
+
+    return data.reverse();
   }
 );
 

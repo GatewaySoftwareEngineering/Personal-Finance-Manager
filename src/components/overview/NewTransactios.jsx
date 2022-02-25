@@ -16,7 +16,6 @@ export default function NewTransactios({ closeModal }) {
   // states
   const [type, setType] = useState('Income');
   const [saving, setSaving] = useState(false);
-  const [category, setCategory] = useState('Salary');
   const [allTransactions, setAllTransactions] = useState([]);
 
   const onFinish = async (val) => {
@@ -40,36 +39,19 @@ export default function NewTransactios({ closeModal }) {
     }, 1000);
   }
 
-  const onValuesChange = (val) => {
-    if (val.category) {
-      setCategory(val.category)
-    }
-    form.setFieldsValue({
-      note: `${type} ⇢ ${category}`
-    });
-  }
-
   const onTypeChange = (val) => {
     const { value } = val.target;
     setType(value)
     if (value === 'Income') {
       form.setFieldsValue({
         category: 'Salary'
-      }); 
-      setCategory('Salary')
+      });  
     } else if (value === 'Expense') {
       form.setFieldsValue({
         category: 'Tech'
-      });
-      setCategory('Tech')
+      }); 
     } 
   }
-
-  useEffect(() => {
-    form.setFieldsValue({
-      note: `${type} ⇢ ${category}`
-    });
-  }, [category, type, form])
 
   useEffect(() => {
     const ls = JSON.parse(localStorage.getItem('fm-transactions'));
@@ -84,9 +66,7 @@ export default function NewTransactios({ closeModal }) {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        onValuesChange={onValuesChange}
-        initialValues={{
-          amount: 0,
+        initialValues={{ 
           type: 'Income',
           date: moment(),
           category: 'Salary',
