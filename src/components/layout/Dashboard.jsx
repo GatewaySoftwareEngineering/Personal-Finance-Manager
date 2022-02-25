@@ -44,15 +44,15 @@ function Dashboard() {
     onTitleChange(key)
   }
 
-  useEffect(() => {  
+  useEffect(() => {
     onTitleChange(location.pathname)
   })
 
-  const onTitleChange = (key) => { 
+  const onTitleChange = (key) => {
     if (key === '/') setRouteName('Overview')
     else if (key === '/transaction-history') setRouteName('Transaction History')
   }
-  
+
 
   return (
     <>
@@ -60,6 +60,7 @@ function Dashboard() {
         <Sider
           width={240}
           theme="dark"
+          collapsible
           collapsed={collapsed}
           onCollapse={onCollapse}
           className="sider_style"
@@ -109,11 +110,12 @@ function Dashboard() {
             <div className="header_container">
               <div className="hambargar_menu">
                 <span>{routeName}</span>
-                <button onClick={toggleSidebar}>
+                {/* <button onClick={toggleSidebar}>
                   {collapsed ?
-                    <DoubleLeftOutlined style={{ fontSize: 14 }} />
-                    : <DoubleRightOutlined style={{ fontSize: 14 }} />}
-                </button>
+                    <DoubleRightOutlined style={{ fontSize: 14 }} />
+                    : <DoubleLeftOutlined style={{ fontSize: 14 }} />
+                  }
+                </button> */}
               </div>
               <Popover
                 content={
