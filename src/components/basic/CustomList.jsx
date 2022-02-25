@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Space, Avatar, Tooltip
 } from "antd";
-import moment from 'moment'
+import moment from 'moment';
+import converter from 'number-to-words';
 
 // category images
 import Loan from '../../assets/icons/svg/loan.svg';
@@ -121,7 +122,16 @@ export default function CustomList({ item }) {
         <div style={{
           color: item.type !== 'Expense' ? '#0EA5E9' : undefined,
           backgroundColor: item.type !== 'Expense' ? '#0EA5E926' : undefined,
-        }}>{customizedAmount || 0}</div>
+        }}>
+          <Tooltip
+            placement="left"
+            title={
+              converter.toWords(item.type === 'Expense' ? -Math.abs(item.amount) : item.amount)
+            }
+          >
+            {customizedAmount || 0}
+          </Tooltip>
+        </div>
       </div>
     </div>
   )

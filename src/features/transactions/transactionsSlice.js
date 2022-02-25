@@ -11,7 +11,6 @@ const initialState = {
 export const fetchTransactions = createAsyncThunk(
   `${name}/fetchTransactions`,
   async (query) => {
-    console.log(query)
     const transactionsInStroe = JSON.parse(localStorage.getItem('fm-transactions'));
     let data;
     if (transactionsInStroe) data = transactionsInStroe;
