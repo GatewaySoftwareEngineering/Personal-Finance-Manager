@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from "react-redux";
-import { fetchStatstics } from '../../features/statistics/statisticSlice';
-import { LoadingOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from 'react';
 import { Tooltip } from 'antd'; 
+import { LoadingOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchStatstics } from '../../features/statistics/statisticSlice';
 
-import converter from 'number-to-words'
+import converter from 'number-to-words';
 
 export default function Statistics() {
 
   const dispatch = useDispatch();
+  const { transactions }  = useSelector((state) => state.transactions); 
+
   const [statics, setStatics] = useState({});
   const [loading, setLoading] = useState(true);
 
-
-  useEffect(() => {
-    // to delay the load by 1.5s to simulate the loading state of the components 
+  useEffect(() => { 
     setLoading(true);
     setTimeout(() => {
       dispatch(fetchStatstics())

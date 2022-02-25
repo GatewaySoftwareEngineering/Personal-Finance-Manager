@@ -12,7 +12,7 @@ import NewTransactios from './NewTransactios';
 
 export default function List() {
   const dispatch = useDispatch();
-  const [dateList, setDataList] = useState([]);
+  const [dataList, setDataList] = useState();
   const [loading, setLoading] = useState(true);
   const [viewTransactionModal, setViewTransactionModal] = useState(false);
 
@@ -36,8 +36,8 @@ export default function List() {
     setLoading(true);
     setTimeout(() => {
       dispatch(fetchTransactions({ limit: 10 }))
-        .then((res) => {
-          const { payload } = res;
+        .then((res) => {  
+          const { payload } = res; 
           setDataList(payload);
           setLoading(false);
         }).catch(() => {
@@ -75,11 +75,11 @@ export default function List() {
         >
           <Loading visible={loading} />
           <div style={{ display: loading ? 'none' : undefined }}>
-            <span>This Week</span>
+            <span>{dataList ? dataList.title : ''}</span>
 
             <AntList
               itemLayout="vertical"
-              dataSource={dateList}
+              dataSource={dataList ? dataList.data : []}
               className="custom_list"
               style={{ marginTop: 15 }}
               renderItem={(item) => (
