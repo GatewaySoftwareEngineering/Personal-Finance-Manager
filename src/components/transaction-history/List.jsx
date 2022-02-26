@@ -1,28 +1,76 @@
-import React from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import {
-  Row, Col, Space, Avatar, Form, Input, Button,
-  Select, DatePicker
+  Row, Col, List as AntList, Form, Input, Button,
+  Select, DatePicker, Dropdown, Space, Radio
 } from "antd";
 import {
   FilterOutlined,
   SearchOutlined,
-  IssuesCloseOutlined
 } from "@ant-design/icons";
-import moment from 'moment'
+import { useDispatch } from "react-redux";
+import { historyTransactions } from '../../features/transaction-history/historySlice';
+
+import _ from 'lodash';
+import moment from 'moment';
+
+import Loading from '../basic/Loading';
+import CustomList from '../basic/CustomList';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 export default function List() {
-  const [form] = Form.useForm();
 
-  const onValuesChange = (val) => {
-    console.log(val)
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
+
+  // states
+  const [dataList, setDataList] = useState();
+  const [loading, setLoading] = useState(true);
+
+  const fetchTransactions = (allValues) => {
+    setLoading(true);
+
+    let query = {}
+    if (allValues) {
+      console.log(allValues)
+      query = allValues
+    }
+
+    setTimeout(() => {
+      dispatch(historyTransactions(query))
+        .then((res) => {
+          const { payload } = res;
+          setDataList(payload);
+          setLoading(false);
+        }).catch(() => {
+          //handle err
+          setLoading(false);
+        })
+    }, 500);
   }
+
+  const onValuesChange = _.debounce((changedValue, allValues) => {
+    fetchTransactions(allValues)
+  }, 500);
 
   const clearMainSerach = () => {
     form.resetFields(['search']);
+    const formValues = form.getFieldValue(); 
+    fetchTransactions(formValues);
   }
+
+  const clearFilters = () => {
+    form.resetFields(['category', 'type']);
+    const formValues = form.getFieldValue();
+    fetchTransactions(formValues);
+  }
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
   return (
     <>
       <Row gutter={[0, 20]}>
@@ -49,12 +97,38 @@ export default function List() {
               <Col span={24}>
                 <div className="transaction_history_filter_container">
                   <div className="filter_icon">
-                    <FilterOutlined />
+                    <Dropdown overlay={(
+                      <>
+                        <div className="category_dropdown">
+                          <Col span={24}>
+                            <Form.Item
+                              name="category"
+                              style={{
+                                transition: 'all 0.3s',
+                              }}
+                            >
+                              <Radio.Group>
+                                <Space direction="vertical">
+                                <Radio value='Income'>Income</Radio>
+                                <Radio value='Expense'>Expense</Radio>
+                                </Space>
+                              </Radio.Group>
+                            </Form.Item>
+                          </Col>
+                        </div>
+                      </>
+                    )}>
+                      <Button
+                        type="text"
+                        shape="circle"
+                        icon={<FilterOutlined />}
+                      />
+                    </Dropdown>
                   </div>
                   <div className="filter_by_type">
                     <Form.Item name="type">
                       <Select
-                        mode="multiple" 
+                        mode="multiple"
                         className="custom_select_input"
                         placeholder="Filter by Type..."
                       >
@@ -82,58 +156,38 @@ export default function List() {
                     </Form.Item>
                   </div>
                   <div className="clear_filter_button">
-                    <Button type='primary'>Clear</Button>
+                    <Button type='primary' onClick={clearFilters}>Clear</Button>
                   </div>
                 </div>
               </Col>
             </Row>
           </Form>
         </Col>
-        <Col span={24} className="overview_transactions">
-          <div className="transaction_container">
 
-            <div>
-              <Space>
-                <Avatar
-                  icon={<IssuesCloseOutlined />}
-                  style={{ backgroundColor: '#1c658c' }}
-                />
-                <p>12 Rules for life by Jordan Peterson signed by himself...</p>
-              </Space>
-              <div className="transaction_row_end_child">
-                <span>Today</span>
-                <div>-$45</div>
-              </div>
-            </div>
-            <div>
-              <Space>
-                <Avatar
-                  icon={<IssuesCloseOutlined />}
-                  style={{ backgroundColor: '#1c658c' }}
-                />
-                <p>12 Rules for life by Jordan Peterson signed by himself...</p>
-              </Space>
-              <div className="transaction_row_end_child">
-                <span>Today</span>
-                <div>-$45</div>
-              </div>
-            </div>
-            <div>
-              <Space>
-                <Avatar
-                  icon={<IssuesCloseOutlined />}
-                  style={{ backgroundColor: '#1c658c' }}
-                />
-                <p>12 Rules for life by Jordan Peterson signed by himself...</p>
-              </Space>
-              <div className="transaction_row_end_child">
-                <span>Today</span>
-                <div>-$45</div>
-              </div>
-            </div>
+        <Col
+          span={24}
+          className="overview_transactions"
+        >
+          <Loading visible={loading} />
+          <div style={{ display: loading ? 'none' : undefined }}>
 
+            <AntList
+              itemLayout="vertical"
+              className="custom_list"
+              style={{ marginTop: 15 }}
+              pagination={{ pageSize: 5 }}
+              dataSource={dataList ? dataList : []}
+              renderItem={(item) => (
+                <React.Fragment key={item.id}>
+                  <CustomList
+                    item={item}
+                  />
+                </React.Fragment>
+              )}
+            />
           </div>
         </Col>
+
       </Row>
     </>
   )

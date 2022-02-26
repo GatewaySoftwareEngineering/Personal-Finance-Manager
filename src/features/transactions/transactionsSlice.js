@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { mockData } from "./transactionsAPI";
+import { mockData } from "../transactionsAPI";
 
 import _ from 'lodash';
 import moment from 'moment'
@@ -71,9 +71,7 @@ export const fetchTransactions = createAsyncThunk(
     return {
       title,
       data: newArray,
-    };
-
-    // return newArray;
+    }; 
   }
 );
 

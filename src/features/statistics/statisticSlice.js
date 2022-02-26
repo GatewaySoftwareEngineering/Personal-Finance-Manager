@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { mockData } from "../transactions/transactionsAPI";
+import { mockData } from "../transactionsAPI";
 import _ from 'lodash';
 import moment from 'moment'
 

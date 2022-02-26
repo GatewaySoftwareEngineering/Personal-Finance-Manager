@@ -16,12 +16,13 @@ import Health from '../../assets/icons/svg/health.svg';
 import Salary from '../../assets/icons/svg/salary.svg';
 
 export default function CustomList({ item }) {
+  
   const [avatarSrc, setAvatarSrc] = useState();
+  const [isInFuture, setIsInFuture] = useState(false);
   const [avatarBg, setAvatarBg] = useState('#ffffff');
   const [customizedNote, setCustomizedNote] = useState();
   const [customizedDate, setCustomizedDate] = useState();
   const [customizedAmount, setCustomizedAmount] = useState();
-  const [isInFuture, setIsInFuture] = useState(false)
 
   const handleAvatar = ({ category }) => {
     switch (category) {
