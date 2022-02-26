@@ -134,7 +134,7 @@ export default function NewTransactios({ closeModal }) {
               name="amount"
               rules={[{
                 required: true,
-                message: 'This input is required!',
+                message: 'Amount is required and it must be bigger than 0!',
               }]}
             >
               <InputNumber

@@ -107,6 +107,7 @@
     height: 120px;
     padding: 24px;
     display: flex;
+    cursor: pointer; 
     border-radius: 7px;
     flex-direction: column;
     justify-content: space-between;
@@ -127,7 +128,8 @@
         border-radius: 24px;
         font-size: 12px;
         height: 20px;
-      }
+        cursor: pointer; 
+      } 
     }
 
     > span {
@@ -181,7 +183,7 @@
 
 .transaction_modal {
   overflow: hidden;
-  max-width: 1000px;
+  max-width: 1100px;
   border-radius: 15px;
 
   .ant-modal-header {

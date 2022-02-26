@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Tooltip } from 'antd'; 
+import { Tooltip } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStatstics } from '../../features/statistics/statisticSlice';
+
+import Swal from 'sweetalert2';
 
 import converter from 'number-to-words';
 
 export default function Statistics() {
 
   const dispatch = useDispatch();
-  const { loadState }  = useSelector((state) => state.transactions);
+  const { loadState } = useSelector((state) => state.transactions);
 
   const [statics, setStatics] = useState({});
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => { 
+  const fireAleart = () => {
+    Swal.fire({
+      icon: 'info',
+      confirmButtonText: 'Ok',
+      title: 'Under Construction!',
+      confirmButtonColor: '#3085d6',
+      text: "This feature will be implemented in the future...",
+    });
+  }
+
+  useEffect(() => {
     setLoading(true);
     setTimeout(() => {
       dispatch(fetchStatstics())
@@ -33,10 +45,14 @@ export default function Statistics() {
     <>
       <div className="statistics_card_container">
 
-        <div className="statistic_card" style={{ background: 'linear-gradient(90deg, #7DD3FC 0%, #BAE6FD 102.82%)' }}>
+        <div
+          onClick={fireAleart}
+          className="statistic_card"
+          style={{ background: 'linear-gradient(90deg, #7DD3FC 0%, #BAE6FD 102.82%)' }}
+        >
           <div>
             <span style={{ color: '#1A74C7' }}>Income</span>
-            <span style={{ background: '#38BDF8BF' }}>details</span>
+            <span style={{ background: '#38BDF8BF' }} onClick={fireAleart}>details</span>
           </div>
           <span>
             <Tooltip title={converter.toWords(statics.income || 0)} placement="bottom">
@@ -47,10 +63,14 @@ export default function Statistics() {
           </span>
         </div>
 
-        <div className="statistic_card" style={{ background: 'linear-gradient(90deg, #D4D4D8 0%, #E4E4E7 102.82%)' }}>
+        <div
+          onClick={fireAleart}
+          className="statistic_card"
+          style={{ background: 'linear-gradient(90deg, #D4D4D8 0%, #E4E4E7 102.82%)' }}
+        >
           <div>
             <span style={{ color: '#71717A' }}>Balance</span>
-            <span style={{ background: '#71717ABF' }}>details</span>
+            <span style={{ background: '#71717ABF' }} onClick={fireAleart}>details</span>
           </div>
           <span>
             <Tooltip title={converter.toWords(statics.total || 0)} placement="bottom">
@@ -61,10 +81,14 @@ export default function Statistics() {
           </span>
         </div>
 
-        <div className="statistic_card" style={{ background: 'linear-gradient(90deg, #FDA4AF 0%, #FECDD3 102.82%)' }}>
+        <div
+          onClick={fireAleart}
+          className="statistic_card"
+          style={{ background: 'linear-gradient(90deg, #FDA4AF 0%, #FECDD3 102.82%)' }}
+        >
           <div>
             <span style={{ color: '#EF2A4C' }}>Expense</span>
-            <span style={{ background: '#FB7185BF' }}>details</span>
+            <span style={{ background: '#FB7185BF' }} onClick={fireAleart}>details</span>
           </div>
           <span>
             <Tooltip title={converter.toWords(statics.expense || 0)} placement="bottom">
