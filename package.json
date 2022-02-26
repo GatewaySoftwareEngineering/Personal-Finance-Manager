@@ -15,7 +15,8 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.0",
-    "sass": "^1.49.8"
+    "sass": "^1.49.8",
+    "uniqid": "^5.4.0"
   },
   "scripts": {
     "start": "craco start",

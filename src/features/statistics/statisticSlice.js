@@ -27,7 +27,7 @@ export const fetchStatstics = createAsyncThunk(
     ];
     const thisMonthsArray = _.filter(data, (obj) => { 
       if (moment(obj.date).isBetween(thisMonthsDate[1], thisMonthsDate[0])) return obj;
-    });
+    }); 
 
     // total calculator, for every transaction done!
     const totalArr = [];

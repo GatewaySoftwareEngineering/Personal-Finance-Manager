@@ -83,7 +83,7 @@ export default function List() {
               className="custom_list"
               style={{ marginTop: 15 }}
               renderItem={(item) => (
-                <React.Fragment key={parseInt(item.id, 10)}>
+                <React.Fragment key={item.id}>
                   <CustomList
                     item={item}
                   />

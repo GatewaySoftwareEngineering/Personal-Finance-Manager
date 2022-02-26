@@ -85,8 +85,8 @@ const transactionsSlice = createSlice({
       state.loadState = 'pending';
     });
     builder.addCase(fetchTransactions.fulfilled, (state, action) => {
-      state.loadState = 'loaded';
-      state.transactions = [];
+      state.loadState = 'loaded'; 
+      state.transactions = action.payload.data;
     });
     builder.addCase(fetchTransactions.rejected, (state) => {
       state.loadState = 'failed';

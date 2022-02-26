@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import {
-  Row, Col, Space, Form, InputNumber,
+  Row, Col, Space, Form, InputNumber, notification,
   DatePicker, Select, Radio, Input, Button
 } from "antd";
 import { useSelector } from "react-redux";
+
 import moment from 'moment';
+import uniqid from 'uniqid';
 
 const { Option } = Select
 
@@ -20,21 +22,27 @@ export default function NewTransactios({ closeModal }) {
 
   const onFinish = async (val) => {
     setSaving(true);
-    const lastTransactionObj =  allTransactions.slice(-1).pop();
-    const generatedId = parseInt(lastTransactionObj.id, 10) + 1;
+    // const lastTransactionObj =  allTransactions.slice(-1).pop();
+    // const generatedId = parseInt(lastTransactionObj.id, 10) + 1;
     const transactionArray = [...allTransactions];
 
      const data = await {
       ...val,
-      id: generatedId.toString(),
+      id: uniqid().toString(),
       date: moment(val.date).format(),
     } 
 
     transactionArray.push(data);
     localStorage.setItem('fm-transactions', JSON.stringify(transactionArray));
     
-    setTimeout(() => {
-      setSaving(false)
+    setTimeout(() => { 
+      notification.success({
+        message: 'Success', 
+        description: 'Transaction added successfully',
+        placement: 'bottomRight',
+        duration: 3,
+      }); 
+      setSaving(false);
       closeModal();
     }, 1000);
   }

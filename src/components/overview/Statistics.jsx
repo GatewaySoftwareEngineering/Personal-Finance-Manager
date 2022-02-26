@@ -9,7 +9,7 @@ import converter from 'number-to-words';
 export default function Statistics() {
 
   const dispatch = useDispatch();
-  const { transactions }  = useSelector((state) => state.transactions); 
+  const { loadState }  = useSelector((state) => state.transactions);
 
   const [statics, setStatics] = useState({});
   const [loading, setLoading] = useState(true);
@@ -27,7 +27,7 @@ export default function Statistics() {
           setLoading(false);
         })
     }, 500);
-  }, [dispatch]);
+  }, [dispatch, loadState]);
 
   return (
     <>
