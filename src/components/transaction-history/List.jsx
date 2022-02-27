@@ -28,14 +28,14 @@ export default function List() {
   // states
   const [dataList, setDataList] = useState();
   const [loading, setLoading] = useState(true);
+  const [typeValue, setTypeValue] = useState('all');
 
   const fetchTransactions = (allValues) => {
     setLoading(true);
 
     let query = {}
     if (allValues) {
-      console.log(allValues)
-      query = allValues
+      query = allValues;
     }
 
     setTimeout(() => {
@@ -52,12 +52,19 @@ export default function List() {
   }
 
   const onValuesChange = _.debounce((changedValue, allValues) => {
-    fetchTransactions(allValues)
+
+    if (changedValue.type) {
+      setTypeValue(changedValue.type);
+      form.resetFields(['category']);
+    }
+
+    const formValues = form.getFieldValue();
+    fetchTransactions(formValues);
   }, 500);
 
   const clearMainSerach = () => {
-    form.resetFields(['search']);
-    const formValues = form.getFieldValue(); 
+    form.resetFields(['note']);
+    const formValues = form.getFieldValue();
     fetchTransactions(formValues);
   }
 
@@ -82,7 +89,7 @@ export default function List() {
           >
             <Row>
               <Col span={24}>
-                <Form.Item name="search">
+                <Form.Item name="note">
                   <Input
                     autoComplete='off'
                     className='custom_serach_input'
@@ -101,16 +108,11 @@ export default function List() {
                       <>
                         <div className="category_dropdown">
                           <Col span={24}>
-                            <Form.Item
-                              name="category"
-                              style={{
-                                transition: 'all 0.3s',
-                              }}
-                            >
+                            <Form.Item name="type"                             >
                               <Radio.Group>
                                 <Space direction="vertical">
-                                <Radio value='Income'>Income</Radio>
-                                <Radio value='Expense'>Expense</Radio>
+                                  <Radio value='Income'>Income</Radio>
+                                  <Radio value='Expense'>Expense</Radio>
                                 </Space>
                               </Radio.Group>
                             </Form.Item>
@@ -126,19 +128,27 @@ export default function List() {
                     </Dropdown>
                   </div>
                   <div className="filter_by_type">
-                    <Form.Item name="type">
+                    <Form.Item name="category">
                       <Select
                         mode="multiple"
                         className="custom_select_input"
                         placeholder="Filter by Type..."
                       >
-                        <Option value="Salary">Salary</Option>
-                        <Option value="Loan">Loan</Option>
-                        <Option value="Gift">Gift</Option>
-                        <Option value="Tech">Tech</Option>
-                        <Option value="Food">Food</Option>
-                        <Option value="Sports">Sports</Option>
-                        <Option value="Health">Health</Option>
+                        {typeValue !== "Expense" && (
+                          <>
+                            <Option value="Salary">Salary</Option>
+                            <Option value="Loan">Loan</Option>
+                            <Option value="Gift">Gift</Option>
+                          </>
+                        )}
+                        {typeValue !== "Income" && (
+                          <>
+                            <Option value="Tech">Tech</Option>
+                            <Option value="Food">Food</Option>
+                            <Option value="Sports">Sports</Option>
+                            <Option value="Health">Health</Option>
+                          </>
+                        )}
                       </Select>
                     </Form.Item>
                   </div>
@@ -175,7 +185,7 @@ export default function List() {
               itemLayout="vertical"
               className="custom_list"
               style={{ marginTop: 15 }}
-              pagination={{ pageSize: 5 }}
+              pagination={{ pageSize: 10 }}
               dataSource={dataList ? dataList : []}
               renderItem={(item) => (
                 <React.Fragment key={item.id}>

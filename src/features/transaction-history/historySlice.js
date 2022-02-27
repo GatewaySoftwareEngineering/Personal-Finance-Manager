@@ -26,11 +26,34 @@ export const historyTransactions = createAsyncThunk(
       var dateA = new Date(a.date);
       var dateB = new Date(b.date);
       return dateB - dateA;
-    });
+    }); 
 
-    // console.log(sortByDate)
+    let array = sortByDate;
+    let filteredByNote;
+    if (query.note) {
+      filteredByNote = _.filter(array, (val) => val.note.includes(query.note.trim()));
+      array = filteredByNote;
+    }
 
-    return sortByDate;
+    let filteredByType;
+    if (query.type) {
+      filteredByType = _.filter(array, (val) => val.type === query.type);
+      array = filteredByType;
+    }
+ 
+    if (query.category?.length) {
+      const resultArray = [];
+      query.category.map((stringValue) => {
+        return _.filter(array, (val) => {
+          if (val.category === stringValue) {
+            resultArray.push(val);
+          }
+        });
+      })
+      array = resultArray;
+    } 
+
+    return array;
   }
 );
 
