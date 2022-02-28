@@ -8,7 +8,7 @@ import TransactionHistory from "./components/transaction-history/TransactionHist
 function App() {
   return (
     <div className="container flex min-h-screen text-2xl">
-      {/* <SideBar /> */}
+      <SideBar />
       <TopBar />
       {/* <Routes>
         <Route path="/" element={<Overview />} />

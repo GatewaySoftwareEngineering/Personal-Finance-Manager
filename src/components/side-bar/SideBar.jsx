@@ -1,6 +1,6 @@
 import React from "react";
 import { AiOutlineDollarCircle } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const SideBar = () => {
   return (
     <div className="w-1/4 bg-gradient-to-b from-sidebar-dark to-sidebar-dark-alt py-6">
@@ -10,7 +10,10 @@ const SideBar = () => {
       </h2>
       <div className="mt-24 flex flex-col gap-4 px-6 font-light text-white">
         <NavLink
-          to={"/"}
+          to={{
+            pathname: "/",
+            state: "overview",
+          }}
           className={({ isActive }) =>
             isActive ? "font-medium capitalize" : "capitalize text-zinc-300"
           }
@@ -18,7 +21,10 @@ const SideBar = () => {
           overview
         </NavLink>
         <NavLink
-          to={"/transaction-history"}
+          to={{
+            pathname: "/transaction-history",
+            state: "transaction history",
+          }}
           className={({ isActive }) =>
             isActive ? "font-medium capitalize" : "capitalize text-zinc-300"
           }
