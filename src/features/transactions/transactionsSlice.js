@@ -24,4 +24,6 @@ const transactionsSlice = createSlice({
   },
 });
 
+// export const {} = transactionsSlice.actions
+
 export default transactionsSlice.reducer;
