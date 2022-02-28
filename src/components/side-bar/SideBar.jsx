@@ -1,9 +1,9 @@
 import React from "react";
 import { AiOutlineDollarCircle } from "react-icons/ai";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const SideBar = () => {
   return (
-    <div className="w-1/4 bg-gradient-to-b from-sidebar-dark to-sidebar-dark-alt py-6">
+    <div className="h-full w-full bg-gradient-to-b from-sidebar-dark to-sidebar-dark-alt py-6">
       <h2 className="flex items-center justify-center gap-4 text-center text-2xl font-semibold capitalize text-sidebar-red">
         <AiOutlineDollarCircle className="text-3xl" />
         Finance Manager

@@ -1,7 +1,7 @@
 import React from "react";
 
 const Overview = () => {
-  return <div>Overview</div>;
+  return <div className="h-full bg-yellow-500">Overview</div>;
 };
 
 export default Overview;

@@ -7,13 +7,17 @@ import TransactionHistory from "./components/transaction-history/TransactionHist
 
 function App() {
   return (
-    <div className="container flex min-h-screen text-2xl">
-      <SideBar />
-      <TopBar />
-      {/* <Routes>
-        <Route path="/" element={<Overview />} />
-        <Route path="/transaction-history" element={<TransactionHistory />} />
-      </Routes> */}
+    <div className="container grid min-h-screen grid-cols-5 text-2xl">
+      <div className="col-span-1">
+        <SideBar />
+      </div>
+      <div className="col-span-4">
+        <TopBar />
+        <Routes>
+          <Route path="/" element={<Overview />} />
+          <Route path="/transaction-history" element={<TransactionHistory />} />
+        </Routes>
+      </div>
     </div>
   );
 }
