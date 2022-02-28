@@ -7,13 +7,13 @@ import TransactionHistory from "./components/transaction-history/TransactionHist
 
 function App() {
   return (
-    <div className="container text-22">
-      <SideBar />
+    <div className="container flex min-h-screen text-2xl">
+      {/* <SideBar /> */}
       <TopBar />
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<Overview />} />
         <Route path="/transaction-history" element={<TransactionHistory />} />
-      </Routes>
+      </Routes> */}
     </div>
   );
 }
