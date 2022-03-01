@@ -4,23 +4,34 @@ import { getTransactions } from "./transactionsAPI";
 const name = "transactions";
 
 const initialState = {
+  loading: false,
   transactions: undefined,
+  error: undefined,
 };
 
 export const fetchTransactions = createAsyncThunk(
   `${name}/fetchTransactions`,
-  () => {
-    return getTransactions();
+  async () => {
+    const transactions = await getTransactions();
+    return transactions;
   }
 );
 
 const transactionsSlice = createSlice({
-  name,
+  name: "transactions",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(fetchTransactions.pending, (state, action) => {});
-    builder.addCase(fetchTransactions.fulfilled, (state, action) => {});
-    builder.addCase(fetchTransactions.rejected, (state, action) => {});
+    builder.addCase(fetchTransactions.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchTransactions.fulfilled, (state, action) => {
+      state.loading = false;
+      state.transactions = action.payload;
+    });
+    builder.addCase(fetchTransactions.rejected, (state, action) => {
+      state.loading = false;
+      state.error = "Oops! an error occurred";
+    });
   },
 });
 
