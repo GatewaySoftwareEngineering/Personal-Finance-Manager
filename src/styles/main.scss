@@ -327,10 +327,17 @@
   }
 }
 
-.category_dropdown {
-  height: 75px;
+.category_dropdown { 
   padding: 12px;
   border-radius: 10px;
   background-color: #fff;
+
+  .ant-form-item {
+    margin: 0;
+  }
+
+  .ant-divider {
+    margin: 10px 0;
+  }
 }
 // end of transaction history page style

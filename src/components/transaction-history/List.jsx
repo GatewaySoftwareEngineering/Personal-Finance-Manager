@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import {
   Row, Col, List as AntList, Form, Input, Button,
-  Select, DatePicker, Dropdown, Space, Radio
+  Select, DatePicker, Dropdown, Space, Radio, Divider,
+  Checkbox,
+  Tooltip
 } from "antd";
 import {
   FilterOutlined,
@@ -29,6 +31,7 @@ export default function List() {
   const [dataList, setDataList] = useState();
   const [loading, setLoading] = useState(true);
   const [typeValue, setTypeValue] = useState('all');
+  const [enableRangePicker, setEnableRangePicker] = useState(false);
 
   const fetchTransactions = (allValues) => {
     setLoading(true);
@@ -69,14 +72,47 @@ export default function List() {
   }
 
   const clearFilters = () => {
-    form.resetFields(['category', 'type']);
+    form.resetFields(['category', 'type', 'date_to', 'date_from', 'date_range']);
     const formValues = form.getFieldValue();
     fetchTransactions(formValues);
+  }
+
+  const disableFutureDates = (current) => {
+    return current.isAfter(moment());
+  }
+
+  const onShowRange = (e) => {
+    const { checked } = e.target;
+    clearFilters();
+    setEnableRangePicker(checked);
   }
 
   useEffect(() => {
     fetchTransactions();
   }, []);
+
+  const dropdown = (
+    <>
+      <div className="category_dropdown">
+        <Col span={24}>
+          <Form.Item name="type"                             >
+            <Radio.Group>
+              <Space direction="vertical">
+                <Radio value='Income'>Income</Radio>
+                <Radio value='Expense'>Expense</Radio>
+              </Space>
+            </Radio.Group>
+          </Form.Item>
+          <Divider dashed />
+          <Checkbox onChange={onShowRange}>
+            <Tooltip title="Enable range picker">
+              Date Range
+            </Tooltip>
+          </Checkbox>
+        </Col>
+      </div>
+    </>
+  )
 
   return (
     <>
@@ -104,22 +140,7 @@ export default function List() {
               <Col span={24}>
                 <div className="transaction_history_filter_container">
                   <div className="filter_icon">
-                    <Dropdown overlay={(
-                      <>
-                        <div className="category_dropdown">
-                          <Col span={24}>
-                            <Form.Item name="type"                             >
-                              <Radio.Group>
-                                <Space direction="vertical">
-                                  <Radio value='Income'>Income</Radio>
-                                  <Radio value='Expense'>Expense</Radio>
-                                </Space>
-                              </Radio.Group>
-                            </Form.Item>
-                          </Col>
-                        </div>
-                      </>
-                    )}>
+                    <Dropdown overlay={dropdown}>
                       <Button
                         type="text"
                         shape="circle"
@@ -153,44 +174,45 @@ export default function List() {
                     </Form.Item>
                   </div>
                   <div className="filter_date_picker">
-                    <Row gutter={[10, 10]}><Col span={12}>
-                      <Form.Item name="date_from">
-                        <DatePicker
-                          showTime
-                          allowClear={false}
-                          placeholder="From"
-                          className="custom_date_inputs"
-                        />
-                        {/* <RangePicker
-                            className='custom_date_inputs'
-                            ranges={{
-                              'yesterday': [moment().subtract(1, 'day'), moment().subtract(1, 'day')],
-                              'Today': [moment(), moment()],
-                              'This Month': [moment().startOf('month'), moment().endOf('month')],
-                              'This Year': [moment().startOf('years'), moment().endOf('years')],
-                            }}
-                          /> */}
-                      </Form.Item>
-                    </Col>
-                      <Col span={12}>
-                        <Form.Item name="date_to">
-                          <DatePicker
-                            showTime
-                            placeholder="To"
-                            allowClear={false}
-                            className='custom_date_inputs'
-                          />
-                          {/* <RangePicker
-                            className='custom_date_inputs'
-                            ranges={{
-                              'yesterday': [moment().subtract(1, 'day'), moment().subtract(1, 'day')],
-                              'Today': [moment(), moment()],
-                              'This Month': [moment().startOf('month'), moment().endOf('month')],
-                              'This Year': [moment().startOf('years'), moment().endOf('years')],
-                            }}
-                          /> */}
-                        </Form.Item>
-                      </Col>
+                    <Row gutter={[10, 10]}>
+                      {!enableRangePicker && (
+                        <>
+                          <Col span={12}>
+                            <Form.Item name="date_from">
+                              <DatePicker
+                                placeholder="From"
+                                className="custom_date_inputs"
+                              />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item name="date_to">
+                              <DatePicker
+                                placeholder="To"
+                                className='custom_date_inputs'
+                                disabledDate={disableFutureDates}
+                              />
+                            </Form.Item>
+                          </Col>
+                        </>
+                      )}
+
+                      {enableRangePicker && (
+                        <Col span={24}>
+                          <Form.Item name="date_range">
+                            <RangePicker
+                              className='custom_date_inputs'
+                              ranges={{
+                                'yesterday': [moment().subtract(1, 'day'), moment().subtract(1, 'day')],
+                                'Today': [moment(), moment()],
+                                'This Week': [moment().startOf('week'), moment().endOf('week')],
+                                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                'This Year': [moment().startOf('years'), moment().endOf('years')],
+                              }}
+                            />
+                          </Form.Item>
+                        </Col>
+                      )}
                     </Row>
                   </div>
                   <div className="clear_filter_button">
