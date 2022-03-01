@@ -64,6 +64,11 @@ const Overview = () => {
               />
             ))}
         </div>
+        <div className="mt-[90px] flex justify-end">
+          <button className="bg-blue-dark text-blue-dark rounded-full bg-opacity-15 px-4 py-2 text-xl font-semibold capitalize">
+            add transaction
+          </button>
+        </div>
       </div>
     </div>
   );

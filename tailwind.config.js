@@ -12,6 +12,7 @@ module.exports = {
         "top-bar-light": "#F7F4F3",
         "expense-badge": "#EF2A4C",
         "income-badge": "#0EA5E9",
+        "blue-dark": "#1C658C",
       },
 
       boxShadow: {
