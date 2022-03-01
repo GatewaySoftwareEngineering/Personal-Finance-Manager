@@ -13,7 +13,7 @@ const { Option } = Select
 export default function NewTransactios({ closeModal }) {
 
   const [form] = Form.useForm();
-  const { transactions }  = useSelector((state) => state.transactions); 
+  const { transactions } = useSelector((state) => state.transactions);
 
   // states
   const [type, setType] = useState('Income');
@@ -26,22 +26,22 @@ export default function NewTransactios({ closeModal }) {
     // const generatedId = parseInt(lastTransactionObj.id, 10) + 1;
     const transactionArray = [...allTransactions];
 
-     const data = await {
+    const data = await {
       ...val,
       id: uniqid().toString(),
       date: moment(val.date).format(),
-    } 
+    }
 
     transactionArray.push(data);
     localStorage.setItem('fm-transactions', JSON.stringify(transactionArray));
-    
-    setTimeout(() => { 
+
+    setTimeout(() => {
       notification.success({
-        message: 'Success', 
+        message: 'Success',
         description: 'Transaction added successfully',
         placement: 'bottomRight',
         duration: 3,
-      }); 
+      });
       setSaving(false);
       closeModal();
     }, 1000);
@@ -53,20 +53,20 @@ export default function NewTransactios({ closeModal }) {
     if (value === 'Income') {
       form.setFieldsValue({
         category: 'Salary'
-      });  
+      });
     } else if (value === 'Expense') {
       form.setFieldsValue({
         category: 'Tech'
-      }); 
-    } 
+      });
+    }
   }
 
   useEffect(() => {
     const ls = JSON.parse(localStorage.getItem('fm-transactions'));
     if (ls !== null) setAllTransactions(ls);
-    else setAllTransactions(transactions); 
+    else setAllTransactions(transactions);
   }, [transactions])
-  
+
 
   return (
     <>
@@ -74,7 +74,7 @@ export default function NewTransactios({ closeModal }) {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ 
+        initialValues={{
           type: 'Income',
           date: moment(),
           category: 'Salary',
@@ -123,6 +123,7 @@ export default function NewTransactios({ closeModal }) {
               }]}
             >
               <DatePicker
+                showTime
                 allowClear={false}
                 className='custom_date_inputs'
               />

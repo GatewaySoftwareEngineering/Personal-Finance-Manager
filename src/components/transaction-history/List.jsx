@@ -153,17 +153,45 @@ export default function List() {
                     </Form.Item>
                   </div>
                   <div className="filter_date_picker">
-                    <Form.Item name="date">
-                      <RangePicker
-                        className='custom_date_inputs'
-                        ranges={{
-                          'yesterday': [moment().subtract(1, 'day'), moment().subtract(1, 'day')],
-                          'Today': [moment(), moment()],
-                          'This Month': [moment().startOf('month'), moment().endOf('month')],
-                          'This Year': [moment().startOf('years'), moment().endOf('years')],
-                        }}
-                      />
-                    </Form.Item>
+                    <Row gutter={[10, 10]}><Col span={12}>
+                      <Form.Item name="date_from">
+                        <DatePicker
+                          showTime
+                          allowClear={false}
+                          placeholder="From"
+                          className="custom_date_inputs"
+                        />
+                        {/* <RangePicker
+                            className='custom_date_inputs'
+                            ranges={{
+                              'yesterday': [moment().subtract(1, 'day'), moment().subtract(1, 'day')],
+                              'Today': [moment(), moment()],
+                              'This Month': [moment().startOf('month'), moment().endOf('month')],
+                              'This Year': [moment().startOf('years'), moment().endOf('years')],
+                            }}
+                          /> */}
+                      </Form.Item>
+                    </Col>
+                      <Col span={12}>
+                        <Form.Item name="date_to">
+                          <DatePicker
+                            showTime
+                            placeholder="To"
+                            allowClear={false}
+                            className='custom_date_inputs'
+                          />
+                          {/* <RangePicker
+                            className='custom_date_inputs'
+                            ranges={{
+                              'yesterday': [moment().subtract(1, 'day'), moment().subtract(1, 'day')],
+                              'Today': [moment(), moment()],
+                              'This Month': [moment().startOf('month'), moment().endOf('month')],
+                              'This Year': [moment().startOf('years'), moment().endOf('years')],
+                            }}
+                          /> */}
+                        </Form.Item>
+                      </Col>
+                    </Row>
                   </div>
                   <div className="clear_filter_button">
                     <Button type='primary' onClick={clearFilters}>Clear</Button>
