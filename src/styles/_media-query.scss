@@ -1,0 +1,13 @@
+@media screen and (max-width: 480px) {
+  .login_input_container {
+    width: 100%;
+
+    .ant-typography {
+      font-size: 26px;
+    }
+  }
+
+  .custom_regular_inputs {
+    height: 40px;
+  }
+}

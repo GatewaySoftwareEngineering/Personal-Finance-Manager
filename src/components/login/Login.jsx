@@ -23,32 +23,36 @@ export default function Login() {
           ...val
         }))
         notification.success({
-          message: 'Success', 
+          message: 'Success',
           description: 'successfully logged in...',
           placement: 'bottomRight',
           duration: 3,
-        }); 
+        });
       }, 1500);
     } else {
       setLoading(false)
       notification.warning({
-        message: 'Warning', 
+        message: 'Warning',
         description: 'Wrong password provided...',
         placement: 'bottomRight',
         duration: 3,
-      });  
+      });
     }
   }
 
   return (
     <>
-      <Row justify="center" align="middle">
-        <Col span={15}>
+      <Row
+        align="middle"
+        justify="center"
+        style={{ height: '100vh' }}
+      >
+        <Col lg={15} xs={0}>
           <div className="logo_container">
             <img src={sideImage} alt="Logo" />
           </div>
         </Col>
-        <Col span={9}>
+        <Col lg={9} xs={24}>
           <Row className="login_input_container">
             <Col span={24}>
               <Typography.Title
