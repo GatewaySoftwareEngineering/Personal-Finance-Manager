@@ -1,6 +1,9 @@
 import React from "react";
 import { HiOutlineChip, HiOutlineBriefcase } from "react-icons/hi";
 import { GiReceiveMoney } from "react-icons/gi";
+import moment from "moment";
+import millify from "millify";
+
 const icons = [
   {
     category: "tech accessories",
@@ -36,8 +39,15 @@ const TransactionCard = ({ note, amount, type, currency, category, date }) => {
     badge.type.match(type.toLowerCase())
   );
   const constructDate = (dateObject) => {
-    const numericFullDate = `${dateObject.getDate()}/${dateObject.getMonth()}/${dateObject.getFullYear()}`;
-    return numericFullDate;
+    const fullDate = moment(dateObject).calendar(null, {
+      sameDay: "[Today]",
+      nextDay: "[Tomorrow]",
+      nextWeek: "dddd",
+      lastDay: "[Yesterday]",
+      lastWeek: "DD/MM/YYYY",
+      sameElse: "DD/MM/YYYY",
+    });
+    return fullDate;
   };
   const changeCurrency = (currencyArg, amountArg) => {
     if (currencyArg === "IQD") return Math.round(amountArg / 1480);
@@ -45,7 +55,7 @@ const TransactionCard = ({ note, amount, type, currency, category, date }) => {
   };
 
   return (
-    <div className="flex h-14 items-center justify-between rounded-lg bg-slate-50 px-4">
+    <div className="flex h-14 flex-wrap items-center justify-between rounded-lg bg-slate-50 px-4">
       <div className="flex items-center">
         <div
           className={`h-8 w-8 rounded-full ${currentIcon.bgColor} mr-4 flex items-center justify-center bg-opacity-20`}
@@ -55,14 +65,14 @@ const TransactionCard = ({ note, amount, type, currency, category, date }) => {
         <p className="text-base">{note}</p>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex flex-wrap items-center gap-6">
         <p className="text-base font-normal">{constructDate(date)}</p>
         <p
           className={`flex h-8 w-20 items-center justify-center rounded-md font-bold ${currentBadge.classes} text-lg`}
         >
           {type.toLowerCase() === "expense" ? "-" : "+"}
           {"$"}
-          {changeCurrency(currency, amount)}
+          {millify(changeCurrency(currency, amount))}
         </p>
       </div>
     </div>

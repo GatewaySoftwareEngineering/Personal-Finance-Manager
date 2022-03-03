@@ -30,10 +30,21 @@ const cards = [
 const Overview = () => {
   const dispatch = useDispatch();
   const transactionsState = useSelector((state) => state.transactions);
-  const { loading, transactions, error } = transactionsState;
+  const { loading, error } = transactionsState;
+  const transactions = transactionsState.transactions
+    ? JSON.parse(transactionsState.transactions)
+    : [];
+  // const = JSON.parse(transactionsState.transactions);
+  // const fetchData = async () => {
+  //   return await dispatch(fetchTransactions());
+  // };
+
   useEffect(() => {
     dispatch(fetchTransactions());
-  }, [dispatch]);
+    // fetchData().then(() => {
+    //   console.log(transactions);
+    // });
+  }, []);
   return (
     <div className="h-full p-6">
       <div className="flex gap-8">
@@ -48,21 +59,20 @@ const Overview = () => {
           />
         ))}
       </div>
-      <div className="mt-24">
+      <div className="mt-24 w-10/12">
         <h2 className="font-medium">This Week</h2>
         <div className="mt-5 flex flex-col gap-5">
-          {transactions &&
-            transactions?.map((element) => (
-              <TransactionCard
-                key={element.id}
-                note={element.note}
-                type={element.type}
-                amount={element.amount}
-                currency={element.currency}
-                category={element.category}
-                date={element.createdAt}
-              />
-            ))}
+          {transactions?.map((element) => (
+            <TransactionCard
+              key={element.id}
+              note={element.note}
+              type={element.type}
+              amount={element.amount}
+              currency={element.currency}
+              category={element.category}
+              date={element.createdAt}
+            />
+          ))}
         </div>
         <div className="mt-[90px] flex justify-end">
           <button className="bg-blue-dark text-blue-dark rounded-full bg-opacity-15 px-4 py-2 text-xl font-semibold capitalize">

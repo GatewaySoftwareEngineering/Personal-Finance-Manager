@@ -13,7 +13,8 @@ export const fetchTransactions = createAsyncThunk(
   `${name}/fetchTransactions`,
   async () => {
     const transactions = await getTransactions();
-    return transactions;
+    const transactionsAsJSON = JSON.stringify(transactions);
+    return transactionsAsJSON;
   }
 );
 
