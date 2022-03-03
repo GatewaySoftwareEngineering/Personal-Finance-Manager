@@ -54,7 +54,6 @@ export default function List() {
         footer={false}
         key={Math.random()}
         title="Add Transaction"
-        width="calc(100% - 240px)"
         className="transaction_modal"
         visible={viewTransactionModal}
         onCancel={closeTransactionModal}

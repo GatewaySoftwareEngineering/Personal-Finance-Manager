@@ -25,9 +25,12 @@
   margin: 16px;
 }
 
+.ant-layout-header { 
+  box-shadow: 0px 1px 8px rgb(34 40 49 / 15%);
+}
+
 .site-layout .site-layout-background {
   background: #f7f4f3;
-  box-shadow: 0px 1px 8px rgb(34 40 49 / 15%);
 }
 
 .sider_style {
@@ -185,6 +188,7 @@
   overflow: hidden;
   max-width: 1100px;
   border-radius: 15px;
+  width: calc(100% - 240px) !important;
 
   .ant-modal-header {
     background: #ffffff;

@@ -67,8 +67,7 @@ export const historyTransactions = createAsyncThunk(
 
     if (query.date_to) {
       const filterdByToDate = [];
-      const selectedToDate = moment(query.date_to).format(dateFormat);
-      console.log(selectedToDate)
+      const selectedToDate = moment(query.date_to).format(dateFormat); 
       array.map((val) => {
         let date = moment(val.date).subtract(1, 'day').format(dateFormat); 
         if (moment(selectedToDate).isAfter(date)) {

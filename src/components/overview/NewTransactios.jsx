@@ -74,6 +74,7 @@ export default function NewTransactios({ closeModal }) {
         form={form}
         layout="vertical"
         onFinish={onFinish}
+        className="add_transaction_form"
         initialValues={{
           type: 'Income',
           date: moment(),
@@ -82,7 +83,7 @@ export default function NewTransactios({ closeModal }) {
       >
         <Row gutter={[12, 20]} style={{ marginTop: 40, marginBottom: 10 }}>
 
-          <Col span={8}>
+          <Col lg={8} xs={24}>
             <Form.Item
               label="Category"
               name="category"
@@ -113,7 +114,7 @@ export default function NewTransactios({ closeModal }) {
               </Select>
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col lg={8} xs={24}>
             <Form.Item
               label="Date"
               name="date"
@@ -129,7 +130,7 @@ export default function NewTransactios({ closeModal }) {
               />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col lg={8} xs={24}>
             <Form.Item
               label="Amount"
               name="amount"
@@ -147,7 +148,7 @@ export default function NewTransactios({ closeModal }) {
             </Form.Item>
           </Col>
 
-          <Col span={8}>
+          <Col md={8} xs={24}>
             <Form.Item
               label="Type"
               name="type"
@@ -162,7 +163,7 @@ export default function NewTransactios({ closeModal }) {
               </Radio.Group>
             </Form.Item>
           </Col>
-          <Col span={16}>
+          <Col md={16} xs={24}>
             <Form.Item
               label="Note"
               name="note"

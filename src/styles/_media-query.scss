@@ -9,6 +9,17 @@
   .transaction_history_filter_container .filter_date_picker {
     width: calc(100% - 300px);
   }
+
+  .add_transaction_form {
+    > .ant-row {
+      margin: 0px -6px 10px !important;
+      row-gap: 0px !important;
+
+      > div:last-child {
+        margin-top: 12px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -79,6 +90,10 @@
       border-radius: 7px;
     }
   }
+
+  .transaction_modal {
+    width: calc(100% - 120px) !important;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -98,6 +113,10 @@
     .clear_filter_button {
       width: 100%;
     }
+  }
+
+  .transaction_modal {
+    width: calc(100% - 50px) !important;
   }
 }
 
@@ -124,7 +143,7 @@
 
   .site-layout-background > .ant-row {
     row-gap: 40px !important;
-  } 
+  }
 }
 
 @media screen and (max-width: 420px) {

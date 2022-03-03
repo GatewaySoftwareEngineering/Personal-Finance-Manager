@@ -1,5 +1,4 @@
 import React, { Suspense, useState, useEffect } from "react";
-
 import {
   Layout, Menu, Popover, Avatar, List, Space
 } from "antd";
@@ -14,20 +13,18 @@ import {
   Switch, Route, Link, withRouter, useLocation
 } from "react-router-dom";
 
+import _ from 'lodash'
 import Routes from "./Routes";
 import Loading from "../basic/Loading";
 
-const screenWidth = window.innerWidth;
-const { Header, Content, Sider } = Layout;
+const { Header, Content, Sider } = Layout; 
 
 function Dashboard() {
+  const size = useWindowSize();
   const dispatch = useDispatch();
   const location = useLocation();
+  const [collapsed, setCollapsed] = useState();
   const [routeName, setRouteName] = useState('Overview');
-  const [collapsed, setCollapsed] = useState(
-    screenWidth > 992 ? false : true
-  );
-  console.log(screenWidth)
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
@@ -47,14 +44,14 @@ function Dashboard() {
   }
 
   useEffect(() => {
-    onTitleChange(location.pathname)
-  })
+    onTitleChange(location.pathname);
+    if (size.width) setCollapsed(size.width > 992 ? false : true)
+  }, [location.pathname, size.width])
 
   const onTitleChange = (key) => {
     if (key === '/') setRouteName('Overview')
     else if (key === '/transaction-history') setRouteName('Transaction History')
   }
-
 
   return (
     <>
@@ -165,5 +162,17 @@ function Dashboard() {
   )
 }
 
-
 export default withRouter((props) => <Dashboard {...props} />);
+
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({ width: undefined });
+  useEffect(() => {
+    const handleResize = _.debounce(() => {
+      setWindowSize({ width: window.innerWidth });
+    }, 500);
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty array ensures that effect is only run on mount
+  return windowSize;
+}
