@@ -177,7 +177,7 @@ export default function List() {
                     <Row gutter={[10, 10]}>
                       {!enableRangePicker && (
                         <>
-                          <Col span={12}>
+                          <Col sm={12} xs={24}>
                             <Form.Item name="date_from">
                               <DatePicker
                                 placeholder="From"
@@ -185,7 +185,7 @@ export default function List() {
                               />
                             </Form.Item>
                           </Col>
-                          <Col span={12}>
+                          <Col sm={12} xs={24}>
                             <Form.Item name="date_to">
                               <DatePicker
                                 placeholder="To"

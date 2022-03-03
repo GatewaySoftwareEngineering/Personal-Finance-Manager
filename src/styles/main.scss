@@ -26,7 +26,8 @@
 }
 
 .site-layout .site-layout-background {
-  background: #fff;
+  background: #f7f4f3;
+  box-shadow: 0px 1px 8px rgb(34 40 49 / 15%);
 }
 
 .sider_style {
@@ -46,7 +47,6 @@
   align-items: center;
   justify-content: space-between;
   background: #f7f4f3;
-  box-shadow: 0px 1px 8px rgba(34, 40, 49, 0.15);
 }
 
 .hambargar_menu {
@@ -107,7 +107,7 @@
     height: 120px;
     padding: 24px;
     display: flex;
-    cursor: pointer; 
+    cursor: pointer;
     border-radius: 7px;
     flex-direction: column;
     justify-content: space-between;
@@ -128,8 +128,8 @@
         border-radius: 24px;
         font-size: 12px;
         height: 20px;
-        cursor: pointer; 
-      } 
+        cursor: pointer;
+      }
     }
 
     > span {
@@ -177,7 +177,7 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 22px;
-    padding: 0 5px; 
+    padding: 0 5px;
   }
 }
 
@@ -214,8 +214,8 @@
         background-color: transparent;
       }
 
-      li.ant-pagination-disabled button{
-        color: #959FB4;
+      li.ant-pagination-disabled button {
+        color: #959fb4;
       }
 
       li.ant-pagination-item-active {
@@ -244,19 +244,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-   img {
-     width: 20px;
-     height: 20px;
-   }
+  img {
+    width: 20px;
+    height: 20px;
+  }
 }
 
-.future_badge { 
-    padding: 4px 8px;
-    border-radius: 24px;
-    font-size: 10px;
-    height: 20px;
-    color: #ffffff;
-    background: #232a34; 
+.future_badge {
+  padding: 4px 8px;
+  border-radius: 24px;
+  font-size: 10px;
+  height: 20px;
+  color: #ffffff;
+  background: #232a34;
 }
 // end of overview page style
 
@@ -327,7 +327,7 @@
   }
 }
 
-.category_dropdown { 
+.category_dropdown {
   padding: 12px;
   border-radius: 10px;
   background-color: #fff;

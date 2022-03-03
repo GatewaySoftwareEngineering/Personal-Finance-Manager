@@ -1,3 +1,106 @@
+@media screen and (max-width: 992px) {
+  .statistics_card_container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .transaction_history_filter_container .filter_by_type {
+    width: 200px;
+  }
+  .transaction_history_filter_container .filter_date_picker {
+    width: calc(100% - 300px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ant-layout-content {
+    margin: 0 !important;
+  }
+
+  .custom_list {
+    .ant-list-items {
+      gap: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      margin-bottom: 20px;
+
+      .transaction_row {
+        height: unset;
+        padding: 14px;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: unset;
+
+        .ant-space {
+          display: flex;
+          flex-direction: column;
+
+          .transaction_img {
+            width: 80px;
+            height: 80px;
+
+            img {
+              width: 60px;
+              height: 60px;
+            }
+          }
+
+          div {
+            text-align: center;
+          }
+        }
+
+        .transaction_row_end_child {
+          width: 100%;
+          justify-content: space-between;
+
+          > span {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  .transaction_history_filter_container {
+    flex-wrap: wrap;
+    height: unset;
+    padding: 10px;
+
+    .filter_by_type {
+      width: calc(100% - 70px);
+    }
+
+    .filter_date_picker {
+      width: calc(100% - 90px);
+    }
+
+    .clear_filter_button button {
+      height: 48px;
+      border-radius: 7px;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .site-layout-background {
+    padding: 12px !important;
+  }
+
+  .custom_list .ant-list-items {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .transaction_history_filter_container {
+    .filter_date_picker {
+      width: 100%;
+    }
+
+    .clear_filter_button {
+      width: 100%;
+    }
+  }
+}
+
 @media screen and (max-width: 480px) {
   .login_input_container {
     width: 100%;
@@ -7,7 +110,41 @@
     }
   }
 
+  .overview_transactions > div > span {
+    font-size: 18px;
+  }
+
   .custom_regular_inputs {
     height: 40px;
+  }
+
+  .ant-layout-sider-trigger {
+    display: none;
+  }
+
+  .site-layout-background > .ant-row {
+    row-gap: 40px !important;
+  } 
+}
+
+@media screen and (max-width: 420px) {
+  .header_container {
+    padding: 0;
+  }
+
+  .hambargar_menu > span {
+    font-size: 18px;
+  }
+
+  .statistics_card_container .statistic_card {
+    height: 106px;
+
+    > div span:first-child {
+      font-size: 14px;
+    }
+
+    > span {
+      font-size: 22px;
+    }
   }
 }

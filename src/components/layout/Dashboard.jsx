@@ -7,8 +7,6 @@ import {
   DollarOutlined,
   FileSyncOutlined,
   PieChartOutlined,
-  DoubleLeftOutlined,
-  DoubleRightOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from 'react-redux';
 import { logout } from '../../features/users/userSlice';
@@ -19,21 +17,25 @@ import {
 import Routes from "./Routes";
 import Loading from "../basic/Loading";
 
+const screenWidth = window.innerWidth;
 const { Header, Content, Sider } = Layout;
 
 function Dashboard() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
   const [routeName, setRouteName] = useState('Overview');
+  const [collapsed, setCollapsed] = useState(
+    screenWidth > 992 ? false : true
+  );
+  console.log(screenWidth)
 
   const onCollapse = (collapsed) => {
-    setCollapsed(collapsed)
+    setCollapsed(collapsed);
   };
 
-  const toggleSidebar = () => {
-    setCollapsed(!collapsed);
-  };
+  // const toggleSidebar = () => {
+  //   setCollapsed(!collapsed);
+  // };
 
   const onLoggingOut = () => {
     dispatch(logout())
@@ -137,7 +139,7 @@ function Dashboard() {
               </Popover>
             </div>
           </Header>
-          <Content style={{ margin: "16px 16px", marginBottom: 0 }}>
+          <Content>
             <div
               className="site-layout-background"
               style={{ padding: 24, minHeight: 500, backgroundColor: 'transparent' }}
