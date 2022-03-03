@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { mockData } from "../transactionsAPI";
 import _ from 'lodash';
@@ -30,18 +29,27 @@ export const fetchStatstics = createAsyncThunk(
     }); 
 
     // total calculator, for every transaction done!
-    const totalArr = [];
-    thisMonthsArray.map((val) => {
-      return totalArr.push(val.amount);
+    const totalIncomeArr = [];
+    const totalExpenceArr = [];
+    data.map((val) => {
+      if (val.type === 'Income') return totalIncomeArr.push(val.amount);
+      else return totalExpenceArr.push(val.amount);
     })
-    const total = totalArr.reduce(
+    
+    const totalIncome = totalIncomeArr.reduce(
       (previousValue, currentValue) => previousValue + currentValue, 0
     );
+    const totalExpence = totalExpenceArr.reduce(
+      (previousValue, currentValue) => previousValue + currentValue, 0
+    );
+    const total = totalIncome - totalExpence;
 
     // income calculator, for transactions done, this month
     const incomeArr = [];
     thisMonthsArray.map((val) => {
-      if (val.type === 'Income') incomeArr.push(val.amount);
+      if (val.type === 'Income') return incomeArr.push(val.amount);
+
+      return null;
     })
     const income = incomeArr.reduce(
       (previousValue, currentValue) => previousValue + currentValue, 0
@@ -50,7 +58,9 @@ export const fetchStatstics = createAsyncThunk(
     // expense calculator, for transactions done, this month
     const expenseArr = [];
     thisMonthsArray.map((val) => {
-      if (val.type === 'Expense') expenseArr.push(val.amount);
+      if (val.type === 'Expense') return expenseArr.push(val.amount);
+
+      return null;
     });
     const expense = expenseArr.reduce(
       (previousValue, currentValue) => previousValue + currentValue, 0

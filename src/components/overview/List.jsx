@@ -52,7 +52,6 @@ export default function List() {
       <Modal
         centered
         footer={false}
-        key={Math.random()}
         title="Add Transaction"
         className="transaction_modal"
         visible={viewTransactionModal}

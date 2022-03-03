@@ -34,7 +34,12 @@ export default function NewTransactios({ closeModal }) {
 
     transactionArray.push(data);
     localStorage.setItem('fm-transactions', JSON.stringify(transactionArray));
-
+    form.resetFields(['amount', 'note']);
+    form.setFieldsValue({
+      type: 'Income',
+      date: moment(),
+      category: 'Salary',
+    });
     setTimeout(() => {
       notification.success({
         message: 'Success',
