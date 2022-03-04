@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchTransactions } from "../../features/transactions/transactionsSlice";
+import AddTransactionModal from "../global/AddTransactionModal";
 import TransactionCard from "../global/TransactionCard";
 import OverviewCard from "./OverviewCard";
 const cards = [
@@ -30,57 +31,55 @@ const cards = [
 const Overview = () => {
   const dispatch = useDispatch();
   const transactionsState = useSelector((state) => state.transactions);
-  const { loading, error } = transactionsState;
-  const transactions = transactionsState.transactions
-    ? JSON.parse(transactionsState.transactions)
-    : [];
-  // const = JSON.parse(transactionsState.transactions);
-  // const fetchData = async () => {
-  //   return await dispatch(fetchTransactions());
-  // };
+  const { loading, transactions } = transactionsState;
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTransactions());
-    // fetchData().then(() => {
-    //   console.log(transactions);
-    // });
   }, []);
   return (
-    <div className="h-full p-6">
-      <div className="flex gap-8">
-        {cards.map((card, index) => (
-          <OverviewCard
-            key={index}
-            type={card.type}
-            value={card.value}
-            bg={card.bg}
-            textColor={card.textColor}
-            detailBg={card.detailBg}
-          />
-        ))}
-      </div>
-      <div className="mt-24 w-10/12">
-        <h2 className="font-medium">This Week</h2>
-        <div className="mt-5 flex flex-col gap-5">
-          {transactions?.map((element) => (
-            <TransactionCard
-              key={element.id}
-              note={element.note}
-              type={element.type}
-              amount={element.amount}
-              currency={element.currency}
-              category={element.category}
-              date={element.createdAt}
+    <>
+      <AddTransactionModal setShowModal={setShowModal} showModal={showModal} />
+
+      <div className="h-full p-6">
+        <div className="flex gap-8">
+          {cards.map((card, index) => (
+            <OverviewCard
+              key={index}
+              type={card.type}
+              value={card.value}
+              bg={card.bg}
+              textColor={card.textColor}
+              detailBg={card.detailBg}
             />
           ))}
         </div>
-        <div className="mt-[90px] flex justify-end">
-          <button className="bg-blue-dark text-blue-dark rounded-full bg-opacity-15 px-4 py-2 text-xl font-semibold capitalize">
-            add transaction
-          </button>
+        <div className="mt-24 w-10/12">
+          <h2 className="font-medium">This Week</h2>
+          <div className="mt-5 flex flex-col gap-5">
+            {transactions?.map((element) => (
+              <TransactionCard
+                key={element.id}
+                note={element.note}
+                type={element.type}
+                amount={element.amount}
+                currency={element.currency}
+                category={element.category}
+                date={element.createdAt}
+              />
+            ))}
+          </div>
+          <div className="mt-[90px] flex justify-end">
+            <button
+              onClick={() => setShowModal(true)}
+              className="rounded-full bg-blue-dark bg-opacity-15 px-4 py-2 text-xl font-semibold capitalize text-blue-dark"
+            >
+              add transaction
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
