@@ -2,40 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchTransactions } from "../../features/transactions/transactionsSlice";
+import { fetchWalletData } from "../../features/wallet/walletSlice";
 import AddTransactionModal from "../global/AddTransactionModal";
 import TransactionCard from "../global/TransactionCard";
 import OverviewCard from "./OverviewCard";
-const cards = [
-  {
-    type: "income",
-    value: 1000,
-    bg: "from-sky-300 via-sky-200 to-sky-100",
-    textColor: "text-sky-600",
-    detailBg: "bg-sky-400",
-  },
-  {
-    type: "balance",
-    value: 4500,
-    bg: "from-zinc-300 via-zinc-200 to-zinc-100",
-    textColor: "text-zinc-600",
-    detailBg: "bg-zinc-400",
-  },
-  {
-    type: "expense",
-    value: 1500,
-    bg: "from-rose-300 via-rose-200 to-rose-100",
-    textColor: "text-rose-600",
-    detailBg: "bg-rose-400",
-  },
-];
 const Overview = () => {
   const dispatch = useDispatch();
   const transactionsState = useSelector((state) => state.transactions);
   const { loading, transactions } = transactionsState;
+  const walletState = useSelector((state) => state.wallet);
+  const { wallet } = walletState;
+  console.log(wallet);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTransactions());
+    dispatch(fetchWalletData());
   }, []);
   return (
     <>
@@ -43,14 +25,11 @@ const Overview = () => {
 
       <div className="h-full p-6">
         <div className="flex gap-8">
-          {cards.map((card, index) => (
+          {wallet?.map((element) => (
             <OverviewCard
-              key={index}
-              type={card.type}
-              value={card.value}
-              bg={card.bg}
-              textColor={card.textColor}
-              detailBg={card.detailBg}
+              key={element.id}
+              type={element.type}
+              value={element.value}
             />
           ))}
         </div>
