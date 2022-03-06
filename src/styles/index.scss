@@ -42,3 +42,22 @@ body {
     @apply bg-sky-400 bg-opacity-75;
   }
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.css-1rrl1o9-ValueContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge add Firefox */
+.css-1rrl1o9-ValueContainer {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+}

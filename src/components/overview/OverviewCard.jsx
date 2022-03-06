@@ -23,7 +23,6 @@ const cards = [
 
 const OverviewCard = ({ type, value }) => {
   const currentCard = cards.find((card) => card.type === type);
-  console.log(currentCard);
   return (
     <div
       className={`h-28 w-72 rounded-lg bg-gradient-to-r ${currentCard.bg} py-5 px-7`}

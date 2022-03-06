@@ -12,13 +12,12 @@ const Overview = () => {
   const { loading, transactions } = transactionsState;
   const walletState = useSelector((state) => state.wallet);
   const { wallet } = walletState;
-  console.log(wallet);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTransactions());
     dispatch(fetchWalletData());
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <AddTransactionModal setShowModal={setShowModal} showModal={showModal} />
