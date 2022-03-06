@@ -14,11 +14,13 @@ module.exports = {
         "income-badge": "#0EA5E9",
         "blue-dark": "#1C658C",
         "modal-drop": "#11468f",
+        "input-gray": "#94A3B8",
       },
 
       boxShadow: {
         "top-bar": "0px 1px 8px rgba(34, 40, 49, 0.15)",
         "modal-header": "0px 0.5px 4px rgba(0, 0, 0, 0.25)",
+        "date-input-inner": "inset 1px 1px 1.5px rgba(0, 0, 0, 0.25)",
       },
 
       opacity: {
