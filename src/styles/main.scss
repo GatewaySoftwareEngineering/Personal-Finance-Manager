@@ -242,6 +242,11 @@
   justify-content: space-between;
   padding: 0 14px;
   margin-bottom: 18px;
+
+  .ant-space-item:last-child {
+    max-width: 300px;
+    overflow: hidden;
+  }
 }
 
 .transaction_img {

@@ -14,17 +14,14 @@ export default function List() {
   const dispatch = useDispatch();
   const [dataList, setDataList] = useState();
   const [loading, setLoading] = useState(true);
-  const [viewTransactionModal, setViewTransactionModal] = useState(false);
-
-
   const [updateState, setUpdateState] = useState(false);
+  const [viewTransactionModal, setViewTransactionModal] = useState(false);
 
   const showTransactionModal = () => {
     setViewTransactionModal(true);
   }
   const closeTransactionModal = () => {
     setViewTransactionModal(false);
-    updateComponent();
   }
 
   const updateComponent = () => {
@@ -36,8 +33,8 @@ export default function List() {
     setLoading(true);
     setTimeout(() => {
       dispatch(fetchTransactions({ limit: 10 }))
-        .then((res) => {  
-          const { payload } = res; 
+        .then((res) => {
+          const { payload } = res;
           setDataList(payload);
           setLoading(false);
         }).catch(() => {
@@ -57,8 +54,9 @@ export default function List() {
         visible={viewTransactionModal}
         onCancel={closeTransactionModal}
       >
-        <NewTransactios
+        <NewTransactios 
           closeModal={closeTransactionModal}
+          updateParentComponent={updateComponent}
         />
       </Modal>
 

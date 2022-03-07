@@ -10,7 +10,7 @@ import uniqid from 'uniqid';
 
 const { Option } = Select
 
-export default function NewTransactios({ closeModal }) {
+export default function NewTransactios({ closeModal, updateParentComponent }) {
 
   const [form] = Form.useForm();
   const { transactions } = useSelector((state) => state.transactions);
@@ -48,6 +48,7 @@ export default function NewTransactios({ closeModal }) {
         duration: 3,
       });
       setSaving(false);
+      updateParentComponent();
       closeModal();
     }, 1000);
   }
