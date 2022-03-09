@@ -1,4 +1,4 @@
-const customTransactionCategorySelect = {
+const customCategory = {
   container: (provided) => {
     return {
       ...provided,
@@ -21,4 +21,4 @@ const customTransactionCategorySelect = {
   },
 };
 
-export { customTransactionCategorySelect };
+export { customCategory };

@@ -5,7 +5,7 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import { BsCalendar2 } from "react-icons/bs";
 import { AiOutlineCheck } from "react-icons/ai";
-import { customTransactionCategorySelect } from "../../styles/customSelectStyle";
+import { customCategory } from "../../styles/customSelectStyle";
 
 const CustomDateInput = forwardRef(({ value, onClick }, ref) => (
   <button
@@ -111,12 +111,10 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
     });
   };
 
-  const handleCategory = (categories) => {
-    const categoryValues = categories.map((category) => category.value);
-    const category = categoryValues.join(" ");
+  const handleCategory = (category) => {
     setModalData({
       ...modalData,
-      category: category,
+      category: category.value.toUpperCase(),
     });
   };
 
@@ -136,8 +134,6 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
       return;
     }
   };
-  console.log(errors);
-
   return (
     showModal && (
       <div
@@ -175,11 +171,10 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
                           ? expenseOptions
                           : incomeOptions
                       }
-                      isMulti
                       components={{ Option }}
                       onChange={handleCategory}
                       className="w-full"
-                      styles={customTransactionCategorySelect}
+                      styles={customCategory}
                       closeMenuOnSelect={false}
                       hideSelectedOptions={false}
                       isClearable={false}

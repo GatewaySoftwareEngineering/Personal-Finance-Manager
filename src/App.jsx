@@ -7,7 +7,7 @@ import TransactionHistory from "./components/transaction-history/TransactionHist
 
 function App() {
   return (
-    <div className="container grid min-h-screen grid-cols-5 text-2xl">
+    <div className="container grid h-full min-h-screen grid-cols-5 text-2xl">
       <div className="col-span-1">
         <SideBar />
       </div>

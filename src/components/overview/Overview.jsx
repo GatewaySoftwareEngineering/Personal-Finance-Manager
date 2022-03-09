@@ -6,23 +6,27 @@ import { fetchWalletData } from "../../features/wallet/walletSlice";
 import AddTransactionModal from "../global/AddTransactionModal";
 import TransactionCard from "../global/TransactionCard";
 import OverviewCard from "./OverviewCard";
+import { getLatestTransactions } from "../../services/transactionServices";
+
 const Overview = () => {
   const dispatch = useDispatch();
   const transactionsState = useSelector((state) => state.transactions);
-  const { loading, transactions } = transactionsState;
   const walletState = useSelector((state) => state.wallet);
+  const { transactions } = transactionsState;
   const { wallet } = walletState;
   const [showModal, setShowModal] = useState(false);
+  const latestTransactions = getLatestTransactions(transactions);
 
   useEffect(() => {
     dispatch(fetchTransactions());
     dispatch(fetchWalletData());
   }, [dispatch]);
+
   return (
     <>
       <AddTransactionModal setShowModal={setShowModal} showModal={showModal} />
 
-      <div className="h-full p-6">
+      <div className="p-6">
         <div className="flex gap-8">
           {wallet?.map((element) => (
             <OverviewCard
@@ -33,9 +37,9 @@ const Overview = () => {
           ))}
         </div>
         <div className="mt-24 w-10/12">
-          <h2 className="font-medium">This Week</h2>
+          <h2 className="font-medium">{latestTransactions.title}</h2>
           <div className="mt-5 flex flex-col gap-5">
-            {transactions?.map((element) => (
+            {latestTransactions?.filteredTransactions?.map((element) => (
               <TransactionCard
                 key={element.id}
                 note={element.note}

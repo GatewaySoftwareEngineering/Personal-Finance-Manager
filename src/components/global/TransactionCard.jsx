@@ -31,6 +31,24 @@ const badges = [
     classes: "bg-income-badge bg-opacity-15 text-income-badge",
   },
 ];
+
+// functions
+const constructDate = (dateObject) => {
+  const fullDate = moment(dateObject).calendar(null, {
+    sameDay: "[Today]",
+    nextDay: "[Tomorrow]",
+    nextWeek: "dddd",
+    lastDay: "[Yesterday]",
+    lastWeek: "DD/MM/YYYY",
+    sameElse: "DD/MM/YYYY",
+  });
+  return fullDate;
+};
+const changeCurrency = (currencyArg, amountArg) => {
+  if (currencyArg === "IQD") return Math.round(amountArg / 1480);
+  return amountArg;
+};
+
 const TransactionCard = ({ note, amount, type, currency, category, date }) => {
   const currentIcon = icons.find((icon) =>
     icon.category.includes(category.toLowerCase())
@@ -38,21 +56,6 @@ const TransactionCard = ({ note, amount, type, currency, category, date }) => {
   const currentBadge = badges.find((badge) =>
     badge.type.match(type.toLowerCase())
   );
-  const constructDate = (dateObject) => {
-    const fullDate = moment(dateObject).calendar(null, {
-      sameDay: "[Today]",
-      nextDay: "[Tomorrow]",
-      nextWeek: "dddd",
-      lastDay: "[Yesterday]",
-      lastWeek: "DD/MM/YYYY",
-      sameElse: "DD/MM/YYYY",
-    });
-    return fullDate;
-  };
-  const changeCurrency = (currencyArg, amountArg) => {
-    if (currencyArg === "IQD") return Math.round(amountArg / 1480);
-    return amountArg;
-  };
 
   return (
     <div className="flex h-14 flex-wrap items-center justify-between rounded-lg bg-slate-50 px-4">
