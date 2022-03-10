@@ -7,11 +7,11 @@ import TransactionHistory from "./components/transaction-history/TransactionHist
 
 function App() {
   return (
-    <div className="container grid h-full min-h-screen grid-cols-5 text-2xl">
+    <div className="container grid h-screen grid-cols-5 text-2xl">
       <div className="col-span-1">
         <SideBar />
       </div>
-      <div className="col-span-4">
+      <div className="col-span-4 flex flex-col overflow-auto">
         <TopBar />
         <Routes>
           <Route path="/" element={<Overview />} />

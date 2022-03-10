@@ -16,7 +16,7 @@ const TopBar = () => {
     (element) => element.path === pathname
   );
   return (
-    <div className="flex h-20 w-full items-center bg-top-bar-light px-6 capitalize shadow-top-bar">
+    <div className="flex w-full items-center bg-top-bar-light py-8 px-6 capitalize shadow-top-bar">
       {currentTitle.title}
     </div>
   );

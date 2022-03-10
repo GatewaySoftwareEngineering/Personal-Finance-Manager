@@ -1,11 +1,13 @@
-import React, { forwardRef, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { useSpring, animated } from "react-spring";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import { BsCalendar2 } from "react-icons/bs";
-import { AiOutlineCheck } from "react-icons/ai";
 import { customCategory } from "../../styles/customSelectStyle";
+import CustomOption from "./CustomOption";
+import { useDispatch } from "react-redux";
+import { handleAddTransaction } from "../../features/transactions/transactionsSlice";
 
 const CustomDateInput = forwardRef(({ value, onClick }, ref) => (
   <button
@@ -20,22 +22,6 @@ const CustomDateInput = forwardRef(({ value, onClick }, ref) => (
     </span>
   </button>
 ));
-
-const Option = (props) => {
-  const { data, innerRef, innerProps, isSelected } = props;
-  return (
-    <div
-      {...innerProps}
-      ref={innerRef}
-      className="flex cursor-default items-center gap-2 p-2 hover:bg-blue-dark hover:bg-opacity-15"
-    >
-      <AiOutlineCheck
-        className={`${isSelected ? "opacity-100" : "opacity-0"}`}
-      />
-      {data.label}
-    </div>
-  );
-};
 
 const expenseOptions = [
   { value: "tech", label: "Tech" },
@@ -53,7 +39,8 @@ const incomeOptions = [
 ];
 
 const AddTransactionModal = ({ showModal, setShowModal }) => {
-  const selectRef = useRef();
+  const dispatch = useDispatch();
+  // states
   const [startDate, setStartDate] = useState(new Date());
   const [modalData, setModalData] = useState({
     id: "",
@@ -68,7 +55,11 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
     category: false,
     note: false,
   });
+
+  // refs
   const modalRef = useRef();
+  const selectRef = useRef();
+
   const modalAnimation = useSpring({
     config: {
       duration: 300,
@@ -77,18 +68,29 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
     transform: showModal ? `scale(1)` : `scale(0)`,
   });
 
-  // 9 digits random number generator
-  const getId = () => Math.floor(100000000 + Math.random() * 900000000);
+  // Effects
+  useEffect(() => {
+    setModalData({
+      id: "",
+      type: "EXPENSE",
+      createdAt: startDate.toISOString(),
+      amount: 0,
+      note: "",
+      category: "",
+      currency: "USD",
+    });
+  }, [showModal]);
 
+  // 9 digits random number generator
+  const getId = () =>
+    Math.floor(100000000 + Math.random() * 900000000).toString();
   // handle input functions
   const handleRadioBtn = (e) => {
-    selectRef.current.clearValue();
     setModalData({
       ...modalData,
-      type: e.target.defaultValue.toUpperCase(),
+      type: e.target.value,
     });
   };
-
   const handleDateChange = (date) => {
     setStartDate(date);
     setModalData({
@@ -111,18 +113,19 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
     });
   };
 
-  const handleCategory = (category) => {
+  const handleCategory = (categories) => {
     setModalData({
       ...modalData,
-      category: category.value.toUpperCase(),
+      category: categories.value.toUpperCase(),
     });
   };
 
   // Validations
   const validateForm = () => {
-    const obj = { category: false, note: false };
+    const obj = { category: false, note: false, amount: false };
     if (!modalData.note) obj.note = true;
     if (!modalData.category) obj.category = true;
+    if (!modalData.amount || modalData.amount === 0) obj.amount = true;
     setErrors(obj);
     return Object.values(obj).every((element) => !element);
   };
@@ -133,7 +136,12 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
       console.log("form is not valid");
       return;
     }
+
+    const data = { ...modalData, id: getId() };
+    dispatch(handleAddTransaction(data));
+    setShowModal(false);
   };
+
   return (
     showModal && (
       <div
@@ -167,17 +175,16 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
                     <Select
                       ref={selectRef}
                       options={
-                        modalData.type.toLowerCase() === "expense"
+                        modalData.type === "EXPENSE"
                           ? expenseOptions
                           : incomeOptions
                       }
-                      components={{ Option }}
+                      components={{ Option: CustomOption }}
                       onChange={handleCategory}
                       className="w-full"
                       styles={customCategory}
                       closeMenuOnSelect={false}
                       hideSelectedOptions={false}
-                      isClearable={false}
                       placeholder="Select transaction category"
                     />
                     <div className="h-5 text-xs text-red-500">
@@ -196,7 +203,7 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
                       dropdownMode="select"
                     />
                   </div>
-                  <div className="w-56">
+                  <div className="mt-5 w-56">
                     <h4 className="mb-[10px] text-base capitalize">amount</h4>
                     <div className="flex items-center gap-1 overflow-hidden rounded-lg border border-input-gray bg-white px-2 outline-none">
                       <span className="text-input-gray">$</span>
@@ -204,10 +211,14 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
                         type="number"
                         name="amount"
                         id="amount"
-                        min="0"
+                        step="any"
+                        min="1"
                         className="h-full w-full bg-transparent px-1 py-3 text-base outline-none"
                         onChange={handleAmount}
                       />
+                    </div>
+                    <div className="h-5 text-xs text-red-500">
+                      {errors.amount && "please provide a transaction amount"}
                     </div>
                   </div>
                 </div>
@@ -220,8 +231,7 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
                         <input
                           type="radio"
                           name="transaction-type"
-                          id="transaction-type"
-                          value="income"
+                          value="INCOME"
                         />
                         income
                       </span>
@@ -229,8 +239,7 @@ const AddTransactionModal = ({ showModal, setShowModal }) => {
                         <input
                           type="radio"
                           name="transaction-type"
-                          id="transaction-type"
-                          value="expense"
+                          value="EXPENSE"
                           defaultChecked
                         />
                         expense

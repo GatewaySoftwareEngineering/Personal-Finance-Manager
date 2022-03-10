@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "react-datepicker/dist/react-datepicker.css";
-import "./styles/index.min.css";
+import "./styles/index.scss";
 import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";

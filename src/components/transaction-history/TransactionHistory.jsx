@@ -1,16 +1,19 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState, useMemo } from "react";
 import { GrSearch } from "react-icons/gr";
 import { HiOutlineFilter } from "react-icons/hi";
 import Select from "react-select";
 import { customCategory } from "../../styles/customSelectStyle";
-import { AiOutlineCheck } from "react-icons/ai";
 import { BsCalendar2 } from "react-icons/bs";
 import DatePicker from "react-datepicker";
 import { useDispatch, useSelector } from "react-redux";
 import { sortTransactions } from "../../services/transactionServices";
 import TransactionCard from "../global/TransactionCard";
-import { fetchTransactions } from "../../features/transactions/transactionsSlice";
-
+import {
+  fetchTransactions,
+  filterTransactions,
+} from "../../features/transactions/transactionsSlice";
+import CustomOption from "../global/CustomOption";
+import ReactPaginate from "react-paginate";
 const categoryOptions = [
   { value: "tech", label: "Tech" },
   { value: "cloths", label: "Cloths" },
@@ -50,63 +53,72 @@ const CustomDateInputTo = forwardRef(({ value, onClick }, ref) => (
     </span>
   </button>
 ));
-const Option = (props) => {
-  const { data, innerRef, innerProps, isSelected } = props;
-  return (
-    <div
-      {...innerProps}
-      ref={innerRef}
-      className="flex cursor-default items-center gap-2 p-2 hover:bg-blue-dark hover:bg-opacity-15"
-    >
-      <AiOutlineCheck
-        className={`${isSelected ? "opacity-100" : "opacity-0"}`}
-      />
-      {data.label}
-    </div>
-  );
-};
+
 const TransactionHistory = () => {
   const dispatch = useDispatch();
   const transactionsState = useSelector((state) => state.transactions);
-  const { transactions } = transactionsState;
-  let allTransactions = sortTransactions(transactions);
+  const transactions = sortTransactions(transactionsState.transactions);
+  const { filteredTransactions } = transactionsState;
+
   const [filterOptions, setFilterOptions] = useState({
     startDate: null,
     endDate: null,
     category: "",
+    searchValue: "",
   });
-  const [searchValue, setSearchValue] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const selectRef = useRef();
   const handleCategory = (categories) => {
     const categoryValues = categories.map((category) => category.value);
     const category = categoryValues.join(" ").toUpperCase();
     setFilterOptions({ ...filterOptions, category: category });
   };
+  const data = useMemo(
+    () =>
+      filteredTransactions?.length > 0 ? filteredTransactions : transactions,
+    [transactions, filteredTransactions]
+  );
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page.selected + 1);
+  };
   // Effects
   useEffect(() => {
     dispatch(fetchTransactions());
-  }, [dispatch]);
+  }, []);
   useEffect(() => {
-    console.log(filterOptions);
-  }, [filterOptions, searchValue]);
-  // functions
+    setCurrentPage(1);
+    dispatch(
+      filterTransactions({
+        filterOptions: filterOptions,
+        transactions: transactions,
+      })
+    );
+  }, [filterOptions]);
+
   const handleFilterReset = () => {
     selectRef.current.clearValue();
     setFilterOptions({
+      ...filterOptions,
       startDate: null,
       endDate: null,
       category: "",
     });
+    dispatch(fetchTransactions());
     return;
   };
 
   const handleSearchReset = () => {
-    setSearchValue("");
+    setFilterOptions({
+      ...filterOptions,
+      searchValue: "",
+    });
+    dispatch(fetchTransactions());
     return;
   };
+
   return (
-    <div className="p-6">
+    <div className="flex flex-1 flex-col overflow-auto p-6">
       {/* search div */}
       <div className="flex h-12 w-full items-center rounded-lg bg-white">
         <div className="my-4 ml-3 h-5 w-5">
@@ -114,9 +126,12 @@ const TransactionHistory = () => {
         </div>
         <input
           onChange={(event) => {
-            setSearchValue(event.target.value);
+            setFilterOptions({
+              ...filterOptions,
+              searchValue: event.target.value,
+            });
           }}
-          value={searchValue}
+          value={filterOptions.searchValue}
           type="text"
           className="ml-4 h-full w-full text-lg outline-none"
         />
@@ -140,7 +155,7 @@ const TransactionHistory = () => {
               ref={selectRef}
               options={categoryOptions}
               isMulti
-              components={{ Option }}
+              components={{ Option: CustomOption }}
               onChange={handleCategory}
               className="w-full"
               styles={customCategory}
@@ -161,7 +176,9 @@ const TransactionHistory = () => {
               customInput={<CustomDateInputFrom />}
               showMonthDropdown
               showYearDropdown
-              maxDate={new Date()}
+              maxDate={
+                filterOptions.endDate ? filterOptions.endDate : new Date()
+              }
               dropdownMode="select"
             />
             <DatePicker
@@ -176,6 +193,7 @@ const TransactionHistory = () => {
               showMonthDropdown
               showYearDropdown
               maxDate={new Date()}
+              minDate={filterOptions.startDate ?? filterOptions.startDate}
               dropdownMode="select"
             />
           </div>
@@ -188,8 +206,9 @@ const TransactionHistory = () => {
           clear
         </button>
       </div>
-      <div className="flex flex-col gap-5">
-        {allTransactions?.map((element) => (
+      {/* transactions div */}
+      <div className="flex w-full flex-1 flex-col gap-5 overflow-auto pr-4">
+        {data.slice(currentPage * 10 - 10, currentPage * 10).map((element) => (
           <TransactionCard
             key={element.id}
             note={element.note}
@@ -200,6 +219,25 @@ const TransactionHistory = () => {
             date={element.createdAt}
           />
         ))}
+      </div>
+      <div className="flex items-end justify-end py-5 text-base font-semibold">
+        <ReactPaginate
+          previousLabel="<"
+          nextLabel=">"
+          pageCount={Math.ceil(data.length / 10)}
+          marginPagesDisplayed={1}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageChange}
+          containerClassName={"paginationButton"}
+          previousLinkClassName={"previousButton"}
+          nextLinkClassName={"nextButton"}
+          disabledClassName={"paginationDisabled"}
+          activeClassName={"paginationActive"}
+          previousClassName={"prevButton"}
+          nextClassName={"nextButton"}
+          forcePage={currentPage - 1}
+          breakLabel=".."
+        />
       </div>
     </div>
   );

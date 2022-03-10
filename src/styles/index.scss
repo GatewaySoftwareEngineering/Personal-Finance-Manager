@@ -53,12 +53,58 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.css-1rrl1o9-ValueContainer::-webkit-scrollbar {
+.css-19qhd5-ValueContainer::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge add Firefox */
-.css-1rrl1o9-ValueContainer {
+.css-19qhd5-ValueContainer {
   -ms-overflow-style: none;
   scrollbar-width: none; /* Firefox */
+  overflow-x: hidden;
+}
+
+.paginationButton {
+  list-style: none;
+  @apply flex justify-center;
+  a.previousButton,
+  a.nextButton {
+    @apply border-transparent text-xl;
+  }
+}
+
+.paginationButton a {
+  @apply flex h-9 w-9 items-center justify-center border border-gray-dark border-opacity-75 text-blue-dark;
+  margin: 0 0.25rem;
+  border-radius: 50%;
+}
+
+.paginationButton a:hover {
+  color: white;
+  @apply bg-blue-dark bg-opacity-75;
+}
+
+.paginationDisabled a:hover {
+  @apply border-transparent bg-blue-dark bg-opacity-25 text-black;
+}
+
+.paginationActive a {
+  @apply bg-blue-dark bg-opacity-70 text-white;
+}
+
+.paginationDisabled a {
+  @apply border-transparent text-gray-400;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-dark bg-opacity-70;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-opacity-100;
+  border-radius: 10px;
 }

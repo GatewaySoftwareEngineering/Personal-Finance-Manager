@@ -16,7 +16,6 @@ const customCategory = {
     return {
       ...provided,
       maxHeight: "48px",
-      overflow: "auto",
     };
   },
 };

@@ -20,7 +20,7 @@ const Overview = () => {
   useEffect(() => {
     dispatch(fetchTransactions());
     dispatch(fetchWalletData());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -39,7 +39,7 @@ const Overview = () => {
         <div className="mt-24 w-10/12">
           <h2 className="font-medium">{latestTransactions.title}</h2>
           <div className="mt-5 flex flex-col gap-5">
-            {latestTransactions?.filteredTransactions?.map((element) => (
+            {latestTransactions?.result?.map((element) => (
               <TransactionCard
                 key={element.id}
                 note={element.note}

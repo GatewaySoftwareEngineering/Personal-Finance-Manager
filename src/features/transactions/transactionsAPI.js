@@ -1,36 +1,24 @@
 export const getTransactions = () => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const transactionsData = localStorage.getItem("transactions");
     resolve(transactionsData);
+    if (transactionsData === "") {
+      reject("Could not fetch data from server try again!");
+    }
   });
 };
 
-// [
-//   {
-//     id: "123456789",
-//     note: "HyperCloud II Headset",
-//     category: "ACCESSORIES",
-//     createdAt: new Date().toISOString(),
-//     type: "EXPENSE",
-//     amount: 75,
-//     currency: "USD",
-//   },
-//   {
-//     id: "987546321",
-//     note: "Salary after promotion",
-//     category: "SALARY",
-//     createdAt: new Date().toISOString(),
-//     type: "INCOME",
-//     amount: 5_000_000,
-//     currency: "IQD",
-//   },
-//   {
-//     id: "458761239",
-//     note: "Borrowed from Muhammad",
-//     category: "LOAN",
-//     createdAt: new Date().toISOString(),
-//     type: "INCOME",
-//     amount: 100_000,
-//     currency: "IQD",
-//   },
-// ];
+export const addTransaction = (data) => {
+  return new Promise((resolve, reject) => {
+    if (!data) {
+      reject("Could not add empty transaction!");
+    }
+    const allTransactions = JSON.parse(localStorage.getItem("transactions"));
+    allTransactions.unshift(data);
+    localStorage.setItem("transactions", JSON.stringify(allTransactions));
+    resolve({
+      message: "Transaction added successfully!",
+      data: allTransactions,
+    });
+  });
+};
