@@ -4,11 +4,6 @@ import Overview from "./components/overview/Overview";
 import SideBar from "./components/side-bar/SideBar";
 import TopBar from "./components/top-bar/TopBar";
 import TransactionHistory from "./components/transaction-history/TransactionHistory";
-const data = [
-  { id: 1, type: "income", value: 1000 },
-  { id: 2, type: "balance", value: 25000 },
-  { id: 3, type: "expense", value: 1500 },
-];
 
 function App() {
   return (

@@ -5,6 +5,7 @@ In order to see the result with data and implement actions.
 Please save this mocked data into your local storage.
 
 
+`RUN BELOW CODE INSIDE APP.JSX TO STORE DATA IN LOCAL STORAGE`
 ### The mocked data is: 
 
 
@@ -245,3 +246,6 @@ const data = [
     localStorage.setItem("wallet", JSON.stringify(walletData));
 ```
 
+
+
+ 
