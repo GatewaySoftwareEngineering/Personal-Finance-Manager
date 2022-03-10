@@ -6,6 +6,8 @@ Please save this mocked data into your local storage.
 
 
 ### The mocked data is: 
+
+
 ```
 const data = [
   {
@@ -15,15 +17,6 @@ const data = [
     amount: "5436",
     note: "Ahmad Saman",
     category: "TECH",
-    currency: "USD",
-  },
-  {
-    id: "849177174",
-    type: "EXPENSE",
-    createdAt: "2022-03-10T13:18:44.268Z",
-    amount: "250",
-    note: "revan saqat bw",
-    category: "HEALTH",
     currency: "USD",
   },
   {
@@ -166,7 +159,7 @@ const data = [
     type: "EXPENSE",
     createdAt: "2022-03-10T03:23:10.731Z",
     amount: "45364",
-    note: "dasfasdasdasfas",
+    note: "bought budget pc",
     category: "TECH",
     currency: "USD",
   },
@@ -211,7 +204,7 @@ const data = [
     type: "INCOME",
     createdAt: "2022-03-10T12:33:39.812Z",
     amount: "44",
-    note: "gifted money",
+    note: "gifted money from AKAM foad",
     category: "GIFT",
     currency: "USD",
   },
@@ -224,59 +217,31 @@ const data = [
     category: "FOOD",
     currency: "USD",
   },
-  {
-    id: "473228856",
-    type: "EXPENSE",
-    createdAt: "2022-03-10T12:49:46.177Z",
-    amount: "76",
-    note: "hfdtretgdfgdfg",
-    category: "SPORTS",
-    currency: "USD",
-  },
-  {
-    id: "867423822",
-    type: "EXPENSE",
-    createdAt: "2022-03-10T13:01:02.099Z",
-    amount: "43",
-    note: "Revan awanday ba jlk nada",
-    category: "CLOTHS",
-    currency: "USD",
-  },
-  {
-    id: "398186493",
-    type: "EXPENSE",
-    createdAt: "2022-03-10T13:01:58.472Z",
-    amount: "453",
-    note: "dasafasgasdfasda",
-    category: "BILLS",
-    currency: "USD",
-  },
-  {
-    id: "948764377",
-    type: "EXPENSE",
-    createdAt: "2022-03-10T13:16:15.048Z",
-    amount: "42352",
-    note: "fsdgsdgsdfsdfs",
-    category: "TECH",
-    currency: "USD",
-  },
+  
   {
     id: "455686909",
     type: "INCOME",
     createdAt: "2022-03-10T13:16:15.048Z",
     amount: "2000",
-    note: "from revan ",
+    note: "from revan",
     category: "GIFT",
     currency: "USD",
   },
 ];
 ```
 
-
+```
+  const walletData = [
+  { id: 1, type: "income", value: 1000 },
+  { id: 2, type: "balance", value: 25000 },
+  { id: 3, type: "expense", value: 1500 },
+];
+```
 
 
 ## The code line for saving into `localStorage`
 ```
-    localStorage.setItem("transactions", JSON.parse(data));
+    localStorage.setItem("transactions", JSON.stringify(data));
+    localStorage.setItem("wallet", JSON.stringify(walletData));
 ```
 
