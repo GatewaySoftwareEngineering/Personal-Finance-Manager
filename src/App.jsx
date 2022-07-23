@@ -1,10 +1,19 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
+import OverView from "./pages/overview";
+import Transactions from "./pages/transactions";
 
 function App() {
   return (
-    <div className="app">
-      <h1 className="app__title">Money Manager</h1>
-      <p className="app__message">Start Editing Me, let's get this done!</p>
+    <div>
+      <Routes>
+        <Route path="/" element={<OverView />} />
+        <Route path="/transactions" element={<Transactions />} />
+        <Route
+          path="*"
+          element={<p style={{ padding: "1rem" }}>404 not found!</p>}
+        />
+      </Routes>
     </div>
   );
 }
