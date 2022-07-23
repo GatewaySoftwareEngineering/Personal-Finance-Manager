@@ -1,0 +1,14 @@
+:root {
+    --sidebarColor: #2c3e51;
+    --wightColor: #f7f4f3;
+    --contentColor: #e8e8e8;
+    --transactionCard: #dbe5ee;
+    --lightBlue: #538ba8;
+    --darkText: #384151;
+    --deactiveText: #7b848d;
+
+}
+
+body{
+    background-color: var(--contentColor) !important;
+}
