@@ -1,0 +1,20 @@
+.sidebar{
+    height: 100vh;
+    overflow-y: scroll;
+    background-color: var(--sidebarColor);
+    box-sizing: content-box !important;
+    
+}
+
+.navBox{
+    background-color: var(--wightColor);
+}
+.closeBtn{
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 30px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
