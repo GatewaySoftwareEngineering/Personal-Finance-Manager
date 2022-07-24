@@ -1,7 +1,22 @@
-.overViewCard{
+.overViewCard {
     padding: 9px;
 }
-.overViewCardBgOne{
-    background-image: linear-gradient(to right, skyblue , rgb(203, 229, 240));
 
+.overViewCardBgOne {
+    background-image: linear-gradient(to right, rgb(135, 206, 235), rgb(203, 229, 240));
+
+}
+.overViewCard .cardDetail{
+    min-width: 190px !important;
+}
+
+.overViewCardBgTwo {
+    background-image: linear-gradient(to right, rgb(213, 213, 217),rgb(226, 226, 229));
+}
+.overViewCardBgThree {
+    background-image: linear-gradient(to right, rgb(253, 164, 175),rgb(254, 205, 211));
+}
+
+.test{
+    background-color: rgb(243, 178, 178);
 }
