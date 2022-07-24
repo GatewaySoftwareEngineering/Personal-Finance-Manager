@@ -4,24 +4,41 @@ import { getTransactions } from "./transactionsAPI";
 const name = "transactions";
 
 const initialState = {
-  transactions: undefined,
+  transactions: [],
+  loading: false,
+  error: undefined,
 };
 
 export const fetchTransactions = createAsyncThunk(
   `${name}/fetchTransactions`,
-  () => {
-    return getTransactions();
+  async () => {
+    const result = await getTransactions();
+    return result;
   }
 );
 
 const transactionsSlice = createSlice({
   name,
   initialState,
-  extraReducers: (builder) => {
-    builder.addCase(fetchTransactions.pending, (state, action) => {});
-    builder.addCase(fetchTransactions.fulfilled, (state, action) => {});
-    builder.addCase(fetchTransactions.rejected, (state, action) => {});
+  reducers: {
+    addTransactions: (state, action) => {
+      state.transactions = [...state.transactions, action.payload];
+    },
+  },
+  extraReducers: {
+    [fetchTransactions.pending](state) {
+      state.loading = true;
+    },
+    [fetchTransactions.fulfilled](state, action) {
+      state.transactions = action.payload;
+      state.loading = false;
+      state.error = undefined;
+    },
+    [fetchTransactions.rejected](state, action) {
+      state = { ...state, loading: false, error: "failed from load data!" };
+    },
   },
 });
 
+export const {addTransactions}=transactionsSlice.actions;
 export default transactionsSlice.reducer;
