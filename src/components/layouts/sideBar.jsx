@@ -7,7 +7,7 @@ export default function SideBar(props) {
   return (
     <div
       className={[
-        `col col-auto  ${!isDesktop ? "d-none" : ""}`,
+        `col col-auto position-sticky top-0 ${!isDesktop ? "d-none" : ""}`,
         classes.sidebar,
       ].join(" ")}
     >

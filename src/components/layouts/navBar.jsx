@@ -18,7 +18,7 @@ export default function NavBar(props) {
 
   //TODO
   return (
-    <nav className={["navbar shadow ", classes.navBox].join(" ")}>
+    <nav className={["navbar shadow  position-sticky top-0 ", classes.navBox].join(" ")}>
       <div className="container-fluid">
         <span className="navbar-brand">{namePage?.name}</span>
         <span className={`float-end ` + `${isDesktop ? "d-none" : ""}`}>

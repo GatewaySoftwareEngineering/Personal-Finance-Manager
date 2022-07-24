@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
+import React from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import NavigationContent from "./navigationContent";
 import { ReactComponent as CloseBtn } from "src/assets/images/close-svgrepo-com.svg";
