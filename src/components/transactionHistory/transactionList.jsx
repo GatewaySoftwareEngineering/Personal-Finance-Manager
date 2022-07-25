@@ -10,7 +10,7 @@ const defaultFilter = {
   category: "",
   search: "",
 };
-let PageSize = 2;
+let PageSize = 10;
 
 export default function TransactionList({ filterList = defaultFilter }) {
   const { transactions } = useSelector((state) => state.transactions);
@@ -45,7 +45,6 @@ export default function TransactionList({ filterList = defaultFilter }) {
   });
   return (
     <div className="mt-5">
-      
       <h4 className="fw-bold ">Top Last Transactions</h4>
 
       <div>
@@ -80,7 +79,14 @@ const filterByText = (filterList, list) => {
   return list?.filter((eTransac) => {
     if (!filterList.search) return true;
     let note = eTransac.note.toLowerCase();
-    let result = note.startsWith(filterList?.search.toLowerCase());
+    let result = _.includes(note, filterList?.search.toLowerCase());
+    if (!result) {
+      result = _.includes(
+        `${eTransac.amount}`,
+        filterList?.search.toLowerCase()
+      );
+    }
+
     return result;
   });
 };
