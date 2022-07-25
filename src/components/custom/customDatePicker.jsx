@@ -1,18 +1,24 @@
-import React from 'react'
-import ReactDatePicker from 'react-datepicker';
+import React from "react";
+import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-export default function CustomDatePicker({dateTime,setDateTime,placeholderText=""}) {
+export default function CustomDatePicker({
+  dateTime,
+  setDateTime,
+  placeholderText = "",
+  isDisable = false,
+}) {
   return (
     <ReactDatePicker
-    selected={dateTime}
-    onChange={(date) => {
-      setDateTime(date);
-    }}
-    showTimeSelect
-    dateFormat="Pp"
-    className="form-control"
-    isRequaired
-    placeholderText={placeholderText}
-  />
-  )
+      disabled={isDisable}
+      selected={dateTime}
+      onChange={(date) => {
+        setDateTime(date);
+      }}
+      showTimeSelect
+      dateFormat="Pp"
+      className="form-control"
+      isRequaired
+      placeholderText={placeholderText}
+    />
+  );
 }

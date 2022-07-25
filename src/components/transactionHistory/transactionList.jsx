@@ -4,6 +4,7 @@ import TransactionCard from "../cards/transactionCard";
 import moment from "moment";
 import _ from "lodash";
 import Pagination from "../customPaginations/paginations";
+import { filterByDate, filterByText, filterCategory } from "src/helper/transactionsFIlter";
 const defaultFilter = {
   from: "",
   to: "",
@@ -66,39 +67,3 @@ export default function TransactionList({ filterList = defaultFilter }) {
   );
 }
 
-const filterCategory = (filterList, list) => {
-  if (filterList.category && list?.length > 0) {
-    return list.filter((eTrans) => {
-      return eTrans.category === filterList.category;
-    });
-  } else {
-    return list;
-  }
-};
-const filterByText = (filterList, list) => {
-  return list?.filter((eTransac) => {
-    if (!filterList.search) return true;
-    let note = eTransac.note.toLowerCase();
-    let result = _.includes(note, filterList?.search.toLowerCase());
-    if (!result) {
-      result = _.includes(
-        `${eTransac.amount}`,
-        filterList?.search.toLowerCase()
-      );
-    }
-
-    return result;
-  });
-};
-const filterByDate = (filterList, list) => {
-  if (filterList?.from && filterList?.to) {
-    return list.filter((eTrans) => {
-      return moment(new Date(eTrans.createdAt)).isBetween(
-        new Date(filterList.from),
-        new Date(filterList.to)
-      );
-    });
-  } else {
-    return list;
-  }
-};

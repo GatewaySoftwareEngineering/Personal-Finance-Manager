@@ -97,8 +97,10 @@ export default function Transactions() {
             }}
             placeholderText="from"
           />
+          
 
           <CustomDatePicker
+          isDisable={allFilter.from?false:true}
             dateTime={allFilter.to}
             setDateTime={(to) =>
               setAllFilter({
