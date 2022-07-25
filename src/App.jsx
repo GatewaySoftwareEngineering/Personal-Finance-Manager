@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { fetchTransactions } from "./features/transactions/transactionsSlice";
-import OverView from "./pages/overview";
-import Transactions from "./pages/transactions";
+const NotFound = React.lazy(() => import("./pages/notfound"));
+const OverView = React.lazy(() => import("./pages/overview"));
+const Transactions = React.lazy(() => import("./pages/transactions"));
 
 function App() {
   const { transactions } = useSelector((state) => state.transactions);
@@ -21,10 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<OverView />} />
         <Route path="/transactions" element={<Transactions />} />
-        <Route
-          path="*"
-          element={<p style={{ padding: "1rem" }}>404 not found!</p>}
-        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
