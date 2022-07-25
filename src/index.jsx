@@ -9,13 +9,14 @@ import MainLayout from "./components/layouts/mainLayout";
 import { BrowserRouter } from "react-router-dom";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import Loading from "src/components/custom/loading";
 let persistor = persistStore(store);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <Suspense fallback={<div>Loading</div>}>
+          <Suspense fallback={<Loading/>}>
             <MainLayout>
               <App />
             </MainLayout>
