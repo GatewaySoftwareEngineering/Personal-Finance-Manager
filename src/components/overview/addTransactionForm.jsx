@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { typeExpence, typeIncome } from "src/configs/constants";
 import { addTransactions } from "src/features/transactions/transactionsSlice";
@@ -11,6 +11,7 @@ import { v1 as uuidv1 } from "uuid";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import CustomDatePicker from "../custom/customDatePicker";
+import NumberFormat from "react-number-format";
 /*/^(0|[1-9]\d*)(\.\d+)?$/*/
 export default function AddTransactionForm(props) {
   const { handleClose } = props;
@@ -22,6 +23,7 @@ export default function AddTransactionForm(props) {
     handleSubmit,
     watch,
     setValue,
+    control,
   } = useForm();
 
   const incomeCategory = Object.values(typeIncome).map(
@@ -36,8 +38,8 @@ export default function AddTransactionForm(props) {
     setValue("type", "INCOME");
   }, []);
   useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (value.type == "INCOME") {
+    const subscription = watch((value) => {
+      if (value.type === "INCOME") {
         setListCategory(incomeCategory);
       } else {
         setListCategory(expenseCategory);
@@ -46,17 +48,21 @@ export default function AddTransactionForm(props) {
     return () => subscription.unsubscribe();
   }, [watch]);
   const onSubmit = (data) => {
-    const newData = {
-      id: uuidv1(),
-      note: data?.note,
-      category: data?.category,
-      createdAt: moment(new Date(dateTime)).format(),
-      type: data?.type,
-      amount: data?.amount,
-      currency: "USD",
-    };
-    dispatch(addTransactions(newData));
-    handleClose();
+    try {
+      const newData = {
+        id: uuidv1(),
+        note: data?.note,
+        category: data?.category,
+        createdAt: moment(new Date(dateTime)).format(),
+        type: data?.type,
+        amount: parseFloat(data?.amount),
+        currency: "USD",
+      };
+      dispatch(addTransactions(newData));
+      handleClose();
+    } catch (e) {
+      //show toast as required Will be implemented in future stories
+    }
   };
 
   return (
@@ -99,14 +105,30 @@ export default function AddTransactionForm(props) {
         <label htmlFor="amount" className="form-label">
           Amount
         </label>
-        <input
+        <Controller
+          defaultValue={0}
+          rules={{ required: true, min: 0 }}
+          render={({ field }) => (
+            <div className="d-flex justify-content-center align-items-center">
+              <span className="me-1 fw-bold">$</span>
+              <NumberFormat
+                {...field}
+                thousandSeparator={true}
+                className="form-control"
+              />
+            </div>
+          )}
+          name="amount"
+          control={control}
+        />
+        {/* <input
           type={"number"}
           {...register("amount", {
             required: true,
           })}
           id="amount"
           className="form-control"
-        />
+        /> */}
         <InvalidField
           isRequaired={errors.amount?.type}
           text={"amount is required"}
@@ -163,7 +185,9 @@ export default function AddTransactionForm(props) {
       <div className={classes.footerBotton}>
         <button
           className="me-3 btn btn-outline-dark rounded-pill fw-bolder"
-          onClick={handleClose}
+          onClick={() => {
+            handleClose();
+          }}
         >
           Dismiss
         </button>
