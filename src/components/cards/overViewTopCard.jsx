@@ -4,7 +4,7 @@ export default function OverViewTopCard({
   type = "income",
   typeColor = "text-primary",
   detailColor = "rgb(120, 220, 255)",
-  price = "0.0",
+  price = 0,
   background = classes.overViewCardBgOne,
   isDesktop
 }) {
@@ -34,7 +34,7 @@ export default function OverViewTopCard({
       </div>
       <div className="text-white fs-2 fw-bold">
         <span>$</span>
-        <span>{price ?? ""}</span>
+        <span>{`${price}`?? ""}</span>
       </div>
     </div>
   );

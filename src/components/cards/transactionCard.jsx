@@ -1,8 +1,6 @@
 import moment from "moment";
 import React from "react";
-import { typeIncome } from "src/configs/constants";
 import IconType from "./iconType";
-import { ReactComponent as Bills } from "src/assets/images/bills-money.svg";
 
 export default function TransactionCard({ type, note, time, amount }) {
   return (
