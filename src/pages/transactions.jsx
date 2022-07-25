@@ -19,10 +19,7 @@ export default function Transactions() {
     (eCategory) => eCategory
   );
 
-  const [listCategory, setListCategory] = useState([
-    ...incomeCategory,
-    ...expenseCategory,
-  ]);
+  const listCategory = [...incomeCategory, ...expenseCategory];
   const [allFilter, setAllFilter] = useState({
     from: "",
     to: "",
