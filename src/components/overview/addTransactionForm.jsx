@@ -25,6 +25,7 @@ export default function AddTransactionForm(props) {
     setValue,
     control,
   } = useForm();
+  const [amoutNumber, setAmount] = useState(0);
 
   const incomeCategory = Object.values(typeIncome).map(
     (eCategory) => eCategory
@@ -105,30 +106,31 @@ export default function AddTransactionForm(props) {
         <label htmlFor="amount" className="form-label">
           Amount
         </label>
-        <Controller
-          defaultValue={0}
-          rules={{ required: true, min: 0 }}
-          render={({ field }) => (
-            <div className="d-flex justify-content-center align-items-center">
-              <span className="me-1 fw-bold">$</span>
-              <NumberFormat
-                {...field}
-                thousandSeparator={true}
-                className="form-control"
-              />
-            </div>
-          )}
-          name="amount"
-          control={control}
-        />
-        {/* <input
+        <input
           type={"number"}
           {...register("amount", {
             required: true,
           })}
           id="amount"
           className="form-control"
-        /> */}
+          value={amoutNumber}
+          min="0"
+          onKeyPress={(event) => {
+            if (!/[0-9]/.test(event.key)) {
+              event.preventDefault();
+            }
+          }}
+          onPaste={(e) => e.preventDefault()}
+          onChange={(ev) => {
+            try {
+              const re = /^[0-9\b]+$/;
+              if (ev.target.value === "" || re.test(ev.target.value)) {
+                setAmount(ev.target.value);
+              }
+            } catch (e) {}
+          }}
+        />
+
         <InvalidField
           isRequaired={errors.amount?.type}
           text={"amount is required"}
