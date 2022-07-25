@@ -1,10 +1,11 @@
 import React from "react";
+import "@fontsource/inter";
+import Layout from "./app/layout/layout.js";
 
 function App() {
   return (
     <div className="app">
-      <h1 className="app__title">Money Manager</h1>
-      <p className="app__message">Start Editing Me, let's get this done!</p>
+      <Layout />
     </div>
   );
 }
