@@ -47,7 +47,7 @@ export default function OverView() {
           detailColor="rgb(145, 143, 143)"
           type="Balance"
           isDesktop={isDesktop}
-          price={sumIncome && sumExpence ? sumIncome - sumExpence : 0}
+          price={(sumIncome ?? 0) - (sumExpence ?? 0)}
         />
         <OverViewTopCard
           background={classes.overViewCardBgThree}
