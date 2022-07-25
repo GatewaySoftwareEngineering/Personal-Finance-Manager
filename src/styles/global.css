@@ -9,7 +9,13 @@
 
 }
 
-body{
+body {
     background-color: var(--contentColor) !important;
-  
+
+}
+
+.pagination-bar {
+    width: 100%;
+    display: flex;
+    justify-content: end;
 }

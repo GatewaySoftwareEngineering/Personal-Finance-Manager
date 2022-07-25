@@ -15,7 +15,7 @@ export const getTransactions = async () => [
     createdAt: "2022-07-24T00:19:57+03:00",
     type: "INCOME",
     amount: 50000,
-    currency: "IQD",
+    currency: "USD",
   },
   {
     id: "987546321",
@@ -24,6 +24,15 @@ export const getTransactions = async () => [
     createdAt: "2022-07-24T00:22:57+03:00",
     type: "INCOME",
     amount: 100,
-    currency: "IQD",
+    currency: "USD",
+  },
+  {
+    id: "98754221",
+    note: "Borrowed from Ibrahem",
+    category: "SALARY",
+    createdAt: "2022-07-25T00:22:57+03:00",
+    type: "INCOME",
+    amount: 100,
+    currency: "USD",
   },
 ];

@@ -9,5 +9,6 @@ export const typeExpence = {
   BILLS: "BILLS",
   SPORTS: "SPORTS",
   HEALTH: "HEALTH",
+  CLOTHS:"Cloths"
 };
 export const allCategory={...typeIncome,...typeExpence}
