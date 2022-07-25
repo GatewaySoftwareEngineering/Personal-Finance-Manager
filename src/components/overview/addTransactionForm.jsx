@@ -11,7 +11,6 @@ import { v1 as uuidv1 } from "uuid";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import CustomDatePicker from "../custom/customDatePicker";
-import NumberFormat from "react-number-format";
 /*/^(0|[1-9]\d*)(\.\d+)?$/*/
 export default function AddTransactionForm(props) {
   const { handleClose } = props;
