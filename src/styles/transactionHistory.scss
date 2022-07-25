@@ -1,0 +1,159 @@
+.transaction_history {
+  background-color: #e5e5e5;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+
+  .transaction_history_container {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+
+    header {
+      grid-column: 1 / -1;
+      background-color: #fff;
+      height: 5rem;
+      width: 100%;
+      box-shadow: 0px 1px 8px rgba(34, 40, 49, 0.15);
+      display: flex;
+      align-items: center;
+
+      .page_title {
+        margin-left: 1.5rem;
+        font-weight: 500;
+      }
+    }
+
+    main {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      padding-left: 1.5rem;
+
+      .search_section {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        padding-right: 1.5rem;
+        margin-top: 1rem;
+
+        .search_input {
+          position: relative;
+          width: 94%;
+
+          .search_icon {
+            font-size: 1.25rem;
+            color: #7e8594;
+            position: absolute;
+            left: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+
+          input {
+            width: 100%;
+            padding: 10px 2px 10px 2rem;
+            border-radius: 7px 0 0 7px;
+            border: none;
+
+            &:focus {
+              outline-color: #1c658cbf;
+            }
+          }
+        }
+
+        .search_clear_button {
+          width: 6%;
+          padding: 10px;
+          background-color: #1c658cbf;
+          color: #fff;
+          border-radius: 0 7px 7px 0;
+          border: none;
+          cursor: pointer;
+        }
+      }
+
+      .filter_section {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-right: 1.5rem;
+        margin-top: 1rem;
+        background-color: #f8fafc;
+        border-radius: 7px;
+
+        .filter_icon {
+          font-size: 1.25rem;
+        }
+
+        .filter_inputs {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: 70%;
+
+          .category_input,
+          .date_picker_input div {
+            background-color: #fff;
+
+            &::before {
+              border: none;
+            }
+          }
+        }
+
+        .filter_clear_button {
+          width: 6%;
+          padding: 1.5rem;
+          background-color: #1c658cbf;
+          color: #fff;
+          border-radius: 0 7px 7px 0;
+          border: none;
+          cursor: pointer;
+        }
+      }
+
+      .transactions {
+        grid-column: 1 / 6;
+        margin-top: 1rem;
+      }
+
+      .pagination_stack {
+        grid-column: 4 / 6;
+
+        & nav ul {
+          display: flex;
+          justify-content: flex-end;
+
+          & li:not(:first-child):not(:last-child) button {
+            background-color: transparent;
+            color: #1c658cbf;
+            border: 1px solid #1c658cbf;
+            font-size: 1rem;
+            font-weight: 700;
+          }
+
+          & .Mui-selected {
+            background-color: #1c658cbf !important;
+            color: #fff !important;
+            font-size: 1rem;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+}
+
+.menu_item {
+  position: relative;
+
+  .check_icon {
+    position: absolute;
+    left: 6px;
+    font-size: 1.5rem;
+  }
+
+  .item {
+    padding-left: 1rem;
+  }
+}

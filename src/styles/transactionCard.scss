@@ -1,0 +1,63 @@
+.transaction_card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 7px;
+  padding: 0.75rem;
+
+  &:not(last-child) {
+    margin-bottom: 1rem;
+  }
+
+  .icon_label {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      padding: 3px;
+      font-size: 1.5rem;
+      border-radius: 100%;
+    }
+
+    .bg_green {
+      background-color: #05966933;
+      color: #059669;
+    }
+
+    .bg_blue {
+      background-color: #0284c733;
+      color: #0284c7;
+    }
+
+    .label {
+      margin-left: 1rem;
+    }
+  }
+
+  .date_amount {
+    display: flex;
+    align-items: center;
+
+    .date {
+      color: #334155;
+      font-weight: 400;
+      margin-right: 1rem;
+    }
+
+    .amount {
+      padding: 0.25rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .expense {
+      color: #ef2a4c;
+      background-color: #ef2a4c26;
+    }
+    .income {
+      color: #0ea5e9;
+      background-color: #0ea5e926;
+    }
+  }
+}

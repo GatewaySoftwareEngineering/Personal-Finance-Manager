@@ -1,0 +1,259 @@
+.overview {
+  background-color: #e5e5e5;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+
+  .overview_container {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+
+    header {
+      grid-column: 1 / -1;
+      background-color: #fff;
+      height: 5rem;
+      width: 100%;
+      box-shadow: 0px 1px 8px rgba(34, 40, 49, 0.15);
+      display: flex;
+      align-items: center;
+
+      .page_title {
+        margin-left: 1.5rem;
+        font-weight: 500;
+      }
+    }
+
+    main {
+      grid-column: 1 / 6;
+      padding-left: 1.5rem;
+
+      .card_section {
+        margin-top: 1.5rem;
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        .card {
+          padding: 1.25rem 1.8rem;
+          border-radius: 0.5rem;
+
+          .top {
+            display: flex;
+            justify-content: space-between;
+
+            .card_title {
+              font-size: 1.1rem;
+              font-weight: 600;
+            }
+
+            button {
+              color: #fff;
+              font-size: 0.75rem;
+              padding: 0 1rem;
+              border-radius: 0.75rem;
+              border: none;
+            }
+          }
+
+          .amount {
+            margin-top: 1rem;
+            font-size: 1.9rem;
+            font-weight: 500;
+            color: #fff;
+          }
+        }
+
+        .income_card {
+          background: linear-gradient(90deg, #7dd3fc 0%, #bae6fd 102.82%);
+
+          .top {
+            .card_title {
+              color: #1a74c7;
+            }
+
+            button {
+              background-color: #38bdf8bf;
+            }
+          }
+        }
+
+        .balance_card {
+          background: linear-gradient(90deg, #d4d4d8 0%, #e4e4e7 102.82%);
+
+          .top {
+            .card_title {
+              color: #71717a;
+            }
+
+            button {
+              background-color: #71717abf;
+            }
+          }
+        }
+
+        .expense_card {
+          background: linear-gradient(90deg, #fda4af 0%, #fecdd3 102.82%);
+
+          .top {
+            .card_title {
+              color: #ef2a4c;
+            }
+
+            button {
+              background-color: #fb7185bf;
+            }
+          }
+        }
+      }
+
+      .latest_transactions {
+        margin-top: 8rem;
+
+        &_title {
+          margin-bottom: 0.75rem;
+        }
+      }
+
+      .add_transaction {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 5rem;
+
+        button {
+          border: none;
+          background-color: #1c658c26;
+          border-radius: 50px;
+          color: #1c658c;
+          font-weight: 500;
+          font-size: 1.25rem;
+          padding: 4px 1rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+h2.MuiTypography-root {
+  background-color: #fff;
+  box-shadow: 0px 1px 8px rgba(34, 40, 49, 0.15);
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+}
+
+.dialog_content {
+  background-color: #f8fafc;
+  padding: 3rem 1rem;
+
+  .dialog_form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3rem 1rem;
+
+    .category_container {
+      display: grid;
+
+      label {
+        margin-bottom: 0.5rem;
+      }
+
+      .category_input {
+        background-color: #fff;
+
+        &::before {
+          border: none;
+        }
+      }
+    }
+
+    .date_container {
+      display: grid;
+
+      label {
+        margin-bottom: 0.5rem;
+      }
+
+      .date_picker_input div {
+        background-color: #fff;
+
+        &::before {
+          border: none;
+        }
+      }
+    }
+
+    .amount_container {
+      display: grid;
+
+      label {
+        margin-bottom: 0.5rem;
+      }
+
+      .amount_input {
+        position: relative;
+
+        .curency_icon {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 1.25rem;
+          color: #94a3b8;
+        }
+
+        input {
+          padding: 1rem 0.5rem 1rem 1.5rem;
+          border-radius: 7px;
+          border: none;
+        }
+      }
+    }
+
+    .type_container {
+      width: 75%;
+
+      .radio_container {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .note_container {
+      // margin-top: 3rem;
+      display: grid;
+      grid-column: 2 / -1;
+
+      textarea {
+        margin-top: 0.5rem;
+        padding: 1rem 0.5rem;
+        width: 100%;
+        resize: none;
+        border: none;
+        border-radius: 7px;
+      }
+    }
+
+    .dialog_actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+      background-color: #f8fafc;
+
+      .dismiss_button {
+        background-color: transparent;
+        border: 1px solid #000000;
+        color: #000000;
+        border-radius: 50px;
+      }
+
+      .add_transaction_button {
+        border: 1px solid #1c658c26;
+        background-color: #1c658c26;
+        border-radius: 50px;
+        color: #1c658c;
+        font-weight: 500;
+        cursor: pointer;
+      }
+    }
+  }
+}

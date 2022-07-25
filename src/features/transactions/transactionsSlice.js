@@ -19,7 +19,9 @@ const transactionsSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchTransactions.pending, (state, action) => {});
-    builder.addCase(fetchTransactions.fulfilled, (state, action) => {});
+    builder.addCase(fetchTransactions.fulfilled, (state, action) => {
+      state.transactions = action.payload;
+    });
     builder.addCase(fetchTransactions.rejected, (state, action) => {});
   },
 });
