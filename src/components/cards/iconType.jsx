@@ -8,6 +8,7 @@ import { ReactComponent as Salary } from "src/assets/images/salary.svg";
 import { ReactComponent as Sport } from "src/assets/images/sports.svg";
 import { ReactComponent as Tech } from "src/assets/images/tech.svg";
 import { ReactComponent as Health } from "src/assets/images/health.svg";
+import { ReactComponent as Clothes } from "src/assets/images/clothes.svg";
 
 export default function IconType({ type }) {
   const styleIcon = {
@@ -35,6 +36,8 @@ export default function IconType({ type }) {
       return <Sport style={styleIcon} />;
     case typeExpence.TECH:
       return <Tech style={styleIcon} />;
+      case typeExpence.CLOTHS:
+        return <Clothes style={styleIcon} />;
   }
   return <div>I</div>;
 }
