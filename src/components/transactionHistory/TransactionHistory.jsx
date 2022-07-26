@@ -21,6 +21,7 @@ import Stack from "@mui/material/Stack";
 import { expenseCategories, incomeCategories } from "../../shared/constants";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import axios from "axios";
 
 const categories = [...incomeCategories, ...expenseCategories];
 const filterInitial = {
@@ -33,7 +34,10 @@ const calculatePagesCount = (pageSize, totalCount) => {
   return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize);
 };
 
-const sortTransactions = (transactions) => {
+const sortTransactions = (transactions = []) => {
+  console.log(
+    [...transactions]?.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+  );
   return [...transactions]?.sort((a, b) =>
     a.createdAt < b.createdAt ? 1 : -1
   );
@@ -42,21 +46,53 @@ const PAGE_SIZE = 10;
 
 const TransactionHistory = () => {
   const { transactions } = useSelector((state) => state.transactions);
+  const [updatedTransactions, setUpdatedTransactions] = useState([]);
   const [sortedTransactions, setSortedTransactions] = useState([]);
+  const [rates, setRates] = useState();
   const [countPagination, setCountPagination] = useState(0);
   const [page, setPage] = useState(0);
-
-  useEffect(() => {
-    setCountPagination(calculatePagesCount(PAGE_SIZE, transactions?.length));
-    const sortTransactionsArray =
-      transactions && sortTransactions(transactions);
-
-    setSortedTransactions(sortTransactionsArray);
-  }, [transactions]);
-
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState(filterInitial);
   const maxDate = moment(new Date());
+
+  useEffect(() => {
+    (async () => {
+      setCountPagination(calculatePagesCount(PAGE_SIZE, transactions?.length));
+      const sortTransactionsArray =
+        transactions && sortTransactions(await updatedTransactions);
+
+      setSortedTransactions(sortTransactionsArray);
+    })();
+  }, [transactions, updatedTransactions]);
+
+  useEffect(() => {
+    axios
+      .get("/latest", {
+        headers: {
+          apikey: "ZD0QxNaaRNeGpXO8VwmeXQIO2lq53Svm",
+        },
+      })
+      .then((res) => setRates(res.data.rates))
+      .catch((error) => console.log("error", error));
+  }, [transactions]);
+
+  useEffect(() => {
+    (async () => {
+      const updatedTr = await transactions?.map((tr) =>
+        tr.currency !== "USD" && rates
+          ? {
+              ...tr,
+              amount: Math.floor(
+                (rates["USD"] / rates[tr.currency]) * tr.amount
+              ),
+              currency: "USD",
+            }
+          : tr
+      );
+
+      setUpdatedTransactions(updatedTr);
+    })();
+  }, [rates, transactions]);
 
   const onSearchChangeHandler = (e) => {
     const value = e.target.value;
@@ -249,7 +285,7 @@ const TransactionHistory = () => {
               ))}
           </section>
 
-          {countPagination > 0 && (
+          {countPagination > 1 && (
             <Stack className="pagination_stack" spacing={2}>
               <Pagination count={countPagination} onChange={onPageChange} />
             </Stack>

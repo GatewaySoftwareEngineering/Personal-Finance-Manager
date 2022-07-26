@@ -102,7 +102,7 @@ export const getTransactions = async () => [
     id: "87564",
     note: "Borrowed from Muhammad",
     category: "LOAN",
-    createdAt: new Date("9/7/2022"),
+    createdAt: new Date("9/7/2021"),
     type: "INCOME",
     amount: 100_000,
     currency: "IQD",
