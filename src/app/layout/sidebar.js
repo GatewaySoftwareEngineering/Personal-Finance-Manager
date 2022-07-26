@@ -15,13 +15,20 @@ export const sidebar = (props) => {
         }}
       >
         <img src={MoneyIcon} alt="Money Icon" width="30" height="30" />
-        <h4 style={{ marginLeft: 5, color: "#F05454", fontSize: "22px" }}>
+        <h4
+          style={{
+            marginLeft: 5,
+            color: "#F05454",
+            fontSize: "22px",
+            fontWeight: "600",
+          }}
+        >
           Finance Manager
         </h4>
       </div>
 
       <ul style={{ listStyleType: "none" }}>
-        <li>
+        <li style={{ fontWeight: "400" }}>
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? "link-active" : "link")}
@@ -29,7 +36,7 @@ export const sidebar = (props) => {
             Overview
           </NavLink>
         </li>
-        <li style={{ marginTop: 10 }}>
+        <li style={{ marginTop: 10, fontWeight: "400" }}>
           <NavLink
             to="/transactions"
             className={({ isActive }) => (isActive ? "link-active" : "link")}

@@ -8,7 +8,16 @@ export const navbar = (props) => {
       style={{ height: "8%", display: "flex", alignItems: "center" }}
       className="navbar"
     >
-      <h4 style={{ marginLeft: 8, fontSize: "22px" }}>{title}</h4>
+      <h4
+        style={{
+          marginLeft: 8,
+          fontSize: "22px",
+          color: "#374151",
+          fontWeight: "500",
+        }}
+      >
+        {title}
+      </h4>
     </div>
   );
 };
