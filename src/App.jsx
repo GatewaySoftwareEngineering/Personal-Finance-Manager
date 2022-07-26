@@ -9,7 +9,6 @@ const Transactions = React.lazy(() => import("./pages/transactions"));
 
 function App() {
   const { transactions } = useSelector((state) => state.transactions);
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (transactions?.length === 0) {

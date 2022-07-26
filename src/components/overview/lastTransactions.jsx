@@ -7,6 +7,11 @@ import { filterPerDate } from "src/helper/calulateLastTransactions";
 import TransactionCard from "../cards/transactionCard";
 import AddTransactionsModal from "./addTransactionsModal";
 export default function LastTransactions() {
+  moment.locale("en", {
+    week: {
+      dow: 6,
+    },
+  });
   const { transactions } = useSelector((state) => state.transactions);
   let transactionsType = "Transactions";
   let listTransactionCards = [];
@@ -14,21 +19,22 @@ export default function LastTransactions() {
     const lastWeek = moment().subtract(1, "w").format();
     if (transactions?.length > 0) {
       let listFilter = [];
-      const resultLastWeek = filterPerDate(transactions, lastWeek);
+      const resultLastWeek = filterPerDate(transactions, "week");
       //if list week is not empty
       if (resultLastWeek.length > 0) {
         listFilter = resultLastWeek;
         transactionsType = "Week";
       } else {
         const lastMonth = moment().subtract(1, "m").format();
-        const resultLastMonth = filterPerDate(transactions, lastMonth);
+
+        const resultLastMonth = filterPerDate(transactions, "month");
         //if list month is not empty
         if (resultLastMonth.length > 0) {
           listFilter = resultLastMonth;
           transactionsType = "Month";
         } else {
           const lastYears = moment().subtract(1, "y").format();
-          const resultLastYears = filterPerDate(transactions, lastYears);
+          const resultLastYears = filterPerDate(transactions, "year");
           //if list years is not empty
           if (resultLastYears.length > 0) {
             listFilter = resultLastYears;
