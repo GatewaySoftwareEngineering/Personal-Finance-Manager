@@ -2,12 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 
 export const navbar = (props) => {
+  const { title } = props;
   return (
     <div
       style={{ height: "8%", display: "flex", alignItems: "center" }}
       className="navbar"
     >
-      <h4 style={{ marginLeft: 8, fontSize: "22px" }}>Screen Selected Name</h4>
+      <h4 style={{ marginLeft: 8, fontSize: "22px" }}>{title}</h4>
     </div>
   );
 };
