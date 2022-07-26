@@ -4,10 +4,18 @@ import TransactionCard from "../TransactionCard";
 import AddTransactionDialog from "./AddTransactionDialog";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Overview = () => {
   const { transactions } = useSelector((state) => state.transactions);
+  const [updatedTransactions, setUpdatedTransactions] = useState([]);
   const [transactionsArray, setTransactionsArray] = useState(transactions);
+  const [rates, setRates] = useState();
+  const [total, setTotal] = useState({
+    income: 0,
+    expense: 0,
+    balance: 0,
+  });
 
   const isInLastWeek = transactions?.some((transaction) =>
     moment(new Date(transaction.createdAt)).isSame(new Date(), "week")
@@ -17,16 +25,68 @@ const Overview = () => {
   );
 
   useEffect(() => {
-    setTransactionsArray(
-      transactions?.filter((transaction) =>
-        isInLastWeek
-          ? moment(new Date(transaction.createdAt)).isSame(new Date(), "week")
-          : isInLastMonth
-          ? moment(new Date(transaction.createdAt)).isSame(new Date(), "month")
-          : transaction
-      )
-    );
-  }, [isInLastMonth, isInLastWeek, transactions]);
+    axios
+      .get("/latest", {
+        headers: {
+          apikey: "ZD0QxNaaRNeGpXO8VwmeXQIO2lq53Svm",
+        },
+      })
+      .then((res) => setRates(res.data.rates))
+      .catch((error) => console.log("error", error));
+  }, [transactions]);
+
+  useEffect(() => {
+    (async () => {
+      const updatedTr = await transactions?.map((tr) =>
+        tr.currency !== "USD" && rates
+          ? {
+              ...tr,
+              amount: Math.floor(
+                (rates["USD"] / rates[tr.currency]) * tr.amount
+              ),
+              currency: "USD",
+            }
+          : tr
+      );
+
+      setUpdatedTransactions(updatedTr);
+    })();
+  }, [rates, transactions]);
+
+  useEffect(() => {
+    (async () => {
+      setTransactionsArray(
+        updatedTransactions?.filter((transaction) =>
+          isInLastWeek
+            ? moment(new Date(transaction.createdAt)).isSame(new Date(), "week")
+            : isInLastMonth
+            ? moment(new Date(transaction.createdAt)).isSame(
+                new Date(),
+                "month"
+              )
+            : transaction
+        )
+      );
+    })();
+  }, [isInLastMonth, isInLastWeek, updatedTransactions]);
+
+  useEffect(() => {
+    (async () => {
+      const totalIncome = await transactionsArray
+        ?.filter((tr) => tr.type === "INCOME" && tr)
+        ?.reduce((a, b) => a + b.amount, 0);
+      const totalexpense = await transactionsArray
+        ?.filter((tr) => tr.type === "EXPENSE" && tr)
+        ?.reduce((a, b) => a + b.amount, 0);
+      const totalBalance = (await totalIncome) - (await totalexpense);
+
+      setTotal({
+        income: totalIncome,
+        expense: totalexpense,
+        balance: totalBalance,
+      });
+    })();
+  }, [transactionsArray]);
 
   const [openDialog, setOpenDialog] = React.useState(false);
 
@@ -46,9 +106,9 @@ const Overview = () => {
         </header>
         <main>
           <section className="card_section">
-            <Card title="income" amount="1000" />
-            <Card title="balance" amount="25000" />
-            <Card title="expense" amount="4520" />
+            <Card title="income" amount={total.income} />
+            <Card title="balance" amount={total.balance} />
+            <Card title="expense" amount={total.expense} />
           </section>
 
           <section className="latest_transactions">
