@@ -6,10 +6,10 @@ export const screen = (props) => {
   return (
     <div>
       <Navbar title={"Overview"} />
-      <div style={{ height: "90%" }}>
+      <div style={{ height: "90vh", backgroundColor: "#EEEEEE" }}>
         <section
           style={{
-            marginTop: "10px",
+            paddingTop: "16px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-around",

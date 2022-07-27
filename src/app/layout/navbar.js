@@ -5,7 +5,7 @@ export const navbar = (props) => {
   const { title } = props;
   return (
     <div
-      style={{ height: "8%", display: "flex", alignItems: "center" }}
+      style={{ height: "10vh", display: "flex", alignItems: "center" }}
       className="navbar"
     >
       <h4
