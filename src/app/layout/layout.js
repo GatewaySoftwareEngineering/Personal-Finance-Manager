@@ -15,10 +15,10 @@ export const layout = (props) => {
           justifyContent: "flex-start",
         }}
       >
-        <div style={{ width: "20%" }}>
+        <div style={{ width: "15%" }}>
           <Sidebar />
         </div>
-        <div style={{ width: "80%" }}>
+        <div style={{ width: "85%" }}>
           <Routes>
             <Route exact path="/transactions" element={<Transactions />} />
             <Route exact path="/" element={<Screen />} />
