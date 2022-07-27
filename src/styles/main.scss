@@ -10,17 +10,73 @@
     box-shadow: 0px 1px 8px rgba(34, 40, 49, 0.15);
   }
 
-  .link{
-    color: #D4D4D8;
+  .card {
+    width: 25%;
+    height: 30%;
+    border-radius: 7px;
+  }
+
+  .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 40px;
+  }
+  .card > h2 {
+    color: #fff;
+    font-size: 30px;
+    font-weight: 500;
+    margin-left: 40px;
+    margin-top: 0 !important;
+  }
+  .card-body > h5 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .blue-card {
+    background: linear-gradient(90deg, #7dd3fc 0%, #bae6fd 102.82%);
+    color: #1a74c7;
+  }
+
+  .gray-card {
+    background: linear-gradient(90deg, #d4d4d8 0%, #e4e4e7 102.82%);
+    color: #71717a;
+  }
+
+  .red-card {
+    background: linear-gradient(90deg, #fda4af 0%, #fecdd3 102.82%);
+    color: #ef2a4c;
+  }
+  .details-button {
+    border-radius: 12px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 4px 16px;
+    text-transform: capitalize;
+  }
+  .blue-button {
+    background: rgba(56, 189, 248, 0.75);
+  }
+  .gray-button {
+    background: rgba(113, 113, 122, 0.75);
+  }
+  .red-button {
+    background: rgba(251, 113, 133, 0.75);
+  }
+
+  .link {
+    color: #d4d4d8;
     text-decoration: none;
   }
 
-  .link-active{
-    color: #FFFFFF;
+  .link-active {
+    color: #ffffff;
     font-weight: bold;
     text-decoration: none;
   }
-
 
   &__title {
     color: crimson;
@@ -35,5 +91,3 @@ body {
   margin: 0 !important;
   font-family: "Inter";
 }
-
-
