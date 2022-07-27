@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import Navbar from "./navbar";
 import Sidebar from "./sidebar";
 import Screen from "./screen";
-import Transactions from "./transactions";
+import Transactions from "./transactionsHistory";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 export const layout = (props) => {
   return (

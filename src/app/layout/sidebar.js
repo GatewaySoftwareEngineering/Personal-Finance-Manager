@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import MoneyIcon from "../images/Icon.png";
-import Screen from "./screen";
 import { NavLink } from "react-router-dom";
 
 export const sidebar = (props) => {
