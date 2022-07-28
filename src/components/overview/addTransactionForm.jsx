@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { typeExpence, typeIncome } from "src/configs/constants";
 import { addTransactions } from "src/features/transactions/transactionsSlice";
@@ -22,7 +22,6 @@ export default function AddTransactionForm(props) {
     handleSubmit,
     watch,
     setValue,
-    control,
   } = useForm();
   const [amoutNumber, setAmount] = useState(0);
 
@@ -95,7 +94,9 @@ export default function AddTransactionForm(props) {
         <label htmlFor="createdAt" className="form-label">
           Date
         </label>
+
         <CustomDatePicker dateTime={dateTime} setDateTime={setDateTime} />
+
         <InvalidField
           isRequaired={errors.createdAt?.type}
           text={"Date is required"}
@@ -105,35 +106,38 @@ export default function AddTransactionForm(props) {
         <label htmlFor="amount" className="form-label">
           Amount
         </label>
-        <input
-          type={"number"}
-          {...register("amount", {
-            required: true,
-          })}
-          id="amount"
-          className="form-control"
-          value={amoutNumber}
-          min="0"
-          onKeyPress={(event) => {
-            if (!/[0-9]/.test(event.key)) {
-              event.preventDefault();
-            }
-          }}
-          onPaste={(e) => e.preventDefault()}
-          onChange={(ev) => {
-            try {
-              const re = /^[0-9\b]+$/;
-              if (ev.target.value === "" || re.test(ev.target.value)) {
-                setAmount(ev.target.value);
+        <div className="d-flex">
+          <span className="fs-4  me-1">$</span>
+          <input
+            type={"number"}
+            {...register("amount", {
+              required: true,
+            })}
+            id="amount"
+            className="form-control"
+            value={amoutNumber}
+            min="0"
+            onKeyPress={(event) => {
+              if (!/[0-9]/.test(event.key)) {
+                event.preventDefault();
               }
-            } catch (e) {}
-          }}
-        />
+            }}
+            onPaste={(e) => e.preventDefault()}
+            onChange={(ev) => {
+              try {
+                const re = /^[0-9\b]+$/;
+                if (ev.target.value === "" || re.test(ev.target.value)) {
+                  setAmount(ev.target.value);
+                }
+              } catch (e) {}
+            }}
+          />
 
-        <InvalidField
-          isRequaired={errors.amount?.type}
-          text={"amount is required"}
-        />
+          <InvalidField
+            isRequaired={errors.amount?.type}
+            text={"amount is required"}
+          />
+        </div>
       </div>
       <div className="col col-12 row mt-5">
         <div className="d-flex col align-items-center  ">

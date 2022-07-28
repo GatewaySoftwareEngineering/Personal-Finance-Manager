@@ -5,13 +5,7 @@ export const filterPerDate = (transactions, type) => {
   const today = moment().format();
   const result = _.orderBy(transactions, ["createdAt"], ["desc"])
     ?.slice(0, 10)
-    ?.filter((eTransactions) => {
-      if (
-        moment(moment(eTransactions.createdAt).format()).isSame(today, type)
-      ) {
-        return eTransactions;
-      }
-    });
+    ?.filter((eTransactions) => moment(moment(eTransactions.createdAt).format()).isSame(today, type));
   if (result && result?.length > 0) {
     return result;
   } else {

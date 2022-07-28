@@ -17,7 +17,7 @@ export default function IconType({ type }) {
     padding: "4px",
     backgroundColor: "#2c3e5126",
     borderRadius: "40px",
-    borderWidth:'1px',
+    borderWidth: "1px",
   };
   switch (type) {
     case typeIncome.GIFT:
@@ -36,8 +36,9 @@ export default function IconType({ type }) {
       return <Sport style={styleIcon} />;
     case typeExpence.TECH:
       return <Tech style={styleIcon} />;
-      case typeExpence.CLOTHS:
-        return <Clothes style={styleIcon} />;
+    case typeExpence.CLOTHS:
+      return <Clothes style={styleIcon} />;
+    default:
+      return <div>I</div>;
   }
-  return <div>I</div>;
 }

@@ -5,6 +5,7 @@ import moment from "moment";
 import _ from "lodash";
 import Pagination from "../customPaginations/paginations";
 import { filterByDate, filterByText, filterCategory } from "src/helper/transactionsFIlter";
+import { useRef } from "react";
 const defaultFilter = {
   from: "",
   to: "",
@@ -15,7 +16,7 @@ let PageSize = 10;
 
 export default function TransactionList({ filterList = defaultFilter }) {
   const { transactions } = useSelector((state) => state.transactions);
-  let totalResultData = 0;
+  let totalResultData = useRef(0);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -25,7 +26,7 @@ export default function TransactionList({ filterList = defaultFilter }) {
     const resultCategory = filterCategory(filterList, resultFilterDate);
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    totalResultData = resultCategory?.length > 0 ? resultCategory?.length : 0;
+    totalResultData.current = resultCategory?.length > 0 ? resultCategory?.length : 0;
     return resultCategory.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, transactions, filterList]);
 
@@ -55,11 +56,11 @@ export default function TransactionList({ filterList = defaultFilter }) {
           <span>there is no transaction</span>
         )}
       </div>
-      {/* NOTE: only show when is needed, totalResultData is must more than pagesize for showing this; */}
+      {/* NOTE: only show when is needed,   totalResultData.current is must more than pagesize for showing this; */}
       <Pagination
         className="pagination-bar"
         currentPage={currentPage}
-        totalCount={totalResultData}
+        totalCount={  totalResultData.current}
         pageSize={PageSize}
         onPageChange={(page) => setCurrentPage(page)}
       />

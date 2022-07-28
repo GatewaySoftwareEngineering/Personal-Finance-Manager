@@ -1,7 +1,6 @@
 import _ from "lodash";
 import moment from "moment";
 import React from "react";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { filterPerDate } from "src/helper/calulateLastTransactions";
 import TransactionCard from "../cards/transactionCard";
@@ -16,7 +15,6 @@ export default function LastTransactions() {
   let transactionsType = "Transactions";
   let listTransactionCards = [];
   const getTransactions = () => {
-    const lastWeek = moment().subtract(1, "w").format();
     if (transactions?.length > 0) {
       let listFilter = [];
       const resultLastWeek = filterPerDate(transactions, "week");
@@ -25,7 +23,6 @@ export default function LastTransactions() {
         listFilter = resultLastWeek;
         transactionsType = "Week";
       } else {
-        const lastMonth = moment().subtract(1, "m").format();
 
         const resultLastMonth = filterPerDate(transactions, "month");
         //if list month is not empty
@@ -33,7 +30,6 @@ export default function LastTransactions() {
           listFilter = resultLastMonth;
           transactionsType = "Month";
         } else {
-          const lastYears = moment().subtract(1, "y").format();
           const resultLastYears = filterPerDate(transactions, "year");
           //if list years is not empty
           if (resultLastYears.length > 0) {
@@ -70,7 +66,7 @@ export default function LastTransactions() {
       <div className="mt-5">
         <h4 className="fw-bold">Top Last {transactionsType}</h4>
       </div>
-      {listTransactionCards?.length == 0 ? (
+      {listTransactionCards?.length === 0 ? (
         <span>there is no transaction</span>
       ) : (
         listTransactionCards

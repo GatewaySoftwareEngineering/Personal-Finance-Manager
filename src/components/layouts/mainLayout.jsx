@@ -1,9 +1,7 @@
 import React from "react";
 import useWindowDimensions from "./ScreenSize";
-import classes from "./Layout.module.css";
 import NavBar from "./navBar";
 import SideBar from "./sideBar";
-import Drawer from "./drawer";
 export default function MainLayout({ children }) {
   const { isDesktop } = useWindowDimensions();
   const listPage = [
