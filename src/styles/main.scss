@@ -1,12 +1,16 @@
-.app {
-  text-align: center;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif, serif;
+}
 
-  &__title {
-    color: crimson;
-  }
+.main_container {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  height: 100vh;
 
-  &__message {
-    color: darkslateblue;
-    font-size: 18px;
+  .main_section {
+    grid-column: 2 / -1;
   }
 }

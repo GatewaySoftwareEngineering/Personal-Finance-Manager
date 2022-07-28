@@ -1,10 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Outlet } from "react-router-dom";
+import Sidenav from "./components/sidenav/Sidenav";
+import { fetchTransactions } from "./features/transactions/transactionsSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTransactions());
+  }, []);
+
   return (
-    <div className="app">
-      <h1 className="app__title">Money Manager</h1>
-      <p className="app__message">Start Editing Me, let's get this done!</p>
+    <div className="main_container">
+      <Sidenav />
+      <div className="main_section">
+        <Outlet />
+      </div>
     </div>
   );
 }
