@@ -1,10 +1,28 @@
 import React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Routes, Route } from "react-router-dom";
+import { fetchTransactions } from "./features/transactions/transactionsSlice";
+const NotFound = React.lazy(() => import("./pages/notfound"));
+const OverView = React.lazy(() => import("./pages/overview"));
+const Transactions = React.lazy(() => import("./pages/transactions"));
 
 function App() {
+  const { transactions } = useSelector((state) => state.transactions);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (transactions?.length === 0) {
+      dispatch(fetchTransactions());
+    }
+  }, []);
+
   return (
-    <div className="app">
-      <h1 className="app__title">Money Manager</h1>
-      <p className="app__message">Start Editing Me, let's get this done!</p>
+    <div>
+      <Routes>
+        <Route path="/" element={<OverView />} />
+        <Route path="/transactions" element={<Transactions />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }
