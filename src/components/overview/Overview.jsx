@@ -4,7 +4,7 @@ import TransactionCard from "../TransactionCard";
 import AddTransactionDialog from "./AddTransactionDialog";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { currencyRates } from "../../shared/currencyRates";
 
 const Overview = () => {
   const { transactions } = useSelector((state) => state.transactions);
@@ -25,14 +25,7 @@ const Overview = () => {
   );
 
   useEffect(() => {
-    axios
-      .get("/latest", {
-        headers: {
-          apikey: "ZD0QxNaaRNeGpXO8VwmeXQIO2lq53Svm",
-        },
-      })
-      .then((res) => setRates(res.data.rates))
-      .catch((error) => console.log("error", error));
+    setRates(currencyRates);
   }, [transactions]);
 
   useEffect(() => {

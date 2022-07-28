@@ -23,6 +23,13 @@ const transactionFormInitial = {
   type: "INCOME",
   note: "",
 };
+const errorsInitial = {
+  category: "",
+  date: "",
+  amount: "",
+  type: "",
+  note: "",
+};
 
 const AddTransactionDialog = ({
   openDialog,
@@ -32,6 +39,7 @@ const AddTransactionDialog = ({
   const [transactionForm, setTransactionForm] = useState(
     transactionFormInitial
   );
+  const [errors, setErrors] = useState(errorsInitial);
 
   const categories =
     transactionForm.type === "INCOME" ? incomeCategories : expenseCategories;
@@ -52,7 +60,7 @@ const AddTransactionDialog = ({
   };
 
   const dateHandleChange = (newValue) => {
-    setTransactionForm((prevValue) => ({ ...prevValue, date: newValue._d }));
+    setTransactionForm((prevValue) => ({ ...prevValue, date: newValue?._d }));
   };
 
   const onRadioChanged = (e) => {
@@ -68,6 +76,27 @@ const AddTransactionDialog = ({
   };
 
   const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (transactionForm.category === "") {
+      return setErrors({
+        ...errorsInitial,
+        category: "Please select a category!",
+      });
+    }
+    if (transactionForm.amount === "") {
+      return setErrors({
+        ...errorsInitial,
+        amount: "Please enter an amount!",
+      });
+    }
+    if (transactionForm.note === "" && transactionForm.note.length <= 350) {
+      return setErrors({
+        ...errorsInitial,
+        note: "Please write a note and less than 350 characters!",
+      });
+    }
+
     setTransactionsArray((prev) => [
       ...prev,
       {
@@ -78,7 +107,7 @@ const AddTransactionDialog = ({
         id: Math.floor(Math.random() * 1000),
       },
     ]);
-    e.preventDefault();
+
     onCloseDialog();
   };
 
@@ -107,6 +136,7 @@ const AddTransactionDialog = ({
             <IoMdClose />
           </IconButton>
         </div>
+
         <div className="dialog_content">
           <form className="dialog_form" onSubmit={onSubmit}>
             <div className="category_container">
@@ -138,6 +168,10 @@ const AddTransactionDialog = ({
                   ))}
                 </Select>
               </FormControl>
+
+              {errors.category && (
+                <p className="error_message">{errors.category}</p>
+              )}
             </div>
 
             <div className="date_container">
@@ -171,6 +205,10 @@ const AddTransactionDialog = ({
                   onChange={inputChangeHandler}
                 />
               </div>
+
+              {errors.amount && (
+                <p className="error_message">{errors.amount}</p>
+              )}
             </div>
 
             <div className="type_container">
@@ -210,7 +248,10 @@ const AddTransactionDialog = ({
                 maxLength="350"
                 onChange={inputChangeHandler}
               ></textarea>
+
+              {errors.note && <p className="error_message">{errors.note}</p>}
             </div>
+
             <DialogActions className="dialog_actions">
               <Button className="dismiss_button" onClick={closeDialog}>
                 Dismiss

@@ -21,7 +21,7 @@ import Stack from "@mui/material/Stack";
 import { expenseCategories, incomeCategories } from "../../shared/constants";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import axios from "axios";
+import { currencyRates } from "../../shared/currencyRates";
 
 const categories = [...incomeCategories, ...expenseCategories];
 const filterInitial = {
@@ -35,9 +35,6 @@ const calculatePagesCount = (pageSize, totalCount) => {
 };
 
 const sortTransactions = (transactions = []) => {
-  console.log(
-    [...transactions]?.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
-  );
   return [...transactions]?.sort((a, b) =>
     a.createdAt < b.createdAt ? 1 : -1
   );
@@ -66,14 +63,7 @@ const TransactionHistory = () => {
   }, [transactions, updatedTransactions]);
 
   useEffect(() => {
-    axios
-      .get("/latest", {
-        headers: {
-          apikey: "ZD0QxNaaRNeGpXO8VwmeXQIO2lq53Svm",
-        },
-      })
-      .then((res) => setRates(res.data.rates))
-      .catch((error) => console.log("error", error));
+    setRates(currencyRates);
   }, [transactions]);
 
   useEffect(() => {
@@ -98,7 +88,7 @@ const TransactionHistory = () => {
     const value = e.target.value;
     setSearch(value);
 
-    const filteredTransactions = transactions.filter((t) =>
+    const filteredTransactions = updatedTransactions.filter((t) =>
       t.note.toUpperCase().includes(value.toUpperCase())
     );
 
@@ -109,8 +99,10 @@ const TransactionHistory = () => {
   const onClearSearch = () => {
     setSearch("");
 
-    setSortedTransactions(sortTransactions(transactions));
-    setCountPagination(calculatePagesCount(PAGE_SIZE, transactions?.length));
+    setSortedTransactions(sortTransactions(updatedTransactions));
+    setCountPagination(
+      calculatePagesCount(PAGE_SIZE, updatedTransactions?.length)
+    );
   };
 
   const categoryHandleChange = (event) => {
@@ -122,7 +114,7 @@ const TransactionHistory = () => {
       category: typeof value === "string" ? value.split(",") : value,
     }));
 
-    const filteredTransactions = transactions.filter((t) =>
+    const filteredTransactions = updatedTransactions.filter((t) =>
       value.some((v) => v.toUpperCase() === t.category.toUpperCase())
     );
 
@@ -133,7 +125,7 @@ const TransactionHistory = () => {
   const fromDateHandleChange = (newValue) => {
     setFilter((prevValue) => ({ ...prevValue, fromDate: newValue._d }));
 
-    const filteredTransactions = transactions.filter(
+    const filteredTransactions = updatedTransactions.filter(
       (t) => moment(newValue._d).format("l") <= moment(t.createdAt).format("l")
     );
 
@@ -144,7 +136,7 @@ const TransactionHistory = () => {
   const toDateHandleChange = (newValue) => {
     setFilter((prevValue) => ({ ...prevValue, toDate: newValue._d }));
 
-    const filteredTransactions = transactions.filter(
+    const filteredTransactions = updatedTransactions.filter(
       (t) => moment(newValue._d).format("l") >= moment(t.createdAt).format("l")
     );
 
@@ -154,8 +146,10 @@ const TransactionHistory = () => {
 
   const onClearFilter = () => {
     setFilter(filterInitial);
-    setSortedTransactions(sortTransactions(transactions));
-    setCountPagination(calculatePagesCount(PAGE_SIZE, transactions?.length));
+    setSortedTransactions(sortTransactions(updatedTransactions));
+    setCountPagination(
+      calculatePagesCount(PAGE_SIZE, updatedTransactions?.length)
+    );
   };
 
   const onPageChange = (e) => {
