@@ -50,6 +50,42 @@
     background: linear-gradient(90deg, #fda4af 0%, #fecdd3 102.82%);
     color: #ef2a4c;
   }
+
+  .add-button {
+    background: rgba(28, 101, 140, 0.15);
+    border-radius: 50px;
+    color: #1c658c;
+    padding: 4px 16px;
+    border: none;
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  .transactions-container {
+    padding-top: 16px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .income-text{
+    background: rgba(56, 248, 136, 0.75);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600; 
+    padding: 5px 6px;
+
+
+  }
+  .expense-text{
+    background: rgba(239, 42, 76, 0.15);
+    border-radius: 6px;
+    color: #EF2A4C;
+    font-size: 14px;
+    font-weight: 600; 
+    padding: 5px 6px;
+
+  }
   .details-button {
     border-radius: 12px;
     color: #fff;
