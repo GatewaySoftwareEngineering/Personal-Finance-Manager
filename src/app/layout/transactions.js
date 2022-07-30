@@ -84,7 +84,7 @@ export const Transactions = (props) => {
                     style={{
                       color: "#334155",
                       fontWeight: "400",
-                      margin: "0 6px",
+                      margin: "0 8px",
                     }}
                   >
                     {transaction &&
