@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal/modal";
+
 function AddTransaction() {
   const [visibile, setVisibile] = useState(false);
 

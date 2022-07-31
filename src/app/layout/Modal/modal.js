@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import moment from "moment";
 import "./modal.css";
+import * as _ from "lodash";
 
 const Modal = (props) => {
   const { show, onClose, title } = props;
@@ -10,6 +11,12 @@ const Modal = (props) => {
       onClose();
     }
   };
+  const [category, setCategory] = useState(null);
+  const [note, setNote] = useState(null);
+  const [amount, setAmount] = useState(null);
+  const [date, setDate] = useState(null);
+  const [type, setType] = useState(null);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     document.body.addEventListener("keydown", closeOnEscapeKeyDown);
@@ -19,10 +26,53 @@ const Modal = (props) => {
   }, []);
 
   const onSubmit = (e) => {
-    console.log("submitted", e);
-
     e.preventDefault();
+    const transaction = {
+      id: _.random(3, 1000),
+      note: note,
+      category: category,
+      createdAt: date,
+      type: type,
+      amount: amount,
+      currency: "$",
+    };
+    // check which is empty and insert into an array, and then from that array show the error message
+    const emptyFields = [];
+    Object.keys(transaction).forEach((key) => {
+      if (
+        transaction[key] == undefined ||
+        transaction[key] == null ||
+        transaction[key] == ""
+      )
+        emptyFields.push(key);
+    });
+    console.log(emptyFields);
+    setErrors(emptyFields);
+    if (!emptyFields.length > 0) {
+      console.log("transaction", transaction);
+      //   you can insert the transaction and work with it
+    }
   };
+
+  const options = {
+    income: ["Salary", "Loan", "Gift"],
+    expense: ["Tech", "Food", "Bills", "Sports", "Health", "Clothes"],
+  };
+
+  const incomeOptions = _.map(options.income, (item) => {
+    return (
+      <option key={item} value={item}>
+        {item}
+      </option>
+    );
+  });
+  const expenseOptions = _.map(options.expense, (item) => {
+    return (
+      <option key={item} value={item}>
+        {item}
+      </option>
+    );
+  });
 
   return (
     <CSSTransition in={show} unmountOnExit timeout={{ enter: 0, exit: 300 }}>
@@ -32,7 +82,6 @@ const Modal = (props) => {
             <h4 className="modal-title">{title}</h4>
           </div>
           <form
-            onSubmit={onSubmit}
             style={{
               display: "flex",
               alignItems: "center",
@@ -58,24 +107,34 @@ const Modal = (props) => {
                   }}
                 >
                   <label className="form-label">Category</label>
-                  <select className="form-input">
-                    <option className="form-select-option" value="grapefruit">
-                      Grapefruit
-                    </option>
-                    <option className="form-select-option" value="lime">
-                      Lime
-                    </option>
-                    <option
-                      className="form-select-option"
-                      defaultValue
-                      value="coconut"
-                    >
-                      Coconut
-                    </option>
-                    <option className="form-select-option" value="mango">
-                      Mango
-                    </option>
+                  {_.isNull(type) ? (
+                    <p style={{ color: "red", fontSize: "10px" }}>
+                      * Please select a type before choosing a transaction
+                    </p>
+                  ) : (
+                    ""
+                  )}
+
+                  <select
+                    className="form-input"
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
+                    disabled={_.isNull(type)}
+                  >
+                    {!_.isNull(type)
+                      ? type == "INCOME"
+                        ? incomeOptions
+                        : expenseOptions
+                      : ""}
                   </select>
+                  {errors.length > 0 && errors.includes("category") ? (
+                    <p style={{ color: "red", fontSize: "10px" }}>
+                      * Please select a category
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div
                   style={{
@@ -89,7 +148,20 @@ const Modal = (props) => {
                     type="date"
                     className="form-input"
                     max={moment().format("YYYY-MM-DD")}
+                    onChange={(e) => {
+                      const dateInMoment = moment(
+                        e.target.valueAsDate
+                      ).toDate();
+                      setDate(dateInMoment);
+                    }}
                   />
+                  {errors.length > 0 && errors.includes("date") ? (
+                    <p style={{ color: "red", fontSize: "10px" }}>
+                      * Please select a date
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div
                   style={{
@@ -99,9 +171,29 @@ const Modal = (props) => {
                   }}
                 >
                   <label className="form-label">Amount</label>
-                  <div class="currency-wrap">
-                    <span class="currency-code">$</span>
-                    <input type="number" className="form-input text-currency" />
+                  <div className="currency-wrap">
+                    <span className="currency-code">$</span>
+                    <input
+                      type="number"
+                      className="form-input text-currency"
+                      min={0}
+                      value={amount}
+                      onChange={(e) => {
+                        let { value, min } = e.target;
+                        if (value > min) {
+                          setAmount(value);
+                        } else {
+                          setAmount(min);
+                        }
+                      }}
+                    />
+                    {errors.length > 0 && errors.includes("amount") ? (
+                      <p style={{ color: "red", fontSize: "10px" }}>
+                        * Please enter a valid amount
+                      </p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
@@ -125,6 +217,9 @@ const Modal = (props) => {
                     style={{
                       display: "flex",
                     }}
+                    onChange={(e) => {
+                      setType(e.target.value);
+                    }}
                   >
                     <div className="radio-text">
                       <input
@@ -144,6 +239,13 @@ const Modal = (props) => {
                       />
                       <label htmlFor="EXPENSE">Expense</label>
                     </div>
+                    {errors.length > 0 && errors.includes("type") ? (
+                      <p style={{ color: "red", fontSize: "10px" }}>
+                        * Please select a type
+                      </p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
                 <div
@@ -154,7 +256,20 @@ const Modal = (props) => {
                   }}
                 >
                   <label className="form-label">Notes</label>
-                  <textarea className="form-input" />
+                  <textarea
+                    className="form-input"
+                    maxLength={350}
+                    onChange={(e) => {
+                      setNote(e.target.value);
+                    }}
+                  />
+                  {errors.length > 0 && errors.includes("note") ? (
+                    <p style={{ color: "red", fontSize: "10px" }}>
+                      * Please fill your notes!
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
@@ -167,6 +282,7 @@ const Modal = (props) => {
               type="submit"
               value="Add Transaction"
               className="add-button-form"
+              onClick={onSubmit}
             ></input>
           </div>
         </div>

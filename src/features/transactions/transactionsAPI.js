@@ -1,7 +1,7 @@
 import moment from "moment";
 export const getTransactions = async () => [
   {
-    id: "123456789",
+    id: "1",
     note: "HyperCloud II Headset",
     category: "ACCESSORIES",
     createdAt: moment().subtract(1, "days").toDate(),
@@ -10,7 +10,7 @@ export const getTransactions = async () => [
     currency: "USD",
   },
   {
-    id: "987546321",
+    id: "2",
     note: "Salary after promotion",
     category: "SALARY",
     createdAt: new Date(),
@@ -19,7 +19,7 @@ export const getTransactions = async () => [
     currency: "IQD",
   },
   {
-    id: "987546325",
+    id: "3",
     note: "Borrowed from Muhammad",
     category: "LOAN",
     createdAt: moment().subtract(40, "days").toDate(),
