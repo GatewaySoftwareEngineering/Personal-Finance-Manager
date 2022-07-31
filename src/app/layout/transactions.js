@@ -110,6 +110,9 @@ export const Transactions = (props) => {
                   >
                     {transaction && transaction.type == "INCOME" ? "+ " : "- "}
                     {transaction && transaction.amount}
+                    {transaction && transaction.currency === "IQD"
+                      ? " IQD"
+                      : "$"}
                   </p>
                 </div>
               </div>

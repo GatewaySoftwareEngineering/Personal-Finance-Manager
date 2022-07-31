@@ -3,9 +3,11 @@ import { CSSTransition } from "react-transition-group";
 import moment from "moment";
 import "./modal.css";
 import * as _ from "lodash";
+import { connect } from "react-redux";
+import { addNewTransaction } from "../../../features/transactions/transactionsSlice";
 
 const Modal = (props) => {
-  const { show, onClose, title } = props;
+  const { show, onClose, title, addNewTransaction } = props;
   const closeOnEscapeKeyDown = (e) => {
     if ((e.charCode || e.keyCode) === 27) {
       onClose();
@@ -46,10 +48,9 @@ const Modal = (props) => {
       )
         emptyFields.push(key);
     });
-    console.log(emptyFields);
     setErrors(emptyFields);
     if (!emptyFields.length > 0) {
-      console.log("transaction", transaction);
+      addNewTransaction(transaction);
       //   you can insert the transaction and work with it
     }
   };
@@ -149,9 +150,9 @@ const Modal = (props) => {
                     className="form-input"
                     max={moment().format("YYYY-MM-DD")}
                     onChange={(e) => {
-                      const dateInMoment = moment(
-                        e.target.valueAsDate
-                      ).toDate();
+                      const dateInMoment = moment(e.target.valueAsDate)
+                        .startOf("day")
+                        .toDate();
                       setDate(dateInMoment);
                     }}
                   />
@@ -290,5 +291,12 @@ const Modal = (props) => {
     </CSSTransition>
   );
 };
+const mapStateToProps = (state) => ({
+  transactions: state.transactions.transactions,
+});
 
-export default Modal;
+const mapDispatchToProps = {
+  addNewTransaction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);
