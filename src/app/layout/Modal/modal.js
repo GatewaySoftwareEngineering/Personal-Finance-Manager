@@ -52,6 +52,12 @@ const Modal = (props) => {
     if (!emptyFields.length > 0) {
       addNewTransaction(transaction);
       //   you can insert the transaction and work with it
+      setCategory(null);
+      setNote(null);
+      setAmount(null);
+      setDate(null);
+      setType(null);
+      onClose();
     }
   };
 
