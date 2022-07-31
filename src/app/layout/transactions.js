@@ -38,6 +38,7 @@ export const Transactions = (props) => {
           {_.map(lastTransactionSorted, (transaction, index) => {
             return (
               <div
+                key={index}
                 style={{
                   background: "#F8FAFC",
                   width: "80%",

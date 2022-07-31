@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Navbar from "./navbar";
 import Transactions from "./transactions";
+import AddTransaction from "./addTransaction";
 export const screen = (props) => {
   return (
     <div>
@@ -41,18 +42,7 @@ export const screen = (props) => {
           <Transactions />
         </section>
         <section>
-          <div
-            style={{
-              paddingTop: "16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-          >
-            <div style={{ width: "30%" }}>
-              <button className="add-button">Add Transaction</button>
-            </div>
-          </div>
+          <AddTransaction />
         </section>
       </div>
     </div>
