@@ -33,12 +33,10 @@ function AddTransaction() {
           Add Transaction
         </button>
         <Modal
-          title="My Modal"
+          title="Add Transaction"
           onClose={() => setVisibile(false)}
           show={visibile}
-        >
-          <p>This is modal body</p>
-        </Modal>
+        />
       </div>
     </div>
   );
