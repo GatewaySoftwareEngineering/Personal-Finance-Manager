@@ -7,7 +7,7 @@ export const screen = (props) => {
   return (
     <div>
       <Navbar title={"Overview"} />
-      <div style={{ height: "90vh", backgroundColor: "#EEEEEE" }}>
+      <div className="container">
         <section
           style={{
             paddingTop: "16px",

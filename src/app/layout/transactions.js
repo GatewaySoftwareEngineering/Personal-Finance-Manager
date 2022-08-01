@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 import { fetchTransactions } from "../../features/transactions/transactionsSlice";
@@ -7,7 +7,8 @@ import MoneyIcon from "../images/Icon.png";
 
 export const Transactions = (props) => {
   console.log("Transactions props: ", props);
-  const { fetchTransactions, transactions, page } = props;
+  const { fetchTransactions, page, search, transactions } = props;
+  const [transactionsList, setTransactionsList] = useState([]);
   // i will have three props
   // 1. transactions search term
   // 2. one for the pagination
@@ -18,11 +19,34 @@ export const Transactions = (props) => {
     fetchTransactions();
   }, []);
 
-  const lastTransaction = transactions && _.maxBy(transactions, "createdAt");
+  useEffect(() => {
+    setTransactionsList(transactions);
+  }, [transactions]);
+
+  useEffect(() => {
+    let filteredTransactions = transactions;
+    if (search !== "") {
+      filteredTransactions = _.filter(transactions, (transaction) => {
+        const { note, amount } = transaction;
+        const searchTerm = search && search.toLowerCase().toString();
+        const amountString = amount.toString();
+        return (
+          note.toLowerCase().indexOf(searchTerm) > -1 ||
+          amountString.toLowerCase().indexOf(searchTerm) > -1
+        );
+      });
+      setTransactionsList(filteredTransactions);
+    } else {
+      setTransactionsList(transactions);
+    }
+  }, [search]);
+
+  const lastTransaction =
+    transactionsList && _.maxBy(transactionsList, "createdAt");
   const lastTransactions =
-    page !== "history" && transactions
-      ? transactions.slice(0, 10)
-      : transactions;
+    page !== "history" && transactionsList
+      ? transactionsList.slice(0, 10)
+      : transactionsList;
   const lastTransactionSorted =
     lastTransactions && _.orderBy(lastTransactions, "createdAt", "desc");
 
