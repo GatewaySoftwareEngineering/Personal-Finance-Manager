@@ -40,7 +40,6 @@ const Modal = (props) => {
       amount: amount,
       currency: "$",
     };
-    // check which is empty and insert into an array, and then from that array show the error message
     const emptyFields = [];
     Object.keys(transaction).forEach((key) => {
       if (
@@ -53,7 +52,6 @@ const Modal = (props) => {
     setErrors(emptyFields);
     if (!emptyFields.length > 0) {
       addNewTransaction(transaction);
-      //   you can insert the transaction and work with it
       clearErrorsandFields();
       onClose();
     }

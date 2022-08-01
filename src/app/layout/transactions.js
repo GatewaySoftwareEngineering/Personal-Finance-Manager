@@ -16,9 +16,7 @@ export const Transactions = (props) => {
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * 5) % transactionsList.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+
     setItemOffset(newOffset);
   };
 
@@ -32,14 +30,7 @@ export const Transactions = (props) => {
   }, [transactions]);
 
   useEffect(() => {
-    // Fetch items from another resources.
-    console.log("transactionsList", transactionsList);
     const endOffset = itemOffset + 5;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    console.log(
-      "transactionsList.slice(itemOffset, endOffset)",
-      transactionsList.slice(itemOffset, endOffset)
-    );
     setCurrentItems(transactionsList.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(transactionsList.length / 5));
   }, [itemOffset, transactionsList]);
