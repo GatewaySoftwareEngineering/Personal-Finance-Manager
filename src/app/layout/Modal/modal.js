@@ -22,7 +22,9 @@ const Modal = (props) => {
 
   useEffect(() => {
     document.body.addEventListener("keydown", closeOnEscapeKeyDown);
+    clearErrorsandFields();
     return function cleanup() {
+      clearErrorsandFields();
       document.body.removeEventListener("keydown", closeOnEscapeKeyDown);
     };
   }, []);
@@ -52,13 +54,18 @@ const Modal = (props) => {
     if (!emptyFields.length > 0) {
       addNewTransaction(transaction);
       //   you can insert the transaction and work with it
-      setCategory(null);
-      setNote(null);
-      setAmount(null);
-      setDate(null);
-      setType(null);
+      clearErrorsandFields();
       onClose();
     }
+  };
+
+  const clearErrorsandFields = () => {
+    setCategory(null);
+    setNote(null);
+    setAmount(null);
+    setDate(null);
+    setType(null);
+    setErrors([]);
   };
 
   const options = {
