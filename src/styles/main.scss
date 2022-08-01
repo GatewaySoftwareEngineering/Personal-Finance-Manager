@@ -1,5 +1,121 @@
 .app {
-  text-align: center;
+  .sidebar {
+    background: linear-gradient(180deg, #30475e 0%, #222831 100%);
+    height: 100%;
+  }
+
+  .container {
+    height: 90vh;
+    background-color: #eeeeee;
+  }
+  .navbar {
+    background: #f7f4f3;
+    box-shadow: 0px 1px 8px rgba(34, 40, 49, 0.15);
+    position: relative;
+    z-index: 10;
+  }
+
+  .card {
+    width: 25%;
+    height: 30%;
+    border-radius: 7px;
+  }
+
+  .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 40px;
+  }
+  .card > h2 {
+    color: #fff;
+    font-size: 30px;
+    font-weight: 500;
+    margin-left: 40px;
+    margin-top: 0 !important;
+  }
+  .card-body > h5 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .blue-card {
+    background: linear-gradient(90deg, #7dd3fc 0%, #bae6fd 102.82%);
+    color: #1a74c7;
+  }
+
+  .gray-card {
+    background: linear-gradient(90deg, #d4d4d8 0%, #e4e4e7 102.82%);
+    color: #71717a;
+  }
+
+  .red-card {
+    background: linear-gradient(90deg, #fda4af 0%, #fecdd3 102.82%);
+    color: #ef2a4c;
+  }
+
+  .add-button {
+    background: rgba(28, 101, 140, 0.15);
+    border-radius: 50px;
+    color: #1c658c;
+    padding: 4px 16px;
+    border: none;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .transactions-container {
+    padding-top: 16px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .income-text {
+    background: rgba(14, 165, 233, 0.15);
+    border-radius: 6px;
+    color: #0ea5e9;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 6px;
+  }
+  .expense-text {
+    background: rgba(239, 42, 76, 0.15);
+    border-radius: 6px;
+    color: #ef2a4c;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 6px;
+  }
+  .details-button {
+    border-radius: 12px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 4px 16px;
+  }
+
+  .blue-button {
+    background: rgba(56, 189, 248, 0.75);
+  }
+  .gray-button {
+    background: rgba(113, 113, 122, 0.75);
+  }
+  .red-button {
+    background: rgba(251, 113, 133, 0.75);
+  }
+
+  .link {
+    color: #d4d4d8;
+    text-decoration: none;
+  }
+
+  .link-active {
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+  }
 
   &__title {
     color: crimson;
@@ -9,4 +125,113 @@
     color: darkslateblue;
     font-size: 18px;
   }
+  .search-input {
+    width: 90%;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 7px 0px 0px 7px;
+  }
+
+  .search-input:focus {
+    outline: none;
+  }
+
+  .search-button {
+    width: 10%;
+    border: none;
+    background: rgba(28, 101, 140, 0.75);
+    border-radius: 0px 7px 7px 0px;
+    padding: 8px 22px;
+    cursor: pointer;
+  }
+  .search-button:focus {
+    outline: none;
+  }
+  .date-input {
+    border: none;
+    height: 75%;
+    border-radius: 7px;
+    box-shadow: inset 0px 0px 1px 0.1px rgba(0, 0, 0, 0.25);
+    padding: 0 22px;
+  }
+  .filter-button {
+    width: 10%;
+    border: none;
+    background: rgba(28, 101, 140, 0.75);
+    border-radius: 0px 7px 7px 0px;
+    height: 100%;
+    cursor: pointer;
+  }
+  pagination > li {
+    display: inline-block;
+    padding-left: 0;
+  }
+  .pagination > li {
+    list-style: none;
+  }
+  .pagination > li > a,
+  .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    color: #1c658c;
+    background-color: transparent;
+    border: 1px solid #1c658c;
+    margin-left: -1px;
+    border-radius: 16px;
+    margin: 0 6px;
+  }
+
+  .pagination > li.active > a {
+    color: #fff;
+    background-color: rgba(28, 101, 140, 0.75);
+    border-color: none;
+    border-radius: 16px;
+  }
+
+  /* Style the active class (and buttons on mouse-over) */
+  .pagination > li > a:hover {
+    background-color: #1c658c;
+    color: white;
+  }
+  .pagination > li:first-child > a,
+  .pagination > li:first-child > span {
+    margin-left: 0;
+    padding: 0px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    display: none !important;
+  }
+  .pagination > li:last-child > a,
+  .pagination > li:last-child > span {
+    border-bottom-right-radius: 4px;
+    margin-right: 0;
+    padding: 0px !important;
+    border-top-right-radius: 4px;
+    display: none !important;
+  }
+}
+body {
+  margin: 0 !important;
+  font-family: "Inter";
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
