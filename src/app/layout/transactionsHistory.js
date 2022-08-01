@@ -15,7 +15,8 @@ export const TransactionsHistory = (props) => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState({
     category: null,
-    date: { from: null, to: null },
+    dateFrom: null,
+    dateTo: null,
   });
   const options = [
     {
@@ -60,7 +61,7 @@ export const TransactionsHistory = (props) => {
     category.current.value = "";
     dateFrom.current.value = "";
     dateTo.current.value = "";
-    setFilter({ category: "", date: { from: "", to: "" } });
+    setFilter({ category: null, dateFrom: null, dateTo: null });
   };
   return (
     <div>
@@ -147,7 +148,7 @@ export const TransactionsHistory = (props) => {
               onChange={(e) => {
                 setFilter({
                   ...filter,
-                  date: { ...filter.date, from: e.target.value },
+                  dateFrom: e.target.value,
                 });
               }}
             />
@@ -160,7 +161,7 @@ export const TransactionsHistory = (props) => {
               onChange={(e) => {
                 setFilter({
                   ...filter,
-                  date: { ...filter.date, to: e.target.value },
+                  dateTo: e.target.value,
                 });
               }}
             />

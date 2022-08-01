@@ -6,13 +6,12 @@ import * as _ from "lodash";
 import MoneyIcon from "../images/Icon.png";
 
 export const Transactions = (props) => {
-  console.log("Transactions props: ", props);
-  const { fetchTransactions, page, search, transactions } = props;
+  const { fetchTransactions, page, search, filter, transactions } = props;
   const [transactionsList, setTransactionsList] = useState([]);
-  // i will have three props
-  // 1. transactions search term
+  // i will have four props
+  // 1. transactions search term ✅
   // 2. one for the pagination
-  // 3. one for filters
+  // 3. one for filters ✅
   // 4. one for the transactions slicing ✅
 
   useEffect(() => {
@@ -25,21 +24,68 @@ export const Transactions = (props) => {
 
   useEffect(() => {
     let filteredTransactions = transactions;
-    if (search !== "") {
-      filteredTransactions = _.filter(transactions, (transaction) => {
-        const { note, amount } = transaction;
-        const searchTerm = search && search.toLowerCase().toString();
-        const amountString = amount.toString();
-        return (
-          note.toLowerCase().indexOf(searchTerm) > -1 ||
-          amountString.toLowerCase().indexOf(searchTerm) > -1
-        );
+    const dateBasedFilteredTransactions = [];
+    const catgoryBasedFilteredTransactions = [];
+    const filtersArray = [];
+
+    filter &&
+      Object.keys(filter).forEach((key) => {
+        if (
+          filter[key] !== undefined &&
+          filter[key] !== null &&
+          filter[key] !== ""
+        )
+          filtersArray.push(key);
       });
+
+    if (filtersArray.length > 0 || search !== "") {
+      if (search !== "") {
+        filteredTransactions = _.filter(transactions, (transaction) => {
+          const { note, amount } = transaction;
+          const searchTerm = search && search.toLowerCase().toString();
+          const amountString = amount.toString();
+          return (
+            note.toLowerCase().indexOf(searchTerm) > -1 ||
+            amountString.toLowerCase().indexOf(searchTerm) > -1
+          );
+        });
+      }
+      if (filtersArray.length > 0) {
+        filteredTransactions = _.filter(filteredTransactions, (transaction) => {
+          const catgs = [];
+          _.forEach(filter.category, (category) => {
+            catgs.push(category.value.toLowerCase());
+          });
+
+          if (
+            !_.isNull(filter.dateFrom)
+              ? moment(transaction.createdAt).isBetween(
+                  filter.dateFrom,
+                  filter.dateTo || moment().endOf("day").toDate()
+                )
+              : false
+          ) {
+            dateBasedFilteredTransactions.push(transaction);
+          }
+          if (catgs.includes(transaction.category.toLowerCase())) {
+            catgoryBasedFilteredTransactions.push(transaction);
+          }
+        });
+      }
+      filteredTransactions = [
+        ...new Set(
+          filteredTransactions.concat(
+            dateBasedFilteredTransactions,
+            catgoryBasedFilteredTransactions
+          )
+        ),
+      ];
+
       setTransactionsList(filteredTransactions);
     } else {
       setTransactionsList(transactions);
     }
-  }, [search]);
+  }, [search, filter]);
 
   const lastTransaction =
     transactionsList && _.maxBy(transactionsList, "createdAt");
