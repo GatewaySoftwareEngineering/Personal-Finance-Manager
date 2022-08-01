@@ -4,23 +4,45 @@ import moment from "moment";
 import { fetchTransactions } from "../../features/transactions/transactionsSlice";
 import * as _ from "lodash";
 import MoneyIcon from "../images/Icon.png";
+import ReactPaginate from "react-paginate";
 
 export const Transactions = (props) => {
   const { fetchTransactions, page, search, filter, transactions } = props;
   const [transactionsList, setTransactionsList] = useState([]);
-  // i will have four props
-  // 1. transactions search term ✅
-  // 2. one for the pagination
-  // 3. one for filters ✅
-  // 4. one for the transactions slicing ✅
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * 5) % transactionsList.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
 
   useEffect(() => {
     fetchTransactions();
   }, []);
 
   useEffect(() => {
-    setTransactionsList(transactions);
+    const orderedTransactions = _.orderBy(transactions, "createdAt", "desc");
+    setTransactionsList(orderedTransactions);
   }, [transactions]);
+
+  useEffect(() => {
+    // Fetch items from another resources.
+    console.log("transactionsList", transactionsList);
+    const endOffset = itemOffset + 5;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    console.log(
+      "transactionsList.slice(itemOffset, endOffset)",
+      transactionsList.slice(itemOffset, endOffset)
+    );
+    setCurrentItems(transactionsList.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(transactionsList.length / 5));
+  }, [itemOffset, transactionsList]);
 
   useEffect(() => {
     let filteredTransactions = transactions;
@@ -89,12 +111,6 @@ export const Transactions = (props) => {
 
   const lastTransaction =
     transactionsList && _.maxBy(transactionsList, "createdAt");
-  const lastTransactions =
-    page !== "history" && transactionsList
-      ? transactionsList.slice(0, 10)
-      : transactionsList;
-  const lastTransactionSorted =
-    lastTransactions && _.orderBy(lastTransactions, "createdAt", "desc");
 
   return (
     <div>
@@ -113,7 +129,7 @@ export const Transactions = (props) => {
           ""
         )}
         <div>
-          {_.map(lastTransactionSorted, (transaction, index) => {
+          {_.map(currentItems, (transaction, index) => {
             return (
               <div
                 key={index}
@@ -202,6 +218,32 @@ export const Transactions = (props) => {
               </div>
             );
           })}
+          <div
+            style={{
+              width: "30%",
+              float: "right",
+            }}
+          >
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel="<"
+              renderOnZeroPageCount={null}
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item"
+              previousLinkClassName="page-link"
+              nextClassName="page-item"
+              nextLinkClassName="page-link"
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              containerClassName="pagination"
+              activeClassName="active"
+            />
+          </div>
         </div>
       </section>
     </div>
