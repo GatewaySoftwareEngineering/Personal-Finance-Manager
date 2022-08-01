@@ -7,33 +7,41 @@ import MoneyIcon from "../images/Icon.png";
 
 export const Transactions = (props) => {
   console.log("Transactions props: ", props);
-  const { fetchTransactions, transactions } = props;
+  const { fetchTransactions, transactions, page } = props;
   // i will have three props
-  // 1. a header for the week and stuff
+  // 1. transactions search term
   // 2. one for the pagination
   // 3. one for filters
+  // 4. one for the transactions slicing ✅
 
   useEffect(() => {
     fetchTransactions();
   }, []);
 
   const lastTransaction = transactions && _.maxBy(transactions, "createdAt");
-  const lastTransactions = transactions && transactions.slice(0, 10);
+  const lastTransactions =
+    page !== "history" && transactions
+      ? transactions.slice(0, 10)
+      : transactions;
   const lastTransactionSorted =
     lastTransactions && _.orderBy(lastTransactions, "createdAt", "desc");
 
   return (
     <div>
       <section className="transactions-container">
-        <h3>
-          {lastTransaction &&
-          moment(lastTransaction.createdAt).isSame(new Date(), "week")
-            ? "This week"
-            : lastTransaction &&
-              moment(lastTransaction.createdAt).isSame(new Date(), "month")
-            ? "This month"
-            : "Last transactions"}
-        </h3>
+        {page !== "history" ? (
+          <h3>
+            {lastTransaction &&
+            moment(lastTransaction.createdAt).isSame(new Date(), "week")
+              ? "This week"
+              : lastTransaction &&
+                moment(lastTransaction.createdAt).isSame(new Date(), "month")
+              ? "This month"
+              : "Last transactions"}
+          </h3>
+        ) : (
+          ""
+        )}
         <div>
           {_.map(lastTransactionSorted, (transaction, index) => {
             return (
@@ -98,7 +106,7 @@ export const Transactions = (props) => {
                         )
                       ? "Yesterday"
                       : transaction
-                      ? moment(transaction.createdAt).format("dddd DD/MM/YYYY")
+                      ? moment(transaction.createdAt).format("ddd DD/MM/YYYY")
                       : "No Date Found"}
                   </p>
                   <p
