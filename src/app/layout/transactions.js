@@ -109,7 +109,13 @@ export const Transactions = (props) => {
                     }
                   >
                     {transaction && transaction.type == "INCOME" ? "+ " : "- "}
-                    {transaction && transaction.amount}
+                    {transaction && Math.abs(transaction.amount) > 999
+                      ? Math.sign(transaction.amount) *
+                          (Math.abs(transaction.amount) / 1000).toFixed(1) +
+                        "k"
+                      : Math.sign(transaction.amount) *
+                        Math.abs(transaction.amount)}
+
                     {transaction && transaction.currency === "IQD"
                       ? " IQD"
                       : "$"}
