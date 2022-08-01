@@ -4,9 +4,6 @@ import Modal from "./Modal/modal";
 function AddTransaction() {
   const [visibile, setVisibile] = useState(false);
 
-  useEffect(() => {
-    console.log("AddTransaction", visibile);
-  }, [visibile]);
   return (
     <div
       style={{

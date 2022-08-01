@@ -52,10 +52,6 @@ export const TransactionsHistory = (props) => {
     },
   ];
 
-  useEffect(() => {
-    console.log("TransactionsHistory", filter);
-  }, [filter]);
-
   const clearSearch = () => {
     setSearch("");
     ref.current.value = "";
@@ -122,7 +118,6 @@ export const TransactionsHistory = (props) => {
                 hideSelectedOptions={false}
                 autosize={false}
                 onChange={(e) => {
-                  console.log(e);
                   setFilter({ ...filter, category: e });
                 }}
                 styles={{
