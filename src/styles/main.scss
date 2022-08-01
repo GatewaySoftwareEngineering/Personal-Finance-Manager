@@ -145,8 +145,44 @@
     padding: 8px 22px;
     cursor: pointer;
   }
+  .search-button:focus {
+    outline: none;
+  }
+  .date-input {
+    border: none;
+    height: 75%;
+    border-radius: 7px;
+    box-shadow: inset 0px 0px 1px 0.1px rgba(0, 0, 0, 0.25);
+    padding: 0 22px;
+  }
+  .filter-button {
+    width: 10%;
+    border: none;
+    background: rgba(28, 101, 140, 0.75);
+    border-radius: 0px 7px 7px 0px;
+    height: 100%;
+    cursor: pointer;
+  }
 }
 body {
   margin: 0 !important;
   font-family: "Inter";
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
